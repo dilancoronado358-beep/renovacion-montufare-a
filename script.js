@@ -10,8 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             mobileToggle.classList.toggle('active');
+            
+            // Toggle body scroll for better UX
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         });
     }
+
 
 
     // --- COUNTDOWN TIMER (Día de la Victoria) ---
@@ -102,8 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (navMenu.classList.contains('active')) {
                     navMenu.classList.remove('active');
-                    navMenu.style.display = 'none';
+                    mobileToggle.classList.remove('active');
+                    document.body.style.overflow = 'auto';
                 }
+
             }
         });
     });
@@ -223,8 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const mapElement = document.getElementById('map-montufar');
     if (mapElement) {
         const map = L.map('map-montufar', {
-            scrollWheelZoom: false
+            scrollWheelZoom: false,
+            dragging: !L.Browser.mobile, // Disable dragging with one finger on mobile
+            tap: !L.Browser.mobile
         }).setView([0.597, -77.830], 11);
+
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap'

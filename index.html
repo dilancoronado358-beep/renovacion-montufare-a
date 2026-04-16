@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Fabián Robles | Alcaldía de Montúfar 2026</title>
+    <meta name="description" content="Movimiento de renovación ciudadana liderado por el Dr. Fabián Robles. Juntos por un Montúfar con futuro.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Leaflet Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+</head>
+<body class="rc-theme">
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/593987851539?text=Quiero%20formar%20parte%20de%20su%20equipo" class="whatsapp-btn" target="_blank" aria-label="Escríbenos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+
+    <!-- Header / Navbar -->
+    <nav class="nav-rc" id="main-nav">
+        <div class="container-rc flex-row justify-between align-center">
+            <div class="logo-box">
+                <a href="#home">
+                    <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo Robles" class="nav-logo">
+                </a>
+            </div>
+            <div class="menu-wrap" id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#home">INICIO</a></li>
+                    <li><a href="#perfil">TRAYECTORIA</a></li>
+                    <li><a href="#propuestas">PROPUESTAS</a></li>
+                    <li><a href="multimedia.html">MULTIMEDIA</a></li>
+
+                    <li><a href="#noticias">NOTICIAS</a></li>
+                    <li><a href="#contacto" class="btn-cta-nav">SÚMATE</a></li>
+                </ul>
+
+            </div>
+            <div class="mobile-btn" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (RC Style) -->
+    <section id="home" class="hero-rc bg-cyan">
+        <div class="container-rc grid-hero">
+            <div class="hero-text-box" data-aos="fade-right">
+                <h1 class="hero-title">CON EL<br><span class="text-white">DR. ROBLES</span> <br>MONTÚFAR<br>AVANZA</h1>
+                <p class="hero-subtext">La fuerza del trabajo y el corazón de nuestra gente. Juntos construiremos el cantón que merecemos.</p>
+                <div class="hero-actions">
+                    <a href="#propuestas" class="btn-rc btn-navy">NUESTRO PLAN</a>
+                    <a href="#contacto" class="btn-rc btn-red pulse">VAMOS CON TODO</a>
+                </div>
+            </div>
+            <div class="hero-img-box" data-aos="zoom-in">
+                <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302661/WhatsApp_Image_2026-04-15_at_8.20.53_PM_p66jxb.jpg" alt="Fabián Robles" class="hero-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Victory Section -->
+    <section class="countdown-section bg-navy text-white">
+        <div class="container-rc text-center">
+            <h3 class="countdown-title">CUENTA REGRESIVA PARA LA <span class="text-cyan">GRAN VICTORIA</span></h3>
+            <div id="countdown" class="countdown-timer mt-30">
+                <div class="timer-unit"><span id="days">00</span><p>DÍAS</p></div>
+                <div class="timer-unit"><span id="hours">00</span><p>HR</p></div>
+                <div class="timer-unit"><span id="minutes">00</span><p>MIN</p></div>
+                <div class="timer-unit"><span id="seconds">00</span><p>SEG</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Counters Block -->
+    <section class="counters-rc">
+        <div class="container-rc grid-four-cols">
+            <div class="counter-item-rc" data-aos="fade-up">
+                <span class="count-val" data-target="8">0</span>
+                <p>PARROQUIAS VISITADAS</p>
+            </div>
+            <div class="counter-item-rc" data-aos="fade-up" data-aos-delay="100">
+                <span class="count-val" data-target="100">0</span><span class="count-unit">%</span>
+                <p>GESTIÓN TRANSPARENTE</p>
+            </div>
+            <div class="counter-item-rc" data-aos="fade-up" data-aos-delay="200">
+                <span class="count-unit">+</span><span class="count-val" data-target="35">0</span>
+                <p>COMUNIDADES RECORRIDAS</p>
+            </div>
+            <div class="counter-item-rc" data-aos="fade-up" data-aos-delay="300">
+                <span class="count-unit">+</span><span class="count-val" data-target="100">0</span>
+                <p>VOLUNTARIOS ACTIVOS</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Plan de Trabajo 2.0 (Buscador) -->
+    <section id="propuestas" class="proposals-rc section-padding bg-white">
+        <div class="container-rc text-center mb-60">
+            <span class="badge-rc bg-red">CONTRATO SOCIAL</span>
+            <h2 class="title-rc mt-20">Plan de Trabajo <span class="text-navy">2.0</span></h2>
+            <p class="lead-rc">Filtra y conoce nuestras propuestas para transformar Montúfar.</p>
+            
+            <!-- Search & Filters -->
+            <div class="search-wrap-rc mt-40">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="proposal-search" placeholder="Busca por palabra clave (ej: riego, seguridad)...">
+                </div>
+                <div class="filter-btns mt-30">
+                    <button class="filter-btn active" data-category="all">TODAS</button>
+                    <button class="filter-btn" data-category="agro">AGRO</button>
+                    <button class="filter-btn" data-category="seguridad">SEGURIDAD</button>
+                    <button class="filter-btn" data-category="salud">SALUD</button>
+                    <button class="filter-btn" data-category="vialidad">VIALIDAD</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-rc">
+            <div class="proposals-grid-rc" id="proposals-container">
+                <!-- Se cargará dinámicamente vía JS -->
+            </div>
+            
+            <div class="text-center mt-60">
+                <a href="#" class="btn-rc btn-navy btn-huge-icon shadow-huge">
+                    <i class="fas fa-file-pdf"></i> DESCARGAR PLAN COMPLETO (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Trayectoria (Timeline) Section -->
+    <section id="perfil" class="timeline-rc section-padding bg-light-gray">
+        <div class="container-rc text-center mb-60">
+            <span class="badge-rc bg-navy">NUESTRA HISTORIA</span>
+            <h2 class="title-rc mt-20">Trayectoria de <span class="text-cyan">Resultados</span></h2>
+            <div class="divider-rc mx-auto"></div>
+        </div>
+        <div class="container-rc">
+            <div class="main-timeline">
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-content rounded-40 shadow-soft">
+                        <span class="timeline-year">2010 - 2015</span>
+                        <h4>LIDERAZGO PROFESIONAL</h4>
+                        <p>Inicio de su trayectoria en el servicio público, destacándose por su compromiso con la ética y la eficiencia administrativa.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <div class="timeline-content rounded-40 shadow-soft">
+                        <span class="timeline-year">2016 - 2022</span>
+                        <h4>GESTIÓN CIUDADANA</h4>
+                        <p>Implementación de programas de apoyo a productores agrícolas en el Carchi, logrando un impacto real en la economía local.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-content rounded-40 shadow-soft">
+                        <span class="timeline-year">2023 - HORA</span>
+                        <h4>RENOVACIÓN MONTUFAREÑA</h4>
+                        <p>Liderazgo del movimiento ciudadano que busca transformar el futuro de Montúfar con propuestas modernas y reales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Territorial Map Section -->
+    <section id="territorio" class="map-section-rc section-padding bg-white">
+        <div class="container-rc text-center mb-60">
+            <span class="badge-rc bg-cyan">PRESENCIA REAL</span>
+            <h2 class="title-rc mt-20">Compromisos con el <span class="text-red">Territorio</span></h2>
+            <p>Haz clic en los marcadores para ver nuestra labor en cada rincón de Montúfar.</p>
+        </div>
+        <div class="container-rc">
+            <div id="map-montufar" class="map-container-rc shadow-huge" data-aos="zoom-in"></div>
+        </div>
+    </section>
+
+
+    <!-- FAQ Section -->
+    <section class="faq-rc bg-light-gray section-padding">
+        <div class="container-rc">
+            <div class="grid-two-cols gap-huge align-center">
+                <div class="faq-head" data-aos="fade-right">
+                    <h2 class="title-rc">Preguntas <span class="text-navy">Frecuentes</span></h2>
+                    <p class="lead-rc">Todo lo que necesitas saber sobre el Dr. Robles y su visión para Montúfar.</p>
+                    <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" class="mt-40 rounded-40" style="height: 300px; width: 300px; object-fit: contain;">
+                </div>
+                <div class="faq-list" data-aos="fade-left">
+                    <div class="faq-item active">
+                        <div class="faq-question">¿Quién es Fabián Robles? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Es un montufareño de cepa, profesional con amplia experiencia en gestión pública y compromiso social, decidido a renovar la política de nuestro cantón.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">¿Cómo mejorará la seguridad? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Implementaremos el Plan "Escudo Ciudadano", integrando tecnología de vigilancia de punta y fortaleciendo los lazos entre la policía y la comunidad.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">¿Qué pasará con el sector agrícola? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Crearemos la Secretaría Técnica del Campo para asegurar insumos a bajo costo, maquinaria permanente y canales directos de venta.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Connect Section -->
+    <section class="social-wall-rc section-padding bg-light-gray" style="border-top: 1px solid rgba(0,0,0,0.05);">
+        <div class="container-rc text-center mb-60">
+            <h2 class="title-rc">SÍGUENOS EN <span class="text-cyan">REDES</span></h2>
+            <p>Súmate a la conversación diaria y no te pierdas nada.</p>
+        </div>
+        <div class="container-rc grid-four-cols gap-30">
+            <a href="https://www.facebook.com/profile.php?id=61577214624568" target="_blank" class="social-card fb-card" data-aos="zoom-in">
+                <i class="fab fa-facebook-f"></i>
+                <span>FACEBOOK <br>OFICIAL</span>
+            </a>
+            <a href="https://www.tiktok.com/@fabin.robles2?_r=1&_t=ZS-95Zirb9raev" target="_blank" class="social-card tt-card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fab fa-tiktok"></i>
+                <span>TIKTOK <br>CAMPAÑA</span>
+            </a>
+            <a href="https://wa.me/593987851539?text=Quiero%20formar%20parte%20de%20su%20equipo" target="_blank" class="social-card wa-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fab fa-whatsapp"></i>
+                <span>WHATSAPP <br>DIRECTO</span>
+            </a>
+            <a href="multimedia.html" class="social-card mm-card" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-photo-video"></i>
+                <span>GALERÍA Y <br>VIDEOS</span>
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Big Action Banner -->
+
+    <section class="banner-rc bg-red">
+        <div class="container-rc text-center">
+            <h2 class="banner-title text-white">¡ES EL MOMENTO DE <br>LA RENOVACIÓN!</h2>
+            <p class="banner-sub text-white">ÚNETE AL EQUIPO QUE SÍ TRABAJA POR MONTÚFAR.</p>
+            <a href="#contacto" class="btn-rc btn-white-action mt-40">QUIERO SER VOLUNTARIO</a>
+        </div>
+    </section>
+
+    <!-- News Grid -->
+    <section id="noticias" class="news-rc section-padding">
+        <div class="container-rc mb-40">
+            <h2 class="title-rc">ÚLTIMAS <span class="text-navy">NOTICIAS</span></h2>
+        </div>
+        <div class="container-rc grid-three-cols gap-40">
+            <article class="news-card-rc rounded-40 overflow-hidden shadow-soft" data-aos="fade-up">
+                <img src="https://images.unsplash.com/photo-1540910419892-f0c7cc2b4d36?auto=format&fit=crop&w=800" alt="News 1" class="news-img">
+                <div class="p-40">
+                    <span class="date-rc">Abril 15, 2026</span>
+                    <h4>Caminata histórica en San Gabriel</h4>
+                    <a href="#" class="more-link">VER MÁS <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            <article class="news-card-rc rounded-40 overflow-hidden shadow-soft" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800" alt="News 2" class="news-img">
+                <div class="p-40">
+                    <span class="date-rc">Abril 12, 2026</span>
+                    <h4>Compromiso con el sector lácteo</h4>
+                    <a href="#" class="more-link">VER MÁS <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            <article class="news-card-rc rounded-40 overflow-hidden shadow-soft" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800" alt="News 3" class="news-img">
+                <div class="p-40">
+                    <span class="date-rc">Abril 08, 2026</span>
+                    <h4>Plan joven de emprendimiento</h4>
+                    <a href="#" class="more-link">VER MÁS <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Contact Block (RC Style) -->
+    <section id="contacto" class="contact-rc section-padding bg-navy">
+        <div class="container-rc grid-two-cols gap-huge align-center">
+            <div class="contact-text text-white" data-aos="fade-right">
+                <h2 class="title-rc text-white">TU OPINIÓN <br><span class="text-cyan">ES NUESTRA GUÍA</span></h2>
+                <p class="lead-rc">Queremos construir un Montúfar basado en tus necesidades reales. Escríbenos y sé parte del cambio.</p>
+                <div class="social-rc mt-40">
+                    <a href="https://www.facebook.com/profile.php?id=61577214624568" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://wa.me/593987851539?text=Quiero%20formar%20parte%20de%20su%20equipo" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@fabin.robles2?_r=1&_t=ZS-95Zirb9raev" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+
+            </div>
+            <div class="contact-form-rc p-60 bg-white rounded-40 shadow-huge" data-aos="fade-left">
+                <form id="contact-form">
+                    <input type="text" placeholder="TU NOMBRE" class="input-rc" required>
+                    <input type="email" placeholder="TU EMAIL" class="input-rc" required>
+                    <textarea placeholder="¿CUÁL ES TU PROPUESTA PARA MONTÚFAR?" class="input-rc" rows="5" required></textarea>
+                    <button type="submit" class="btn-rc btn-cyan-action btn-block mt-20">ENVIAR AHORA</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

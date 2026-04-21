@@ -34,7 +34,33 @@
 
     <!-- Header / Navbar -->
     <nav class="nav-rc" id="main-nav">
-        <div class="container-rc flex-row justify-between align-center">
+        <!-- Attention Modal -->
+        <div id="attention-modal" class="attention-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
+                <h2 id="modal-title">¡ÚNETE AHORA!</h2>
+                <p>¿Quieres ser voluntario o recibir novedades del Dr. Robles? Sé el primero en enterarte.</p>
+                <div class="modal-actions">
+                    <a href="#contacto" class="btn-rc btn-red">QUIERO PARTICIPAR</a>
+                    <a href="https://wa.me/593987851539?text=Quiero%20formar%20parte%20de%20su%20equipo" class="btn-rc btn-navy" target="_blank">CONTACTO RÁPIDO</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky CTA bar -->
+        <div id="sticky-cta" class="sticky-cta" aria-hidden="false">
+            <div class="sticky-inner container-rc">
+                <div class="sticky-text">¡Apoya a Fabián Robles! Únete como voluntario.</div>
+                <div class="sticky-actions">
+                    <a href="#contacto" class="btn-rc btn-white-action">SÚMATE</a>
+                    <a href="https://wa.me/593987851539?text=Quiero%20formar%20parte%20de%20su%20equipo" class="btn-rc btn-cyan-action" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <button id="share-btn" class="btn-rc btn-outline-navy" aria-label="Compartir"><i class="fas fa-share-alt"></i></button>
+                </div>
+                <button id="sticky-close" class="sticky-close" aria-label="Cerrar anuncio">×</button>
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
             <div class="logo-box">
                 <a href="#home">
                     <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo Robles" class="nav-logo">
@@ -111,11 +137,11 @@
         </div>
     </section>
 
-    <!-- Plan de Trabajo 2.0 (Buscador) -->
+    <!-- Plan de Trabajo  (Buscador) -->
     <section id="propuestas" class="proposals-rc section-padding bg-white">
         <div class="container-rc text-center mb-60">
             <span class="badge-rc bg-red">CONTRATO SOCIAL</span>
-            <h2 class="title-rc mt-20">Plan de Trabajo <span class="text-navy">2.0</span></h2>
+            <h2 class="title-rc mt-20">Plan de Trabajo <span class="text-navy"></span></h2>
             <p class="lead-rc">Filtra y conoce nuestras propuestas para transformar Montúfar.</p>
             
             <!-- Search & Filters -->

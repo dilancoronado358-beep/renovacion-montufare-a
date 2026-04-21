@@ -1137,3 +1137,92 @@ textarea.input-rc {
     color: #555;
     margin-top: 10px;
 }
+
+/* Attention Modal */
+.attention-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 4000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.28s ease;
+}
+
+.attention-modal[aria-hidden="false"], .attention-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.attention-modal .modal-content {
+    background: var(--white);
+    padding: 36px;
+    border-radius: 18px;
+    max-width: 560px;
+    width: calc(100% - 40px);
+    text-align: center;
+    box-shadow: var(--shadow-huge);
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--navy);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.modal-actions .btn-rc { padding: 12px 22px; }
+
+/* Sticky CTA bar */
+.sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 3500;
+    display: flex;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.sticky-inner {
+    background: rgba(29, 43, 77, 0.95);
+    color: var(--white);
+    padding: 12px 18px;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-huge);
+    max-width: 1100px;
+    width: calc(100% - 40px);
+}
+
+.sticky-text { font-weight: 900; margin-right: 10px; }
+.sticky-actions { display: flex; gap: 10px; align-items: center; }
+.sticky-close { background: transparent; border: none; color: var(--white); font-size: 1.4rem; margin-left: 12px; cursor: pointer; }
+
+@media (max-width: 700px) {
+    .sticky-inner { flex-direction: column; gap: 10px; padding: 14px; text-align: center; }
+    .sticky-text { font-size: 0.95rem; }
+    .sticky-actions .btn-rc { padding: 10px 14px; }
+}
+
+/* Small helper for share button */
+.btn-outline-navy { border: 2px solid var(--navy); color: var(--navy); background: transparent; }

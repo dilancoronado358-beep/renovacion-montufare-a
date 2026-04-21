@@ -269,5 +269,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-});
+        // --- ATTENTION MODAL & STICKY CTA ---
+        const modal = document.getElementById('attention-modal');
+        const modalClose = document.getElementById('modal-close');
+        const sticky = document.getElementById('sticky-cta');
+        const stickyClose = document.getElementById('sticky-close');
+        const shareBtn = document.getElementById('share-btn');
+
+        const showModalOnce = () => {
+            if (!modal) return;
+            try {
+                const shown = localStorage.getItem('modal_shown_v1');
+                if (!shown) {
+                    setTimeout(() => {
+                        modal.setAttribute('aria-hidden', 'false');
+                        modal.classList.add('active');
+                    }, 900);
+                    localStorage.setItem('modal_shown_v1', '1');
+                }
+            } catch (e) { /* ignore storage errors */ }
+        };
+
+        if (modal && modalClose) {
+            modalClose.addEventListener('click', () => {
+                modal.setAttribute('aria-hidden', 'true');
+                modal.classList.remove('active');
+            });
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.setAttribute('aria-hidden', 'true');
+                    modal.classList.remove('active');
+                }
+            });
+            showModalOnce();
+        }
+
+        if (sticky && stickyClose) {
+            stickyClose.addEventListener('click', () => {
+                sticky.style.display = 'none';
+                try { localStorage.setItem('sticky_closed_v1', '1'); } catch (e) {}
+            });
+            if (localStorage.getItem('sticky_closed_v1')) {
+                sticky.style.display = 'none';
+            }
+        }
+
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const shareData = { title: document.title, text: 'Apoya a Fabián Robles en Montúfar', url: location.href };
+                if (navigator.share) {
+                    try { await navigator.share(shareData); } catch (e) { /* canceled */ }
+                } else if (navigator.clipboard) {
+                    try {
+                        await navigator.clipboard.writeText(location.href);
+                        alert('Enlace copiado. ¡Compártelo con tus contactos!');
+                    } catch (e) {
+                        // fallback alert
+                        alert('Copia este enlace y compártelo: ' + location.href);
+                    }
+                } else {
+                    alert('Comparte esta URL: ' + location.href);
+                }
+            });
+        }
+
+    });
 

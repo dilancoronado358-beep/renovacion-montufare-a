@@ -59,12 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             
+            console.log("Intento de login:", { data, error }); // Para diagnóstico
+
             if (error) {
                 // Si hay error en las credenciales (Supabase puede enviar varios tipos de mensajes)
                 if (error.message.toLowerCase().includes('credential') || error.message.toLowerCase().includes('invalid')) {
                     errorEl.innerText = 'Error: Credenciales incorrectas. Asegúrate de usar dilancoronado358@gmail.com y Dilan123';
                 } else {
-                    errorEl.innerText = 'Error del sistema: ' + error.message;
+                    errorEl.innerText = 'Error de Supabase: ' + error.message;
                 }
                 errorEl.style.display = 'block';
             } else if (data && data.session) {
@@ -74,10 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // Si entra aquí es porque el usuario existe pero falta marcar la opción "Auto Confirm" en Supabase
                 errorEl.innerText = 'Atención: Tu usuario NO está confirmado en Supabase.';
+                alert('Atención: Tu usuario NO está confirmado en Supabase.');
                 errorEl.style.display = 'block';
             }
         } catch (err) {
             errorEl.innerText = 'Error crítico de conexión: ' + err.message;
+            alert('Error crítico de conexión: ' + err.message);
             errorEl.style.display = 'block';
         } finally {
             // 2. Restaurar botón siempre, sin importar lo que pase

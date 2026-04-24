@@ -186,7 +186,7 @@ h4,
 /* Navbar RC */
 .nav-rc {
     background: var(--white);
-    padding: 10px 0;
+    padding: 8px 0; /* Reduced padding */
     position: fixed;
     width: 100%;
     top: 0;
@@ -197,6 +197,24 @@ h4,
 
 .nav-rc.nav-hidden {
     transform: translateY(-100%);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menu-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.mobile-btn {
+    margin-left: auto;
 }
 
 

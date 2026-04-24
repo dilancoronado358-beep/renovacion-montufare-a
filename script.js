@@ -225,8 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial Render
-    renderProposals();
+    // No initial render - wait for user interaction
 
 
     // --- TERRITORIAL MAP INITIALIZATION ---

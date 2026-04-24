@@ -12,28 +12,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = document.getElementById('logout-btn');
     const proposalForm = document.getElementById('proposal-form');
 
-    // --- 1. GESTIÓN DE AUTENTICACIÓN ---
-    // Verificar sesión al cargar
-    supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-            showDashboard();
+    // Protector global de errores de Javascript
+    window.onerror = function(msg) {
+        const errorEl = document.getElementById('login-error');
+        if (errorEl) {
+            errorEl.innerText = "Error del navegador: " + msg;
+            errorEl.style.display = 'block';
         }
-    });
+    };
 
-    // Escuchar cambios de autenticación
-    supabase.auth.onAuthStateChange((_event, session) => {
-        if (session) {
-            showDashboard();
-        } else {
-            showLogin();
-        }
-    });
+    // --- 1. GESTIÓN DE AUTENTICACIÓN ---
+    try {
+        // Verificar sesión al cargar
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session) {
+                showDashboard();
+            }
+        });
+
+        // Escuchar cambios de autenticación
+        supabase.auth.onAuthStateChange((_event, session) => {
+            if (session) showDashboard();
+            else showLogin();
+        });
+    } catch (e) {
+        console.error("Supabase no pudo inicializarse correctamente:", e);
+    }
 
     // Login Submit
+    if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('admin-email').value;
-        const password = document.getElementById('admin-pass').value;
+        // El .trim() elimina espacios en blanco accidentales que dañan el login
+        const email = document.getElementById('admin-email').value.trim();
+        const password = document.getElementById('admin-pass').value.trim();
         const errorEl = document.getElementById('login-error');
         const submitBtn = loginForm.querySelector('button[type="submit"]');
 
@@ -50,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (error) {
                 // Si hay error en las credenciales (Supabase puede enviar varios tipos de mensajes)
                 if (error.message.toLowerCase().includes('credential') || error.message.toLowerCase().includes('invalid')) {
-                    errorEl.innerText = 'Error: El correo o la contraseña son incorrectos. Por favor, verifica tus datos.';
+                    errorEl.innerText = 'Error: Credenciales incorrectas. Asegúrate de usar dilancoronado358@gmail.com y Dilan123';
                 } else {
                     errorEl.innerText = 'Error del sistema: ' + error.message;
                 }
@@ -61,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showDashboard();
             } else {
                 // Si entra aquí es porque el usuario existe pero falta marcar la opción "Auto Confirm" en Supabase
-                errorEl.innerText = 'Atención: Tu usuario existe pero NO está confirmado. Ve a Supabase -> Authentication -> Users, borra tu usuario y vuelve a crearlo ASEGURÁNDOTE de marcar la casilla "Auto Confirm User".';
+                errorEl.innerText = 'Atención: Tu usuario NO está confirmado en Supabase.';
                 errorEl.style.display = 'block';
             }
         } catch (err) {
@@ -73,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = false;
         }
     });
+    }
 
     // Logout
     logoutBtn.addEventListener('click', async () => {

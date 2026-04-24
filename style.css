@@ -288,7 +288,7 @@ h4,
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #0B1930 0%, #1D2B4D 50%, #38B6FF 100%);
+    background: linear-gradient(135deg, #205A97 0%, #38B6FF 100%);
     position: relative;
     overflow: hidden;
 }

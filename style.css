@@ -354,19 +354,23 @@ h4,
 
 .hero-img {
     width: 100%;
+    max-width: 400px;
     height: auto;
-    border-radius: 50% 50% 0 50%;
-    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.2);
-    border: 10px solid var(--white);
-    background-color: var(--white);
     object-fit: contain;
 }
 
 .hero-name-img {
+    width: 100%;
     max-width: 400px;
     height: auto;
-    margin: 20px 0;
     object-fit: contain;
+}
+
+.hero-img-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 /* Countdown */
@@ -1266,8 +1270,15 @@ textarea.input-rc {
     }
 
     .hero-img {
-        border-radius: 0;
-        object-fit: contain;
+        max-width: 300px;
+    }
+
+    .hero-name-img {
+        max-width: 300px;
+    }
+
+    .hero-img-box {
+        gap: 15px;
     }
 
     .countdown-timer {
@@ -1527,8 +1538,16 @@ textarea.input-rc {
         left: 8px;
     }
 
+    .hero-img {
+        max-width: 250px;
+    }
+
     .hero-name-img {
         max-width: 250px;
+    }
+
+    .hero-img-box {
+        gap: 10px;
     }
 
     .faq-head img {

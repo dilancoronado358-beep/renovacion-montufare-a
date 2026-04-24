@@ -359,7 +359,7 @@ h4,
     box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.2);
     border: 10px solid var(--white);
     background-color: var(--white);
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .hero-name-img {
@@ -1266,8 +1266,8 @@ textarea.input-rc {
     }
 
     .hero-img {
-        max-width: 300px;
-        margin: 0 auto;
+        border-radius: 0;
+        object-fit: contain;
     }
 
     .countdown-timer {

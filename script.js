@@ -1,3 +1,8 @@
+// =========================================
+// CONFIGURACIÓN DE SUPABASE (PÚBLICO)
+// =========================================
+const _supabase = window.supabase ? window.supabase.createClient('https://TU_SUPABASE_URL.supabase.co', 'TU_SUPABASE_ANON_KEY') : null;
+
 document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.getElementById('mobile-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -165,21 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- PROPOSALS 2.0: SEARCH & FILTER ---
-    const proposalsData = [
-        { id: 1, category: 'agro', title: 'SECRETARÍA TÉCNICA DEL CAMPO', desc: 'Asistencia técnica, insumos a bajo costo y maquinaria permanente para nuestros agricultores.' },
-        { id: 2, category: 'seguridad', title: 'PLAN ESCUDO CIUDADANO', desc: 'Cámaras de vigilancia 360°, drones de patrullaje rural y alarmas comunitarias conectadas.' },
-        { id: 3, category: 'salud', title: 'MEDICINA A TU ALCANCE', desc: 'Clínicas móviles para las 9 parroquias rurales y abastecimiento total de dispensarios locales.' },
-        { id: 4, category: 'vialidad', title: 'CAMINOS DE PROGRESO', desc: 'Mantenimiento vial permanente de vías vecinales para sacar la producción sin demoras.' },
-        { id: 5, category: 'agro', title: 'BANCO DE SEMILLAS', desc: 'Rescate de semillas ancestrales y distribución de semillas certificadas para mejorar el rendimiento.' },
-        { id: 6, category: 'seguridad', title: 'MONTÚFAR ALERTA', desc: 'APP ciudadana de respuesta inmediata ante emergencias y botones de pánico comerciales.' },
-        { id: 7, category: 'salud', title: 'ATENCIÓN GERIÁTRICA', desc: 'Programa de visitas médicas domiciliarias gratuitas para nuestros adultos mayores.' },
-        { id: 8, category: 'vialidad', title: 'PUENTES DE UNIÓN', desc: 'Reconstrucción estratégica de puentes rurales para conectar comunidades aisladas.' },
-        { id: 9, category: 'agro', title: 'FERIA DEL PRODUCTOR', desc: 'Creación de mercados directos del productor al consumidor, eliminando intermediarios.' },
-        { id: 10, category: 'seguridad', title: 'ILUMINACIÓN TOTAL', desc: 'Recuperación de espacios públicos mediante iluminación LED en parques y zonas oscuras.' },
-        { id: 11, category: 'salud', title: 'SALUD ODONTOLÓGICA', desc: 'Unidades odontológicas móviles para escuelas rurales de todo el cantón Montúfar.' },
-        { id: 12, category: 'vialidad', title: 'ASFALTADO URBANO', desc: 'Plan intensivo de bacheo y asfaltado en la cabecera cantonal y centros parroquiales.' }
-    ];
-
+    let proposalsData = []; // Se cargará dinámicamente
+    
     const proposalsContainer = document.getElementById('proposals-container');
     const searchInput = document.getElementById('proposal-search');
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -192,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const filtered = proposalsData.filter(p => {
             const matchesFilter = filter === 'all' || p.category === filter;
             const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                                 p.desc.toLowerCase().includes(searchTerm.toLowerCase());
+                                 p.desc_text.toLowerCase().includes(searchTerm.toLowerCase());
             return matchesFilter && matchesSearch;
         });
 
@@ -203,10 +195,25 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <span class="prop-badge bg-${p.category}">${p.category}</span>
                 <h4>${p.title}</h4>
-                <p>${p.desc}</p>
+                <p>${p.desc_text}</p>
             `;
             proposalsContainer.appendChild(card);
         });
+    };
+
+    // Cargar propuestas desde Supabase
+    const fetchProposals = async () => {
+        if (!_supabase || !proposalsContainer) return;
+        
+        const { data, error } = await _supabase
+            .from('propuestas')
+            .select('*')
+            .eq('is_active', true); // Solo cargar las que estén activas
+            
+        if (data) {
+            proposalsData = data;
+            renderProposals(); // Renderizar una vez cargados los datos
+        }
     };
 
     // Listeners for Search & Filter
@@ -225,7 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // No initial render - wait for user interaction
+    // Ejecutar fetch al inicio
+    fetchProposals();
 
 
     // --- TERRITORIAL MAP INITIALIZATION ---
@@ -333,4 +341,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     });
-

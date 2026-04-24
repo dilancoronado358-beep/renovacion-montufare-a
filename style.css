@@ -1693,3 +1693,55 @@ textarea.input-rc {
 .bio-text p:last-child {
     margin-bottom: 0;
 }
+
+/* =========================================
+   ADMIN PANEL STYLES
+   ========================================= */
+.admin-body {
+    background-color: var(--gray-light);
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+}
+
+.admin-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.admin-sidebar {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.admin-nav a:hover, .admin-nav a.active {
+    background: var(--cyan);
+    color: var(--white);
+}
+
+.admin-content {
+    flex: 1;
+    overflow-y: auto;
+}

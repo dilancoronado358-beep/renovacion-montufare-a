@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Dr. Fabián Robles</title>
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-light-gray admin-body">
+
+    <!-- LOGIN VIEW -->
+    <div id="login-view" class="login-container">
+        <div class="login-box bg-white shadow-huge rounded-40 p-40 text-center">
+            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo" style="max-height: 60px; margin-bottom: 20px;">
+            <h2 class="text-navy" style="font-family: 'Archivo Black'; margin-bottom: 20px;">ACCESO PRIVADO</h2>
+            <form id="login-form" class="flex-col" style="gap: 15px;">
+                <input type="email" id="admin-email" placeholder="Correo electrónico" class="input-rc" required>
+                <input type="password" id="admin-pass" placeholder="Contraseña" class="input-rc" required>
+                <button type="submit" class="btn-rc btn-navy btn-block mt-20">INICIAR SESIÓN</button>
+                <p id="login-error" class="text-red" style="display:none; margin-top: 10px; font-weight: bold;"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="dashboard-view" class="admin-layout" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar bg-navy text-white p-40">
+            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo" style="max-height: 50px; margin-bottom: 40px; filter: brightness(0) invert(1);">
+            <nav class="admin-nav flex-col" style="gap: 20px;">
+                <a href="#hero" class="active"><i class="fas fa-home"></i> Hero Principal</a>
+                <a href="#proposals"><i class="fas fa-list-check"></i> Propuestas</a>
+                <a href="#news"><i class="fas fa-newspaper"></i> Noticias</a>
+                <a href="#settings"><i class="fas fa-cog"></i> Contacto / Redes</a>
+            </nav>
+            <button id="logout-btn" class="btn-rc btn-red btn-block" style="margin-top: auto; padding: 10px;"><i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN</button>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="admin-content p-40">
+            <h1 class="title-rc text-navy mb-40">Gestión de <span class="text-cyan">Propuestas</span></h1>
+            
+            <!-- Formulario Propuestas -->
+            <div class="bg-white p-40 rounded-40 shadow-soft mb-40">
+                <h3 class="mb-20">Agregar Nueva Propuesta</h3>
+                <form id="proposal-form" class="grid-two-cols align-center">
+                    <select id="prop-cat" class="input-rc" required>
+                        <option value="agro">Agro</option>
+                        <option value="seguridad">Seguridad</option>
+                        <option value="salud">Salud</option>
+                        <option value="vialidad">Vialidad</option>
+                    </select>
+                    <input type="text" id="prop-title" placeholder="Título de la propuesta" class="input-rc" required>
+                    <textarea id="prop-desc" placeholder="Descripción..." class="input-rc" style="grid-column: span 2;" rows="3" required></textarea>
+                    <button type="submit" class="btn-rc btn-cyan-action" style="grid-column: span 2;">GUARDAR PROPUESTA</button>
+                </form>
+            </div>
+
+            <!-- Lista de Propuestas Actuales -->
+            <div class="bg-white p-40 rounded-40 shadow-soft">
+                <h3 class="mb-20">Propuestas Activas</h3>
+                <div id="admin-proposals-list" class="flex-col" style="gap: 15px;">
+                    <!-- Cargado dinámicamente -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Supabase JS & Custom Admin JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -391,7 +391,8 @@ h4,
 .hero-img-box {
     flex: 1 1 50%;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     position: relative;
     z-index: 5;
@@ -440,6 +441,30 @@ h4,
     display: block;
     position: relative;
     z-index: 2;
+}
+
+.hero-candidate-name {
+    text-align: center;
+    z-index: 10;
+}
+
+.hero-candidate-name h3 {
+    font-size: 2.8rem;
+    color: var(--white);
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.hero-candidate-name span {
+    font-size: 1.3rem;
+    color: var(--cyan);
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    display: block;
+    margin-top: 5px;
 }
 
 /* Countdown */
@@ -1352,6 +1377,15 @@ textarea.input-rc {
 
     .hero-portrait-frame {
         max-width: 320px;
+    }
+
+    .hero-candidate-name h3 {
+        font-size: 2.2rem;
+    }
+
+    .hero-candidate-name span {
+        font-size: 1.1rem;
+        letter-spacing: 3px;
     }
 
     .hero-actions {

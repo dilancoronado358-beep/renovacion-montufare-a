@@ -279,7 +279,7 @@ h4,
 
 /* Hero */
 .hero-rc {
-    padding: 140px 0;
+    padding: 100px 0;
     min-height: 80vh;
     display: flex;
     align-items: center;
@@ -1270,15 +1270,17 @@ textarea.input-rc {
     }
 
     .hero-img {
-        max-width: 250px;
+        width: 70vw;
+        max-width: none;
     }
 
     .hero-name-img {
-        max-width: 250px;
+        width: 70vw;
+        max-width: none;
     }
 
     .hero-img-box {
-        gap: 5px;
+        gap: 10px;
     }
 
     .countdown-timer {
@@ -1444,7 +1446,7 @@ textarea.input-rc {
     }
 
     .hero-rc {
-        padding: 100px 0 60px;
+        padding: 60px 0;
     }
 
     .hero-title {
@@ -1539,11 +1541,13 @@ textarea.input-rc {
     }
 
     .hero-img {
-        max-width: 200px;
+        width: 80vw;
+        max-width: none;
     }
 
     .hero-name-img {
-        max-width: 200px;
+        width: 80vw;
+        max-width: none;
     }
 
     .hero-img-box {

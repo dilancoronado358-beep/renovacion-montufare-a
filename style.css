@@ -219,6 +219,7 @@ h4,
 
 .nav-logo {
     height: 120px;
+    max-width: 100%;
     transition: var(--transition);
 }
 
@@ -362,7 +363,6 @@ h4,
 }
 
 .hero-name-img {
-    width: 100%;
     max-width: 400px;
     height: auto;
     margin: 20px 0;
@@ -794,7 +794,7 @@ textarea.input-rc {
     flex-shrink: 0;
 }
 
-.nav-logo { height: 100px; }
+.nav-logo { height: 100px; max-width: 100%; }
     .hero-title { font-size: 2.8rem; line-height: 1.2; }
     .hero-subtext { font-size: 1.1rem; }
     .p-80 { padding: 40px 20px; }
@@ -1361,6 +1361,7 @@ textarea.input-rc {
 
     .nav-logo {
         height: 80px;
+        max-width: 100%;
     }
 
     .title-rc {
@@ -1407,6 +1408,10 @@ textarea.input-rc {
 
     .hero-name-img {
         max-width: 300px;
+    }
+
+    .main-timeline {
+        max-width: 100%;
     }
 
     .banner-title {
@@ -1520,10 +1525,6 @@ textarea.input-rc {
     .right::after,
     .left::after {
         left: 8px;
-    }
-
-    .timeline-content {
-        padding: 20px;
     }
 
     .hero-name-img {

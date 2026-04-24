@@ -48,18 +48,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             
             if (error) {
-                // Traducción de errores comunes para más claridad
-                if (error.message.includes('Invalid login')) {
-                    errorEl.innerText = 'Error: Correo o contraseña incorrectos.';
-                } else if (error.message.includes('Email not confirmed')) {
-                    errorEl.innerText = 'Error: Debes confirmar tu correo en Supabase. Ve a Authentication -> Users y asegúrate de que el usuario esté confirmado.';
+                // Si hay error en las credenciales (Supabase puede enviar varios tipos de mensajes)
+                if (error.message.toLowerCase().includes('credential') || error.message.toLowerCase().includes('invalid')) {
+                    errorEl.innerText = 'Error: El correo o la contraseña son incorrectos. Por favor, verifica tus datos.';
                 } else {
-                    errorEl.innerText = 'Error: ' + error.message;
+                    errorEl.innerText = 'Error del sistema: ' + error.message;
                 }
                 errorEl.style.display = 'block';
             } else if (data && data.session) {
                 // Login exitoso
+                document.getElementById('admin-pass').value = ''; // Limpiar contraseña por seguridad
                 showDashboard();
+            } else {
+                // Si entra aquí es porque el usuario existe pero falta marcar la opción "Auto Confirm" en Supabase
+                errorEl.innerText = 'Atención: Tu usuario existe pero NO está confirmado. Ve a Supabase -> Authentication -> Users, borra tu usuario y vuelve a crearlo ASEGURÁNDOTE de marcar la casilla "Auto Confirm User".';
+                errorEl.style.display = 'block';
             }
         } catch (err) {
             errorEl.innerText = 'Error crítico de conexión: ' + err.message;

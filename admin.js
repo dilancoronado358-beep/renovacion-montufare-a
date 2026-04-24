@@ -35,11 +35,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('admin-email').value;
         const password = document.getElementById('admin-pass').value;
         const errorEl = document.getElementById('login-error');
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+        // 1. Mostrar estado de carga
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'VERIFICANDO...';
+        submitBtn.disabled = true;
 
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         
+        // 2. Restaurar botón
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+
         if (error) {
-            errorEl.innerText = 'Error: Credenciales incorrectas.';
+            // Mostrar el error exacto que envía Supabase
+            errorEl.innerText = 'Error: ' + (error.message === 'Invalid login credentials' ? 'Credenciales incorrectas' : error.message);
+            errorEl.style.display = 'block';
+        } else if (data.session) {
+            errorEl.style.display = 'none';
+            showDashboard();
+        } else {
+            errorEl.innerText = 'Error: Tu cuenta necesita confirmación en Supabase.';
             errorEl.style.display = 'block';
         }
     });
@@ -67,7 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const { data, error } = await supabase.from('propuestas').select('*').order('id', { ascending: false });
         
-        if (data) {
+        if (error) {
+            container.innerHTML = `<p class="text-red">Error al conectar con la base de datos: ${error.message}</p>`;
+            return;
+        }
+
+        if (data && data.length > 0) {
             container.innerHTML = '';
             data.forEach(p => {
                 const div = document.createElement('div');
@@ -82,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 container.appendChild(div);
             });
+        } else {
+            container.innerHTML = '<p>No hay propuestas registradas. Agrega una usando el formulario superior.</p>';
         }
     }
 

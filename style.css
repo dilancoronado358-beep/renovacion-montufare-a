@@ -412,14 +412,17 @@ h4,
     z-index: -2;
 }
 
-.hero-portrait-circle {
+.hero-portrait-frame {
     width: 100%;
-    max-width: 500px;
-    aspect-ratio: 1 / 1;
-    background: linear-gradient(135deg, rgba(56, 182, 255, 0.5) 0%, rgba(11, 25, 48, 0.95) 100%);
-    border-radius: 50%;
-    border: 6px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    max-width: 460px;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(180deg, rgba(56, 182, 255, 0.15) 0%, rgba(11, 25, 48, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 250px 250px 25px 25px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 5px solid var(--cyan);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     overflow: hidden;
     display: flex;
     align-items: flex-end;
@@ -429,16 +432,14 @@ h4,
 }
 
 .hero-img-dominant {
-    width: 85%;
-    height: auto;
-    max-height: 100%;
+    width: 92%;
+    height: 95%;
     object-fit: contain;
-    object-position: bottom;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+    object-position: bottom center;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.8));
     display: block;
     position: relative;
     z-index: 2;
-    transform: translateY(2%);
 }
 
 /* Countdown */
@@ -1349,13 +1350,8 @@ textarea.input-rc {
         width: 100%;
     }
 
-    .hero-portrait-circle {
+    .hero-portrait-frame {
         max-width: 320px;
-        border-width: 4px;
-    }
-
-    .hero-img-dominant {
-        width: 90%;
     }
 
     .hero-actions {

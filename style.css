@@ -1345,6 +1345,54 @@ textarea.input-rc {
     .lead-rc {
         font-size: 1.3rem;
     }
+
+    /* Ajustes adicionales */
+    .grid-two-cols {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .main-timeline::after {
+        left: 30px;
+        margin-left: 0;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 80px;
+        padding-right: 20px;
+    }
+
+    .timeline-item::after {
+        left: 18px;
+        right: auto;
+    }
+
+    .right::after {
+        left: 18px;
+    }
+
+    .left::after {
+        left: 18px;
+    }
+
+    .timeline-content {
+        padding: 30px;
+    }
+
+    .faq-head img {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+    }
+
+    .banner-title {
+        font-size: 2rem;
+    }
+
+    .banner-sub {
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1428,6 +1476,31 @@ textarea.input-rc {
 
     .social-card span {
         font-size: 1rem;
+    }
+
+    .timeline-item {
+        padding-left: 60px;
+    }
+
+    .main-timeline::after {
+        left: 20px;
+    }
+
+    .timeline-item::after {
+        left: 8px;
+    }
+
+    .right::after,
+    .left::after {
+        left: 8px;
+    }
+
+    .timeline-content {
+        padding: 20px;
+    }
+
+    .faq-head img {
+        max-width: 250px;
     }
 }
 

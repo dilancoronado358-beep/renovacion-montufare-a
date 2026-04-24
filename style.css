@@ -368,7 +368,7 @@ h4,
 
 .hero-img {
     width: 100%;
-    max-width: 300px;
+    max-width: 450px;
     height: auto;
     object-fit: contain;
     position: relative;
@@ -378,32 +378,33 @@ h4,
 .hero-img::before {
     content: '';
     position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 120%;
-    height: 120%;
-    background: rgba(255, 255, 255, 0.1);
+    top: -40px;
+    left: -40px;
+    width: 130%;
+    height: 130%;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 50%;
     z-index: -1;
-    filter: blur(10px);
+    filter: blur(15px);
 }
 
 .hero-name-img {
     width: 100%;
-    max-width: 250px;
+    max-width: 180px;
     height: auto;
     object-fit: contain;
     position: absolute;
-    bottom: -50px;
-    right: -50px;
+    bottom: 20px;
+    right: -20px;
     z-index: 1;
 }
 
 .hero-img-box {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
+    height: 100%;
 }
 
 /* Countdown */
@@ -1304,17 +1305,21 @@ textarea.input-rc {
 
     .hero-img {
         width: 70vw;
-        max-width: none;
+        max-width: 350px;
     }
 
     .hero-name-img {
-        width: 70vw;
-        max-width: none;
-        position: static;
+        width: 50vw;
+        max-width: 150px;
+        position: relative;
+        bottom: auto;
+        right: auto;
     }
 
     .hero-img-box {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
     }
 
@@ -1577,16 +1582,21 @@ textarea.input-rc {
 
     .hero-img {
         width: 80vw;
-        max-width: none;
+        max-width: 280px;
     }
 
     .hero-name-img {
-        width: 80vw;
-        max-width: none;
-        position: static;
+        width: 60vw;
+        max-width: 130px;
+        position: relative;
+        bottom: auto;
+        right: auto;
     }
 
     .hero-img-box {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 5px;
     }
 

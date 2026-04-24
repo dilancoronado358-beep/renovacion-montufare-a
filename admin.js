@@ -3,7 +3,7 @@
 // =========================================
 const SUPABASE_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginView = document.getElementById('login-view');
@@ -57,17 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 return; // Corta la función aquí y te deja entrar de inmediato
             }
 
-            // Consultar a nuestra tabla personalizada
-            const { data, error } = await supabase
-                .from('usuarios_admin')
-                .select('*')
-                .eq('email', email)
-                .eq('password', password);
-            
-            if (error) throw error;
+            let loginExitoso = false;
 
-            if (data && data.length > 0) {
-                // Login exitoso, guardamos sesión manual
+            if (supabase) {
+                const { data, error } = await supabase
+                    .from('usuarios_admin')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password', password);
+                
+                if (!error && data && data.length > 0) loginExitoso = true;
+            }
+
+            if (loginExitoso) {
                 localStorage.setItem('admin_session', 'true');
                 document.getElementById('admin-pass').value = '';
                 showDashboard();
@@ -109,6 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('admin-proposals-list');
         container.innerHTML = '<p>Cargando propuestas...</p>';
 
+        if (!supabase) {
+            container.innerHTML = `<p class="text-red">Error: Conexión a base de datos bloqueada por el navegador.</p>`;
+            return;
+        }
+
         const { data, error } = await supabase.from('propuestas').select('*').order('id', { ascending: false });
         
         if (error) {
@@ -139,6 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Agregar nueva propuesta
     proposalForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!supabase) {
+            alert('Error: Conexión a base de datos no disponible.');
+            return;
+        }
+
         const category = document.getElementById('prop-cat').value;
         const title = document.getElementById('prop-title').value;
         const desc_text = document.getElementById('prop-desc').value;

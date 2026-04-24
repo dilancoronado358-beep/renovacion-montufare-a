@@ -258,6 +258,23 @@ h4,
     border-radius: 50px;
 }
 
+.btn-login-nav {
+    background: transparent;
+    color: var(--navy) !important;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-login-nav:hover {
+    background: var(--navy) !important;
+    color: var(--white) !important;
+}
+
 /* WhatsApp */
 .whatsapp-btn {
     position: fixed;

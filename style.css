@@ -402,9 +402,19 @@ h4,
 .hero-img-box {
     position: relative;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.hero-img-final {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
 }
 
 /* Countdown */
@@ -1323,6 +1333,11 @@ textarea.input-rc {
         gap: 10px;
     }
 
+    .hero-img-final {
+        max-width: 90%;
+        border-radius: 30px;
+    }
+
     .countdown-timer {
         flex-direction: column;
         gap: 20px;
@@ -1598,6 +1613,12 @@ textarea.input-rc {
         justify-content: center;
         align-items: center;
         gap: 5px;
+    }
+
+    .hero-img-final {
+        max-width: 95%;
+        border-radius: 25px;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
     }
 
     .faq-head img {

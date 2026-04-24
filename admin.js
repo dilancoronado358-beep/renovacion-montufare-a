@@ -37,27 +37,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const errorEl = document.getElementById('login-error');
         const submitBtn = loginForm.querySelector('button[type="submit"]');
 
-        // 1. Mostrar estado de carga
+        // 1. Limpiar errores previos y mostrar estado de carga
+        errorEl.style.display = 'none';
+        errorEl.innerText = '';
         const originalText = submitBtn.innerText;
         submitBtn.innerText = 'VERIFICANDO...';
         submitBtn.disabled = true;
 
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        
-        // 2. Restaurar botón
-        submitBtn.innerText = originalText;
-        submitBtn.disabled = false;
-
-        if (error) {
-            // Mostrar el error exacto que envía Supabase
-            errorEl.innerText = 'Error: ' + (error.message === 'Invalid login credentials' ? 'Credenciales incorrectas' : error.message);
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                // Traducción de errores comunes para más claridad
+                if (error.message.includes('Invalid login')) {
+                    errorEl.innerText = 'Error: Correo o contraseña incorrectos.';
+                } else if (error.message.includes('Email not confirmed')) {
+                    errorEl.innerText = 'Error: Debes confirmar tu correo en Supabase. Ve a Authentication -> Users y asegúrate de que el usuario esté confirmado.';
+                } else {
+                    errorEl.innerText = 'Error: ' + error.message;
+                }
+                errorEl.style.display = 'block';
+            } else if (data && data.session) {
+                // Login exitoso
+                showDashboard();
+            }
+        } catch (err) {
+            errorEl.innerText = 'Error crítico de conexión: ' + err.message;
             errorEl.style.display = 'block';
-        } else if (data.session) {
-            errorEl.style.display = 'none';
-            showDashboard();
-        } else {
-            errorEl.innerText = 'Error: Tu cuenta necesita confirmación en Supabase.';
-            errorEl.style.display = 'block';
+        } finally {
+            // 2. Restaurar botón siempre, sin importar lo que pase
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
         }
     });
 

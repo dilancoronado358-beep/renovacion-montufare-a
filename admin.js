@@ -1,8 +1,8 @@
 // =========================================
 // CONFIGURACIÓN DE SUPABASE
 // =========================================
-const SUPABASE_URL = 'https://TU_SUPABASE_URL.supabase.co';
-const SUPABASE_KEY = 'TU_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {

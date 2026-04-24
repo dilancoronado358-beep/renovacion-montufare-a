@@ -1,7 +1,7 @@
 // =========================================
 // CONFIGURACIÓN DE SUPABASE (PÚBLICO)
 // =========================================
-const _supabase = window.supabase ? window.supabase.createClient('https://TU_SUPABASE_URL.supabase.co', 'TU_SUPABASE_ANON_KEY') : null;
+const _supabase = window.supabase ? window.supabase.createClient('https://agqrytictqmjzupqrnqp.supabase.co', 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf') : null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.getElementById('mobile-toggle');

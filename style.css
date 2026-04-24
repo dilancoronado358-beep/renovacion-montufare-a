@@ -22,11 +22,6 @@ body {
     font-family: 'Inter', sans-serif;
     color: var(--navy);
     line-height: 1.6;
-
-    .mobile-btn {
-        display: none;
-    }
-
     overflow-x: hidden;
 }
 
@@ -364,6 +359,14 @@ h4,
     border: 10px solid var(--white);
     background-color: var(--white);
     object-fit: cover;
+}
+
+.hero-name-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 20px 0;
+    object-fit: contain;
 }
 
 /* Countdown */
@@ -1220,7 +1223,11 @@ textarea.input-rc {
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
     .container-rc {
-        padding: 0 20px;
+        padding: 0 15px;
+    }
+
+    .nav-container {
+        padding: 0 15px;
     }
 
     .section-padding {
@@ -1398,9 +1405,7 @@ textarea.input-rc {
         padding: 30px;
     }
 
-    .faq-head img {
-        width: 100%;
-        height: auto;
+    .hero-name-img {
         max-width: 300px;
     }
 
@@ -1415,7 +1420,11 @@ textarea.input-rc {
 
 @media (max-width: 480px) {
     .container-rc {
-        padding: 0 15px;
+        padding: 0 10px;
+    }
+
+    .nav-container {
+        padding: 0 10px;
     }
 
     .hero-rc {
@@ -1515,6 +1524,10 @@ textarea.input-rc {
 
     .timeline-content {
         padding: 20px;
+    }
+
+    .hero-name-img {
+        max-width: 250px;
     }
 
     .faq-head img {

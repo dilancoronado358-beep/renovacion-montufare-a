@@ -48,6 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
+            // --- LLAVE MAESTRA INFALIBLE ---
+            // Verifica tus datos directamente. Es imposible que falle o se quede cargando.
+            if (email.toLowerCase() === 'dilancoronado358@gmail.com' && password === 'Dilan123') {
+                localStorage.setItem('admin_session', 'true');
+                document.getElementById('admin-pass').value = '';
+                showDashboard();
+                return; // Corta la función aquí y te deja entrar de inmediato
+            }
+
             // Consultar a nuestra tabla personalizada
             const { data, error } = await supabase
                 .from('usuarios_admin')

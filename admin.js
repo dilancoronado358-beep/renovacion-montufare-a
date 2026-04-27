@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginView = document.getElementById('login-view');
     const dashboardView = document.getElementById('dashboard-view');
     const loginForm = document.getElementById('login-form');
+    const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const proposalForm = document.getElementById('proposal-form');
 
@@ -36,10 +37,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+    // Permitir usar la tecla "Enter" para iniciar sesión
+    const handleEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (loginBtn) loginBtn.click();
+        }
+    };
+    document.getElementById('admin-email').addEventListener('keypress', handleEnter);
+    document.getElementById('admin-pass').addEventListener('keypress', handleEnter);
+
+    // Login Action (Clic directo al botón)
+    if (loginBtn) {
+    loginBtn.addEventListener('click', async () => {
+        const errorEl = document.getElementById('login-error');
         const email = document.getElementById('admin-email').value.trim();
         const password = document.getElementById('admin-pass').value.trim();
         const errorEl = document.getElementById('login-error');
         const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const submitBtn = loginBtn;
+
+        if (!email || !password) {
+            errorEl.innerText = 'Por favor, ingresa tu correo y contraseña.';
+            errorEl.style.display = 'block';
+            return;
+        }
 
         errorEl.style.display = 'none';
         errorEl.innerText = '';

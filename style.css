@@ -945,17 +945,22 @@ textarea.input-rc {
     gap: 25px;
 }
 
-.gallery-grid img {
+.gallery-grid img,
+.gallery-grid video {
     width: 100%;
     height: 350px;
     object-fit: cover;
     border-radius: var(--radius);
     transition: var(--transition);
-    cursor: pointer;
     box-shadow: var(--shadow-soft);
 }
 
-.gallery-grid img:hover {
+.gallery-grid img {
+    cursor: pointer;
+}
+
+.gallery-grid img:hover,
+.gallery-grid video:hover {
     transform: scale(1.03);
     box-shadow: var(--shadow-huge);
 }
@@ -1580,7 +1585,8 @@ textarea.input-rc {
         font-size: 2rem;
     }
 
-    .gallery-grid img {
+    .gallery-grid img,
+    .gallery-grid video {
         height: 250px;
     }
 

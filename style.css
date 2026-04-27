@@ -6,9 +6,9 @@
     --black: #000000;
     --gray-light: #F4F7F6;
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
-    --shadow-huge: 0 40px 100px rgba(0, 0, 0, 0.1);
+    --shadow-huge: 0 20px 40px rgba(0, 0, 0, 0.08);
     --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    --radius: 40px;
+    --radius: 8px;
 }
 
 * {
@@ -34,7 +34,9 @@ h2,
 h3,
 h4,
 .btn-rc {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.5px;
     text-transform: uppercase;
 }
 
@@ -255,14 +257,14 @@ h4,
     background: var(--red);
     color: var(--white) !important;
     padding: 12px 30px;
-    border-radius: 50px;
+    border-radius: 8px;
 }
 
 .btn-login-nav {
     background: transparent;
     color: var(--navy) !important;
     padding: 10px 20px;
-    border-radius: 50px;
+    border-radius: 8px;
     border: 2px solid var(--navy);
     display: flex;
     align-items: center;
@@ -371,7 +373,7 @@ h4,
     align-items: center;
     justify-content: center;
     padding: 18px 45px;
-    border-radius: 60px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 900;
     font-size: 1.1rem;
@@ -435,7 +437,7 @@ h4,
     background: linear-gradient(180deg, rgba(56, 182, 255, 0.15) 0%, rgba(11, 25, 48, 0.8) 100%);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 250px 250px 25px 25px;
+    border-radius: 12px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-bottom: 5px solid var(--cyan);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
@@ -477,7 +479,8 @@ h4,
 
 .timer-unit span {
     font-size: 3.5rem;
-    font-family: 'Archivo Black';
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
     line-height: 1;
 }
 
@@ -504,13 +507,15 @@ h4,
 
 .count-val {
     font-size: 3.5rem;
-    font-family: 'Archivo Black';
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
     color: var(--navy);
 }
 
 .count-unit {
     font-size: 2rem;
-    font-family: 'Archivo Black';
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
     color: var(--cyan);
 }
 
@@ -596,7 +601,7 @@ h4,
     background: var(--navy);
     color: var(--white);
     padding: 5px 15px;
-    border-radius: 20px;
+    border-radius: 6px;
     font-weight: 900;
     font-size: 0.8rem;
     margin-bottom: 15px;
@@ -643,7 +648,7 @@ h4,
 /* FAQ */
 .faq-item {
     background: var(--white);
-    border-radius: 25px;
+    border-radius: 8px;
     margin-bottom: 20px;
     padding: 30px;
     transition: var(--transition);
@@ -773,7 +778,7 @@ h4,
     width: 100%;
     padding: 15px 25px;
     border: 2px solid #eee;
-    border-radius: 15px;
+    border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
     transition: var(--transition);
@@ -1128,7 +1133,7 @@ textarea.input-rc {
     width: 100%;
     padding: 20px 20px 20px 60px;
     border: 2px solid rgba(0, 0, 0, 0.05);
-    border-radius: 100px;
+    border-radius: 8px;
     font-family: inherit;
     font-size: 1.1rem;
     box-shadow: var(--shadow-soft);
@@ -1152,7 +1157,7 @@ textarea.input-rc {
     padding: 10px 25px;
     border: 2px solid var(--navy);
     background: transparent;
-    border-radius: 50px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 700;
     color: var(--navy);
@@ -1232,7 +1237,7 @@ textarea.input-rc {
 .map-container-rc {
     height: 600px;
     width: 100%;
-    border-radius: 40px;
+    border-radius: 12px;
     border: 10px solid var(--white);
     z-index: 100;
     overflow: hidden;
@@ -1285,7 +1290,7 @@ textarea.input-rc {
 .attention-modal .modal-content {
     background: var(--white);
     padding: 36px;
-    border-radius: 18px;
+    border-radius: 12px;
     max-width: 560px;
     width: calc(100% - 40px);
     text-align: center;
@@ -1667,7 +1672,7 @@ textarea.input-rc {
     background: rgba(29, 43, 77, 0.95);
     color: var(--white);
     padding: 12px 18px;
-    border-radius: 60px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 16px;

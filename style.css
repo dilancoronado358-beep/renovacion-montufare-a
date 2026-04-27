@@ -978,14 +978,14 @@ textarea.input-rc {
 /* Album Gallery Styles */
 .album-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 40px;
     margin-top: 50px;
 }
 
 .album-card {
     position: relative;
-    height: 400px;
+    height: 300px;
     border-radius: var(--radius);
     overflow: hidden;
     cursor: pointer;
@@ -1005,7 +1005,7 @@ textarea.input-rc {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 40px;
+    padding: 30px;
     background: linear-gradient(to top, rgba(29, 43, 77, 0.95), transparent);
     color: var(--white);
     display: flex;
@@ -1432,7 +1432,7 @@ textarea.input-rc {
     }
 
     .album-card {
-        height: 300px;
+        height: 250px;
     }
 
     .proposals-grid-rc {
@@ -1591,7 +1591,7 @@ textarea.input-rc {
     }
 
     .album-card {
-        height: 250px;
+        height: 200px;
     }
 
     .prop-card-rc {

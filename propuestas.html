@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuestas | Dr. Fabián Robles</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Supabase SDK (Para consumir datos dinámicos) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="rc-theme">
+
+    <!-- Header / Navbar -->
+    <nav class="nav-rc" id="main-nav">
+        <div class="container-rc flex-row justify-between align-center">
+            <div class="logo-box">
+                <a href="index.html">
+                    <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo Robles" class="nav-logo">
+                </a>
+            </div>
+            <div class="menu-wrap" id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html">INICIO</a></li>
+                    <li><a href="trayectoria.html">TRAYECTORIA</a></li>
+                    <li><a href="propuestas.html" class="active">PROPUESTAS</a></li>
+                    <li><a href="multimedia.html">MULTIMEDIA</a></li>
+                    <li><a href="index.html#noticias">NOTICIAS</a></li>
+                    <li><a href="index.html#contacto" class="btn-cta-nav">SÚMATE</a></li>
+                    <li><a href="admin.html" class="btn-login-nav"><i class="fas fa-user-lock"></i> INGRESAR</a></li>
+                </ul>
+            </div>
+            <div class="mobile-btn" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-rc bg-navy text-white" style="min-height: 40vh; padding-top: 200px;">
+        <div class="container-rc text-center" data-aos="fade-up">
+            <h1 class="hero-title" style="font-size: 3.5rem;">NUESTRO <br><span class="text-cyan">PLAN DE TRABAJO</span></h1>
+            <p class="lead-rc">Propuestas reales para transformar nuestro cantón.</p>
+        </div>
+    </section>
+
+    <!-- Plan de Trabajo (Buscador) -->
+    <section id="propuestas" class="proposals-rc section-padding bg-light-gray">
+        <div class="container-rc text-center mb-60">
+            <span class="badge-rc bg-red">CONTRATO SOCIAL</span>
+            <h2 class="title-rc mt-20">Plan de Trabajo <span class="text-navy"></span></h2>
+            <p class="lead-rc">Filtra y conoce nuestras propuestas para transformar Montúfar.</p>
+            
+            <!-- Search & Filters -->
+            <div class="search-wrap-rc mt-40">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="proposal-search" placeholder="Busca por palabra clave (ej: riego, seguridad)...">
+                </div>
+                <div class="filter-btns mt-30">
+                    <button class="filter-btn" data-category="all">TODAS</button>
+                    <button class="filter-btn" data-category="agro">AGRO</button>
+                    <button class="filter-btn" data-category="seguridad">SEGURIDAD</button>
+                    <button class="filter-btn" data-category="salud">SALUD</button>
+                    <button class="filter-btn" data-category="vialidad">VIALIDAD</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-rc">
+            <div class="proposals-grid-rc" id="proposals-container">
+                <!-- Se cargará dinámicamente vía JS -->
+            </div>
+            
+            <div class="text-center mt-60">
+                <a href="#" class="btn-rc btn-navy btn-huge-icon shadow-huge">
+                    <i class="fas fa-file-pdf"></i> DESCARGAR PLAN COMPLETO (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -26,6 +26,13 @@
     <!-- Supabase SDK (Para consumir datos dinámicos) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Ajuste CSS para evitar que las fotos del carrusel se corten -->
+    <style>
+        .main-slider-rc .slide-rc img {
+            object-fit: contain !important;
+            background-color: #000; /* Fondo negro para los espacios vacíos que puedan quedar */
+        }
+    </style>
 </head>
 <body class="rc-theme">
 

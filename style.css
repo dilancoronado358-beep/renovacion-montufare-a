@@ -443,7 +443,8 @@ h4 {
     position: relative;
     width: 95%;
     max-width: 1200px;
-    height: 65vh;
+    aspect-ratio: 16/9; /* Mantiene la proporción automáticamente */
+    height: auto;
     max-height: 600px;
     margin: 110px auto 50px;
     border-radius: 8px; /* Bordes más rectos, aspecto más institucional */
@@ -488,7 +489,7 @@ h4 {
 .slide-rc img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Asegura que la foto salga completa */
+    object-fit: cover; /* Permite que la imagen se adapte y llene el carrusel completo */
     object-position: center;
     background-color: transparent;
     border-radius: 8px; /* Redondeamos las fotos individuales */
@@ -1466,11 +1467,7 @@ textarea.input-rc {
         padding: 15px;
     }
 
-    .slide-rc {
-        padding: 20px 50px 60px; /* Espacio para flechas y los puntos abajo */
-    }
-
-    .main-slider-rc { height: 45vh; min-height: 350px; margin-top: 90px; border-radius: 12px; }
+    .main-slider-rc { aspect-ratio: 4/5; height: auto; min-height: 350px; margin-top: 90px; border-radius: 12px; }
     .slider-btn { width: 40px; height: 40px; font-size: 1rem; }
     .prev-btn { left: 5px; }
     .next-btn { right: 5px; }

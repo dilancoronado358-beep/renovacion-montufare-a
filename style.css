@@ -1466,16 +1466,15 @@ textarea.input-rc {
         padding: 15px;
     }
 
-    .slide-grid {
-        padding: 15px 55px; /* Ajuste del espacio lateral para celulares */
-        gap: 10px;
+    .slide-rc {
+        padding: 20px 50px 60px; /* Espacio para flechas y los puntos abajo */
     }
 
-    .main-slider-rc { height: 40vh; margin-top: 90px; border-radius: 8px; }
+    .main-slider-rc { height: 45vh; min-height: 350px; margin-top: 90px; border-radius: 12px; }
     .slider-btn { width: 40px; height: 40px; font-size: 1rem; }
-    .prev-btn { left: 15px; }
-    .next-btn { right: 15px; }
-    .slider-dots { bottom: 30px; }
+    .prev-btn { left: 5px; }
+    .next-btn { right: 5px; }
+    .slider-dots { bottom: 15px; }
 
     .countdown-timer {
         flex-direction: column;

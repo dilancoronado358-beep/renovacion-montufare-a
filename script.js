@@ -25,6 +25,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- MAIN SLIDER LOGIC ---
+    const slides = document.querySelectorAll('.slide-rc');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('slider-prev');
+    const nextBtn = document.getElementById('slider-next');
+    let currentSlide = 0;
+    let slideInterval;
+
+    const showSlide = (index) => {
+        if (!slides.length) return;
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        currentSlide = index;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    };
+
+    const nextSlide = () => showSlide(currentSlide + 1);
+    const prevSlide = () => showSlide(currentSlide - 1);
+
+    const startSlider = () => {
+        if (!slides.length) return;
+        slideInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
+    };
+
+    const resetSliderInterval = () => {
+        clearInterval(slideInterval);
+        startSlider();
+    };
+
+    if (prevBtn && nextBtn) {
+        nextBtn.addEventListener('click', () => { nextSlide(); resetSliderInterval(); });
+        prevBtn.addEventListener('click', () => { prevSlide(); resetSliderInterval(); });
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                showSlide(parseInt(e.target.dataset.slide));
+                resetSliderInterval();
+            });
+        });
+        startSlider();
+    }
+
 
 
     // --- COUNTDOWN TIMER (Día de la Victoria) ---

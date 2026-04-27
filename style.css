@@ -442,7 +442,7 @@ h4 {
 .main-slider-rc {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 70vh;
     overflow: hidden;
     background: var(--navy);
 }
@@ -1456,7 +1456,7 @@ textarea.input-rc {
         padding: 15px;
     }
 
-    .main-slider-rc { height: 75vh; }
+    .main-slider-rc { height: 50vh; }
     .slider-btn { width: 45px; height: 45px; font-size: 1.2rem; }
     .prev-btn { left: 15px; }
     .next-btn { right: 15px; }

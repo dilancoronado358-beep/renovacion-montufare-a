@@ -229,17 +229,17 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
   </div>
 </div>
 
+<!-- Supabase debe cargarse ANTES del código inline -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const MASTER = {email:'dilancoronado358@gmail.com', pass:'Dilan123'};
 const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
 const SB_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
 
-let db = null;
-window.addEventListener('load', function(){
-  if(window.supabase && window.supabase.createClient){
-    db = window.supabase.createClient(SB_URL, SB_KEY);
-  }
-});
+// Inicializar db inmediatamente (el script de supabase ya cargó arriba)
+const db = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SB_URL, SB_KEY)
+  : null;
 
 const login   = document.getElementById('pg-login');
 const dash    = document.getElementById('pg-dash');
@@ -540,6 +540,5 @@ async function deleteAlbum(id){
 }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>

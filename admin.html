@@ -37,7 +37,6 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
 #pg-dash{display:none;min-height:100vh}
 .layout{display:flex;min-height:100vh}
 .sidebar{width:250px;background:#0a1628;color:#fff;display:flex;flex-direction:column;padding:28px 20px;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
-.sidebar img{height:45px;margin-bottom:32px;filter:brightness(0) invert(1)}
 .sidebar nav{display:flex;flex-direction:column;gap:4px}
 .sidebar nav button{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.65);background:transparent;border:none;font-size:.87rem;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .2s}
 .sidebar nav button:hover,.sidebar nav button.active{background:rgba(255,255,255,.12);color:#fff}
@@ -108,7 +107,9 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
 <div id="pg-dash">
   <div class="layout">
     <aside class="sidebar">
-      <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1777329849/LOGO_RENOVACIO%CC%81N_MONTUFAREN%CC%83A_fegxxf.png" alt="Logo Renovación Montufareña" style="height:55px; width:auto; object-fit:contain; filter:none; margin-bottom:32px;">
+      <div style="background:#fff; padding:12px 16px; border-radius:14px; margin-bottom:32px; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+        <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1777329849/LOGO_RENOVACIO%CC%81N_MONTUFAREN%CC%83A_fegxxf.png" alt="Logo Renovación Montufareña" style="height:55px; width:auto; max-width:100%; object-fit:contain; display:block;">
+      </div>
       <nav>
         <button class="active" onclick="showTab('dashboard',this)"><i class="fas fa-chart-pie"></i> Inicio / Estadísticas</button>
         <button onclick="showTab('mensajes',this)"><i class="fas fa-inbox"></i> Mensajes / Voluntarios</button>

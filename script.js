@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.innerHTML = `
                 <span class="prop-badge bg-${p.category}">${p.category}</span>
                 <h4>${p.title}</h4>
-                <p>${p.desc_text}</p>
+                <div class="prop-desc-content" style="color:var(--text-gray); font-size:0.95rem; line-height:1.6; margin-bottom:15px">${p.desc_text}</div>
             `;
             proposalsContainer.appendChild(card);
         });

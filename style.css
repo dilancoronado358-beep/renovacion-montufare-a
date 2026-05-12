@@ -1482,23 +1482,24 @@ textarea.input-rc {
     }
 
     .hero-img-dominant {
-        width: 50%;
-        height: auto;
-        max-height: 40vh;
+        height: 250px;
+        width: auto;
         object-fit: contain;
         object-position: bottom;
     }
 
     .hero-portrait-frame img:nth-child(1) {
-        margin-right: -5%;
-        transform: scale(1.1); /* Escala suave */
-        transform-origin: bottom right; /* Crece hacia el centro */
+        margin-right: -15%;
+        z-index: 3;
+        transform: scale(1.15); /* Mantenemos la proporción del escritorio */
+        transform-origin: bottom right; 
     }
 
     .hero-portrait-frame img:nth-child(2) {
-        margin-left: -5%;
+        margin-left: -15%;
+        z-index: 2;
         transform: scale(0.9);
-        transform-origin: bottom left; /* Crece hacia el centro */
+        transform-origin: bottom left; 
     }
 
     .hero-actions {

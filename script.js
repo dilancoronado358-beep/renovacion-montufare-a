@@ -76,6 +76,23 @@ async function applyDynamicContent(){
             if(ct.fb) document.querySelectorAll('a[href*="facebook.com"]').forEach(a=>a.href=ct.fb);
             if(ct.tt) document.querySelectorAll('a[href*="tiktok.com"]').forEach(a=>a.href=ct.tt);
         }
+
+        // Theme Colors
+        if(cfg.theme) {
+            if(cfg.theme.navy) document.documentElement.style.setProperty('--navy', cfg.theme.navy);
+            if(cfg.theme.cyan) document.documentElement.style.setProperty('--cyan-action', cfg.theme.cyan);
+        }
+
+        // SEO
+        if(cfg.seo) {
+            if(cfg.seo.title) document.title = cfg.seo.title;
+            if(cfg.seo.desc) {
+                let metaDesc = document.querySelector('meta[name="description"]');
+                if(!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name="description"; document.head.appendChild(metaDesc); }
+                metaDesc.content = cfg.seo.desc;
+            }
+        }
+
     } catch(e){ console.warn('Dynamic content error:', e); }
 }
 
@@ -242,14 +259,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FORM EXPERIENCE ---
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = contactForm.querySelector('button');
             const originalText = btn.innerText;
 
+            const nombre = document.getElementById('contact-name').value.trim();
+            const telefono = document.getElementById('contact-phone').value.trim();
+            const mensaje = document.getElementById('contact-msg').value.trim();
+
+            if (!nombre || !mensaje) {
+                alert('Por favor, completa tu nombre y mensaje.');
+                return;
+            }
+
             btn.innerText = 'ENVIANDO PROPUESTA...';
             btn.style.opacity = '0.7';
             btn.disabled = true;
+
+            if (_supabase) {
+                const { error } = await _supabase.from('mensajes').insert([{ nombre, telefono, mensaje }]);
+                if (error) {
+                    alert('Hubo un error enviando tu mensaje: ' + error.message);
+                    btn.innerText = originalText;
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                    return;
+                }
+            }
 
             setTimeout(() => {
                 alert('¡GRACIAS! TU PROPUESTA HA SIDO RECIBIDA POR EL EQUIPO DEL DR. FABIÁN ROBLES. JUNTOS CONSTRUIREMOS EL MONTÚFAR QUE SOÑAMOS.');
@@ -257,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerText = originalText;
                 btn.style.opacity = '1';
                 btn.disabled = false;
-            }, 2000);
+            }, 500);
         });
     }
 
@@ -374,23 +411,36 @@ document.addEventListener('DOMContentLoaded', () => {
             iconAnchor: [10, 10]
         });
 
-        const locations = [
-            { pos: [0.592, -77.831], title: 'SAN GABRIEL', text: 'Compromiso: Recuperación total del Casco Colonial y Seguridad Comercial.' },
-            { pos: [0.612, -77.745], title: 'CRISTÓBAL COLÓN', text: 'Compromiso: Fortalecimiento de la tecnificación del cultivo de papa.' },
-            { pos: [0.505, -77.865], title: 'LA PAZ', text: 'Compromiso: Potencialización turística de la Gruta y vialidad rural.' },
-            { pos: [0.635, -77.880], title: 'PIARTAL', text: 'Compromiso: Sistema de riego comunitario y apoyo al sector lechero.' },
-            { pos: [0.665, -77.820], title: 'FERNÁNDEZ SALVADOR', text: 'Compromiso: Atención médica móvil y maquinaria permanente para el campo.' },
-            { pos: [0.575, -77.885], title: 'CHITÁN DE NAVARRETE', text: 'Compromiso: Infraestructura deportiva y fomento al emprendimiento juvenil.' }
-        ];
+        // Load dynamic map points from Supabase
+        const loadMapPoints = async () => {
+            let mapData = [];
+            if (_supabase) {
+                const { data } = await _supabase.from('mapa_puntos').select('*');
+                if (data && data.length > 0) mapData = data;
+            }
+            
+            // Fallback si no hay conexión o no hay datos
+            if(mapData.length === 0) {
+                mapData = [
+                    { lat: 0.592, lng: -77.831, titulo: 'SAN GABRIEL', texto: 'Compromiso: Recuperación total del Casco Colonial y Seguridad Comercial.' },
+                    { lat: 0.612, lng: -77.745, titulo: 'CRISTÓBAL COLÓN', texto: 'Compromiso: Fortalecimiento de la tecnificación del cultivo de papa.' },
+                    { lat: 0.505, lng: -77.865, titulo: 'LA PAZ', texto: 'Compromiso: Potencialización turística de la Gruta y vialidad rural.' },
+                    { lat: 0.635, lng: -77.880, titulo: 'PIARTAL', texto: 'Compromiso: Sistema de riego comunitario y apoyo al sector lechero.' },
+                    { lat: 0.665, lng: -77.820, titulo: 'FERNÁNDEZ SALVADOR', texto: 'Compromiso: Atención médica móvil y maquinaria permanente para el campo.' },
+                    { lat: 0.575, lng: -77.885, titulo: 'CHITÁN DE NAVARRETE', texto: 'Compromiso: Infraestructura deportiva y fomento al emprendimiento juvenil.' }
+                ];
+            }
 
+            mapData.forEach(loc => {
+                L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map)
+                    .bindPopup(`
+                        <div class="map-popup-header">${loc.titulo}</div>
+                        <div class="map-popup-text">${loc.texto}</div>
+                    `);
+            });
+        };
 
-        locations.forEach(loc => {
-            L.marker(loc.pos, { icon: customIcon }).addTo(map)
-                .bindPopup(`
-                    <div class="map-popup-header">${loc.title}</div>
-                    <div class="map-popup-text">${loc.text}</div>
-                `);
-        });
+        loadMapPoints();
     }
 
         // --- ATTENTION MODAL & STICKY CTA ---

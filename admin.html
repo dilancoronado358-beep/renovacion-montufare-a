@@ -111,11 +111,15 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
       <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
       <nav>
         <button class="active" onclick="showTab('dashboard',this)"><i class="fas fa-chart-pie"></i> Inicio / Estadísticas</button>
+        <button onclick="showTab('mensajes',this)"><i class="fas fa-inbox"></i> Mensajes / Voluntarios</button>
         <button onclick="showTab('hero',this)"><i class="fas fa-user"></i> Hero / Candidato</button>
         <button onclick="showTab('slider',this)"><i class="fas fa-images"></i> Carrusel Imágenes</button>
         <button onclick="showTab('propuestas',this)"><i class="fas fa-list-check"></i> Propuestas</button>
         <button onclick="showTab('multimedia',this)"><i class="fas fa-photo-film"></i> Multimedia / Álbumes</button>
+        <button onclick="showTab('mapa',this)"><i class="fas fa-map-marked-alt"></i> Mapa Territorial</button>
         <button onclick="showTab('contacto',this)"><i class="fas fa-phone"></i> Contacto / Redes</button>
+        <button onclick="showTab('config',this)"><i class="fas fa-paint-roller"></i> SEO y Configuración</button>
+        <button onclick="showTab('usuarios',this)"><i class="fas fa-users-cog"></i> Usuarios del Sistema</button>
         
         <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
           <a href="index.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);font-size:.87rem;font-weight:600;text-decoration:none;transition:all .2s;">
@@ -323,6 +327,83 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         </div>
       </div>
 
+      <!-- TAB: MENSAJES / VOLUNTARIOS -->
+      <div class="tab-panel" id="tab-mensajes">
+        <h1 class="page-title">Bandeja de <span>Mensajes</span></h1>
+        <div class="card">
+          <h3><i class="fas fa-inbox"></i> Mensajes Recibidos</h3>
+          <div class="notice ok">Aquí aparecen los mensajes enviados desde el formulario de contacto de la página principal.</div>
+          <div id="mensajes-list"><p style="color:#888">Cargando mensajes...</p></div>
+        </div>
+      </div>
+
+      <!-- TAB: MAPA TERRITORIAL -->
+      <div class="tab-panel" id="tab-mapa">
+        <h1 class="page-title">Mapa <span>Territorial</span></h1>
+        <div class="card">
+          <h3><i class="fas fa-map-pin"></i> Agregar Nuevo Punto</h3>
+          <div class="grid2">
+            <div class="field"><label>Latitud (ej: 0.592)</label><input type="number" step="any" id="map-lat" placeholder="0.592"></div>
+            <div class="field"><label>Longitud (ej: -77.831)</label><input type="number" step="any" id="map-lng" placeholder="-77.831"></div>
+          </div>
+          <div class="field"><label>Título (Parroquia o Lugar)</label><input type="text" id="map-title" placeholder="SAN GABRIEL"></div>
+          <div class="field"><label>Texto del Compromiso o Evento</label><textarea id="map-text" rows="2" placeholder="Compromiso: Recuperación total del Casco Colonial..."></textarea></div>
+          <button class="btn-save" onclick="createMapPoint()"><i class="fas fa-save"></i> Guardar Punto en el Mapa</button>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Puntos Existentes</h3>
+          <div id="map-list"><p style="color:#888">Cargando puntos...</p></div>
+        </div>
+      </div>
+
+      <!-- TAB: SEO Y CONFIGURACIÓN -->
+      <div class="tab-panel" id="tab-config">
+        <h1 class="page-title">SEO y <span>Tema</span></h1>
+        
+        <div class="card">
+          <h3><i class="fas fa-paint-roller"></i> Colores del Tema</h3>
+          <div class="notice ok">Cambia el color principal y secundario de la página web. (Recarga la página pública para ver los cambios).</div>
+          <div class="grid2" style="margin-top:15px">
+            <div class="field">
+              <label>Color Principal (Navy)</label>
+              <input type="color" id="theme-navy" value="#0a192f" style="height:50px; width:100%; cursor:pointer; padding:0; border:none; border-radius:8px">
+            </div>
+            <div class="field">
+              <label>Color Secundario (Cyan)</label>
+              <input type="color" id="theme-cyan" value="#64ffda" style="height:50px; width:100%; cursor:pointer; padding:0; border:none; border-radius:8px">
+            </div>
+          </div>
+          <button class="btn-save" onclick="saveTheme()"><i class="fas fa-save"></i> Guardar Colores</button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-search"></i> SEO y Redes Sociales</h3>
+          <div class="notice warn">Configura el texto y la imagen que aparecerán cuando compartas el enlace de tu página en WhatsApp o Facebook. (Aplica para compartidos dinámicos si tu servidor lo permite).</div>
+          <div class="field" style="margin-top:15px"><label>Título de la página compartida</label><input type="text" id="seo-title" placeholder="Renovación Montufareña | Fabián Robles"></div>
+          <div class="field"><label>Descripción corta</label><textarea id="seo-desc" rows="2" placeholder="Súmate al cambio con Fabián Robles..."></textarea></div>
+          <div class="field">
+            <label>Imagen en miniatura (URL)</label>
+            <button class="btn-upload" onclick="openCloudinaryWidget('seo-img')"><i class="fas fa-upload"></i> Subir Miniatura</button>
+            <input type="url" id="seo-img" placeholder="https://..." style="margin-top:8px">
+            <img id="prev-seo-img" class="img-preview" style="display:none">
+          </div>
+          <button class="btn-save" onclick="saveSEO()"><i class="fas fa-save"></i> Guardar SEO</button>
+        </div>
+      </div>
+
+      <!-- TAB: USUARIOS -->
+      <div class="tab-panel" id="tab-usuarios">
+        <h1 class="page-title">Gestión de <span>Usuarios</span></h1>
+        <div class="card">
+          <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Usuario</h3>
+          <div class="notice warn">Recuerda tener apagada la opción "Confirm email" en Supabase.</div>
+          <div class="grid2" style="margin-top:15px">
+            <div class="field"><label>Correo Electrónico</label><input type="email" id="new-user-email" placeholder="usuario@ejemplo.com"></div>
+            <div class="field"><label>Contraseña (Mínimo 6 caracteres)</label><input type="password" id="new-user-pass" placeholder="******"></div>
+          </div>
+          <button class="btn-save" onclick="createUser()"><i class="fas fa-save"></i> Crear Usuario</button>
+        </div>
+      </div>
     </main>
   </div>
 </div>
@@ -361,22 +442,44 @@ const btnIn   = document.getElementById('btn-in');
 const btnOut  = document.getElementById('btn-out');
 const errBox  = document.getElementById('err');
 
-if(localStorage.getItem('adm')==='1') go();
+// Verificar sesión inicial
+async function checkSession() {
+  if (!db) return;
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
+    go();
+  }
+}
 
-btnIn.onclick = function(){
+checkSession();
+
+btnIn.onclick = async function(){
   const e = document.getElementById('em').value.trim();
   const p = document.getElementById('pw').value.trim();
   errBox.style.display='none';
   if(!e||!p){showErr('Completa todos los campos');return;}
-  if(e.toLowerCase()===MASTER.email.toLowerCase() && p===MASTER.pass){
-    localStorage.setItem('adm','1'); go();
-  } else { showErr('Correo o contraseña incorrectos'); }
+  
+  if(!db){showErr('Sin conexión a Supabase');return;}
+  btnIn.innerText = 'Autenticando...';
+  
+  const { data, error } = await db.auth.signInWithPassword({
+    email: e,
+    password: p,
+  });
+  
+  btnIn.innerText = 'Ingresar';
+  
+  if (error) {
+    showErr('Correo o contraseña incorrectos');
+  } else {
+    go();
+  }
 };
 document.getElementById('pw').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 document.getElementById('em').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 
-btnOut.onclick=function(){
-  localStorage.removeItem('adm');
+btnOut.onclick = async function(){
+  if(db) await db.auth.signOut();
   dash.style.display='none';
   login.style.display='flex';
 };
@@ -484,6 +587,9 @@ function showTab(name, btn){
   if(name==='dashboard') loadDashboardStats();
   if(name==='propuestas') loadProps();
   if(name==='multimedia') loadAlbums();
+  if(name==='mensajes') loadMensajes();
+  if(name==='mapa') loadMapPoints();
+  if(name==='config') loadConfigTab();
 }
 
 async function getConfig(key){
@@ -539,6 +645,21 @@ async function loadContent(){
   if(ct.wa) document.getElementById('c-wa').value=ct.wa;
   if(ct.fb) document.getElementById('c-fb').value=ct.fb;
   if(ct.tt) document.getElementById('c-tt').value=ct.tt;
+}
+
+async function loadConfigTab() {
+  const theme = await getConfig('theme');
+  if(theme.navy) document.getElementById('theme-navy').value = theme.navy;
+  if(theme.cyan) document.getElementById('theme-cyan').value = theme.cyan;
+
+  const seo = await getConfig('seo');
+  if(seo.title) document.getElementById('seo-title').value = seo.title;
+  if(seo.desc)  document.getElementById('seo-desc').value = seo.desc;
+  if(seo.img) {
+    document.getElementById('seo-img').value = seo.img;
+    document.getElementById('prev-seo-img').src = seo.img;
+    document.getElementById('prev-seo-img').style.display = 'block';
+  }
 }
 
 async function saveHeroText(){
@@ -809,6 +930,152 @@ async function deleteAlbum(id){
   if(error){showToast('Error: '+error.message, 'error');return;}
   showToast('Álbum eliminado');
   loadAlbums();
+}
+// ---- MENSAJES ----
+async function loadMensajes() {
+  const list = document.getElementById('mensajes-list');
+  if(!list) return;
+  list.innerHTML='<p style="color:#888">Cargando...</p>';
+  if(!db){list.innerHTML='<p style="color:#aaa">Sin conexión a Supabase.</p>';return;}
+  
+  const {data, error} = await db.from('mensajes').select('*').order('created_at', {ascending: false});
+  if(error){list.innerHTML=`<p style="color:red">Error: ${error.message}</p>`;return;}
+  if(!data||!data.length){list.innerHTML='<p style="color:#aaa">No hay mensajes aún.</p>';return;}
+  
+  list.innerHTML='';
+  data.forEach(msg => {
+    const d=document.createElement('div');
+    d.className='prop-item';
+    d.style = msg.leido ? 'opacity:0.7' : 'border-left: 4px solid var(--primary-color)';
+    
+    d.innerHTML=`
+      <div style="flex:1">
+        <h4 style="display:flex; justify-content:space-between">
+          <span><i class="fas fa-user"></i> ${msg.nombre}</span>
+          <span style="font-size:0.8rem; font-weight:normal; color:#888">${new Date(msg.created_at).toLocaleString()}</span>
+        </h4>
+        <p><strong><i class="fas fa-phone"></i> Teléfono:</strong> ${msg.telefono || 'N/A'}</p>
+        <p style="margin-top:8px; padding:10px; background:rgba(0,0,0,0.03); border-radius:8px"><i>"${msg.mensaje}"</i></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:120px">
+        ${!msg.leido ? `<button class="btn-save" style="padding:7px 14px;font-size:.8rem" onclick="markMensajeLeido(${msg.id})">✔ Marcar Leído</button>` : `<span style="text-align:center;font-size:0.85rem;color:#888">Leído</span>`}
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteMensaje(${msg.id})">🗑 Eliminar</button>
+      </div>
+    `;
+    list.appendChild(d);
+  });
+}
+
+async function markMensajeLeido(id) {
+  if(!db) return;
+  await db.from('mensajes').update({leido: true}).eq('id', id);
+  showToast('Mensaje marcado como leído');
+  loadMensajes();
+}
+
+async function deleteMensaje(id) {
+  if(!confirm('¿Eliminar este mensaje?')) return;
+  if(!db) return;
+  await db.from('mensajes').delete().eq('id', id);
+  showToast('Mensaje eliminado');
+  loadMensajes();
+}
+
+// ---- MAPA TERRITORIAL ----
+async function loadMapPoints() {
+  const list = document.getElementById('map-list');
+  if(!list) return;
+  list.innerHTML='<p style="color:#888">Cargando puntos...</p>';
+  if(!db) {list.innerHTML='<p style="color:#aaa">Sin conexión a Supabase.</p>'; return;}
+
+  const {data, error} = await db.from('mapa_puntos').select('*').order('id', {ascending: false});
+  if(error){list.innerHTML=`<p style="color:red">Error: ${error.message}</p>`;return;}
+  if(!data||!data.length){list.innerHTML='<p style="color:#aaa">No hay puntos en el mapa.</p>';return;}
+
+  list.innerHTML='';
+  data.forEach(pt => {
+    const d = document.createElement('div');
+    d.className='prop-item';
+    d.innerHTML=`
+      <div style="flex:1">
+        <h4><i class="fas fa-map-marker-alt" style="color:#e74c3c"></i> ${pt.titulo}</h4>
+        <p style="font-size:0.85rem; color:#888">Lat: ${pt.lat}, Lng: ${pt.lng}</p>
+        <p style="margin-top:5px">${pt.texto}</p>
+      </div>
+      <div>
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteMapPoint(${pt.id})">🗑 Eliminar</button>
+      </div>
+    `;
+    list.appendChild(d);
+  });
+}
+
+async function createMapPoint() {
+  const lat = document.getElementById('map-lat').value;
+  const lng = document.getElementById('map-lng').value;
+  const titulo = document.getElementById('map-title').value.trim();
+  const texto = document.getElementById('map-text').value.trim();
+
+  if(!lat || !lng || !titulo || !texto) {showToast('Completa todos los campos del mapa', 'error'); return;}
+  if(!db){showToast('Sin conexión a Supabase', 'error'); return;}
+
+  const {error} = await db.from('mapa_puntos').insert([{lat: parseFloat(lat), lng: parseFloat(lng), titulo, texto}]);
+  if(error) {showToast('Error: '+error.message, 'error'); return;}
+
+  ['map-lat', 'map-lng', 'map-title', 'map-text'].forEach(id => document.getElementById(id).value = '');
+  showToast('Punto guardado en el mapa');
+  loadMapPoints();
+}
+
+async function deleteMapPoint(id) {
+  if(!confirm('¿Eliminar este punto del mapa?')) return;
+  if(!db) return;
+  await db.from('mapa_puntos').delete().eq('id', id);
+  showToast('Punto eliminado');
+  loadMapPoints();
+}
+
+// ---- CONFIGURACIÓN Y TEMA ----
+async function saveTheme() {
+  const navy = document.getElementById('theme-navy').value;
+  const cyan = document.getElementById('theme-cyan').value;
+  await setConfig('theme', {navy, cyan});
+  showToast('Colores del tema actualizados');
+}
+
+async function saveSEO() {
+  await setConfig('seo', {
+    title: document.getElementById('seo-title').value.trim(),
+    desc: document.getElementById('seo-desc').value.trim(),
+    img: document.getElementById('seo-img').value.trim()
+  });
+  showToast('Configuración SEO guardada');
+}
+
+// ---- USUARIOS ----
+async function createUser() {
+  const email = document.getElementById('new-user-email').value.trim();
+  const password = document.getElementById('new-user-pass').value.trim();
+
+  if(!email || !password || password.length < 6) {
+    showToast('Ingresa un correo válido y una contraseña de al menos 6 caracteres', 'error');
+    return;
+  }
+  if(!db) {showToast('Sin conexión a Supabase', 'error'); return;}
+
+  showToast('Creando usuario...');
+  const { data, error } = await db.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if(error) {
+    showToast('Error: ' + error.message, 'error');
+  } else {
+    document.getElementById('new-user-email').value = '';
+    document.getElementById('new-user-pass').value = '';
+    showToast('Usuario creado exitosamente');
+  }
 }
 
 </script>

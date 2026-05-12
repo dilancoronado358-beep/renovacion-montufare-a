@@ -136,13 +136,20 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
       <div class="tab-panel" id="tab-slider">
         <h1 class="page-title">Carrusel de <span>Imágenes</span></h1>
         <div class="card">
-          <h3><i class="fas fa-images"></i> Imágenes del carrusel principal</h3>
-          <div class="notice warn"><i class="fas fa-cloud"></i> Sube imágenes a Cloudinary y pega las URLs aquí.</div>
-          <div class="field"><label>Imagen 1 (URL)</label><input type="url" id="sl-1" placeholder="https://res.cloudinary.com/..."></div>
-          <div class="field"><label>Imagen 2 (URL)</label><input type="url" id="sl-2" placeholder="https://res.cloudinary.com/..."></div>
-          <div class="field"><label>Imagen 3 (URL) — opcional</label><input type="url" id="sl-3" placeholder="https://res.cloudinary.com/..."></div>
-          <button class="btn-save" onclick="saveSlider()"><i class="fas fa-save"></i> Guardar Imágenes</button>
+          <h3><i class="fas fa-images"></i> Imágenes del carrusel principal (hasta 100)</h3>
+          <div class="notice warn"><i class="fas fa-cloud"></i> Sube las imágenes a <strong>Cloudinary</strong> y pega las URLs aquí, <strong>una por línea</strong>. El orden de las líneas es el orden del carrusel.</div>
+          <div class="field" style="margin-top:14px">
+            <label>URLs de imágenes (una por línea)</label>
+            <textarea id="sl-urls" rows="10" placeholder="https://res.cloudinary.com/foto1.jpg&#10;https://res.cloudinary.com/foto2.jpg&#10;https://res.cloudinary.com/foto3.jpg"></textarea>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <button class="btn-save" onclick="saveSlider()"><i class="fas fa-save"></i> Guardar Carrusel</button>
+            <span id="sl-count" style="font-size:.85rem;color:#666"></span>
+          </div>
+          <!-- Preview de imágenes -->
+          <div id="sl-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:18px"></div>
         </div>
+      </div>
       </div>
 
       <!-- TAB: PROPUESTAS -->
@@ -271,7 +278,6 @@ async function go(){
   login.style.display='none';
   dash.style.display='block';
   await testDB();
-  await seedStaticAlbums();
   await loadContent();
   await loadProps();
 }
@@ -289,18 +295,6 @@ async function testDB(){
 
 function showErr(m){errBox.textContent=m;errBox.style.display='block';}
 
-// Migrar los 3 álbumes estáticos originales a Supabase (solo si la tabla está vacía)
-async function seedStaticAlbums(){
-  if(!db) return;
-  const {data} = await db.from('albumes').select('id').limit(1);
-  if(data && data.length > 0) return; // Ya hay álbumes, no hacer nada
-  const estaticos = [
-    {titulo:'Capacitación: Manejo de Redes Sociales', fecha:'11 DE ABRIL, 2026', lugar:'Casa El Arrayán', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776307899/WhatsApp_Image_2026-04-15_at_9.49.48_PM_4_yj3qtv.jpg', fotos:[]},
-    {titulo:'Brigada Chutan Bajo', fecha:'20 DE ABRIL, 2026', lugar:'Montúfar', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776664480/IMG-20260419-WA0107_zci17q.jpg', fotos:[]},
-    {titulo:'Recorrido y Actividades', fecha:'26 DE ABRIL, 2026', lugar:'Montúfar', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/v1777300536/lv_0_20260425120457_vvkaun.jpg', fotos:[]}
-  ];
-  await db.from('albumes').insert(estaticos);
-}
 
 function showTab(name, btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -343,9 +337,10 @@ async function loadContent(){
   if(hi.bg)   document.getElementById('h-bg').value=hi.bg;
 
   const sl = await getConfig('slider_imgs');
-  if(sl.s1) document.getElementById('sl-1').value=sl.s1;
-  if(sl.s2) document.getElementById('sl-2').value=sl.s2;
-  if(sl.s3) document.getElementById('sl-3').value=sl.s3;
+  const slUrls = Array.isArray(sl.urls) ? sl.urls : [sl.s1,sl.s2,sl.s3].filter(u=>u&&u.trim());
+  const slTextarea = document.getElementById('sl-urls');
+  if(slTextarea) slTextarea.value = slUrls.join('\n');
+  updateSliderPreview(slUrls);
 
   const ct = await getConfig('contacto');
   if(ct.wa) document.getElementById('c-wa').value=ct.wa;
@@ -379,13 +374,36 @@ async function saveHeroBg(){
 }
 
 async function saveSlider(){
-  await setConfig('slider_imgs',{
-    s1:document.getElementById('sl-1').value,
-    s2:document.getElementById('sl-2').value,
-    s3:document.getElementById('sl-3').value
-  });
-  alert('✅ Imágenes del carrusel guardadas');
+  const ta = document.getElementById('sl-urls');
+  const urls = ta.value.split('\n').map(u=>u.trim()).filter(u=>u).slice(0,100);
+  await setConfig('slider_imgs', {urls});
+  updateSliderPreview(urls);
+  alert('\u2705 Carrusel guardado con '+urls.length+' imagen(es)');
 }
+
+function updateSliderPreview(urls){
+  const prev = document.getElementById('sl-preview');
+  const cnt  = document.getElementById('sl-count');
+  if(!prev) return;
+  if(cnt) cnt.textContent = urls.length + '/100 imagen(es)';
+  prev.innerHTML='';
+  urls.forEach(url=>{
+    const img=document.createElement('img');
+    img.src=url;
+    img.style='width:100%;height:100px;object-fit:cover;border-radius:8px';
+    img.onerror=()=>img.style.opacity='0.3';
+    prev.appendChild(img);
+  });
+}
+
+// Live preview en el textarea del slider
+document.addEventListener('DOMContentLoaded',()=>{
+  const ta = document.getElementById('sl-urls');
+  if(ta) ta.addEventListener('input',function(){
+    const urls=this.value.split('\n').map(u=>u.trim()).filter(u=>u);
+    updateSliderPreview(urls);
+  });
+});
 
 async function saveProp(){
   const cat   = document.getElementById('p-cat').value;

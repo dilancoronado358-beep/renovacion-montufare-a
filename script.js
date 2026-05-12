@@ -35,28 +35,32 @@ async function applyDynamicContent(){
             }
         }
 
-        // Slider images
+        // Slider images — soporta hasta 100 imágenes
         if(cfg.slider_imgs){
             const sl = cfg.slider_imgs;
-            const slides = document.querySelectorAll('.slide-rc img');
-            if(slides[0] && sl.s1) slides[0].src = sl.s1;
-            if(slides[1] && sl.s2) slides[1].src = sl.s2;
-            // Slide 3: add if s3 exists
-            if(sl.s3 && sl.s3.trim()){
+            // Compatibilidad: nuevo formato {urls:[...]} o viejo {s1,s2,s3}
+            const urls = Array.isArray(sl.urls) ? sl.urls
+                : [sl.s1, sl.s2, sl.s3].filter(u => u && u.trim());
+
+            if(urls.length > 0){
                 const wrapper = document.getElementById('slider-wrapper');
                 const dotsEl  = document.getElementById('slider-dots');
-                if(wrapper && !wrapper.querySelector('[data-dynamic-slide]')){
-                    const div=document.createElement('div');
-                    div.className='slide-rc';
-                    div.setAttribute('data-dynamic-slide','1');
-                    div.innerHTML=`<img src="${sl.s3}" alt="Imagen 3">`;
-                    wrapper.appendChild(div);
-                    if(dotsEl){
-                        const dot=document.createElement('span');
-                        dot.className='dot';
-                        dot.dataset.slide=String(dotsEl.children.length);
-                        dotsEl.appendChild(dot);
-                    }
+                if(wrapper){
+                    // Reemplazar completamente el contenido del slider
+                    wrapper.innerHTML = '';
+                    if(dotsEl) dotsEl.innerHTML = '';
+                    urls.forEach((url, i) => {
+                        const div = document.createElement('div');
+                        div.className = 'slide-rc' + (i===0 ? ' active' : '');
+                        div.innerHTML = `<img src="${url}" alt="Imagen ${i+1}">`;
+                        wrapper.appendChild(div);
+                        if(dotsEl){
+                            const dot = document.createElement('span');
+                            dot.className = 'dot' + (i===0 ? ' active' : '');
+                            dot.dataset.slide = String(i);
+                            dotsEl.appendChild(dot);
+                        }
+                    });
                 }
             }
         }

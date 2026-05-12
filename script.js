@@ -17,7 +17,7 @@ async function applyDynamicContent(){
             const t = cfg.hero_text;
             const heroTitle = document.querySelector('.hero-title');
             if(heroTitle && t.titulo1 && t.nombre && t.titulo2){
-                heroTitle.innerHTML = `CON <br><span class="text-green">${t.nombre}</span> <br>${t.titulo2}`;
+                heroTitle.innerHTML = `${t.titulo1} <br><span class="text-green">${t.nombre}</span> <br>${t.titulo2}`;
             }
             const heroSub = document.querySelector('.hero-subtext');
             if(heroSub && t.sub) heroSub.textContent = t.sub;

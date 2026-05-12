@@ -38,7 +38,6 @@ async function applyDynamicContent(){
         // Slider images — soporta hasta 100 imágenes
         if(cfg.slider_imgs){
             const sl = cfg.slider_imgs;
-            // Compatibilidad: nuevo formato {urls:[...]} o viejo {s1,s2,s3}
             const urls = Array.isArray(sl.urls) ? sl.urls
                 : [sl.s1, sl.s2, sl.s3].filter(u => u && u.trim());
 
@@ -46,7 +45,6 @@ async function applyDynamicContent(){
                 const wrapper = document.getElementById('slider-wrapper');
                 const dotsEl  = document.getElementById('slider-dots');
                 if(wrapper){
-                    // Reemplazar completamente el contenido del slider
                     wrapper.innerHTML = '';
                     if(dotsEl) dotsEl.innerHTML = '';
                     urls.forEach((url, i) => {
@@ -61,6 +59,8 @@ async function applyDynamicContent(){
                             dotsEl.appendChild(dot);
                         }
                     });
+                    // Re-inicializar el slider con los nuevos elementos
+                    if(typeof reinitSlider === 'function') reinitSlider();
                 }
             }
         }
@@ -104,45 +104,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- MAIN SLIDER LOGIC ---
-    const slides = document.querySelectorAll('.slide-rc');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
     let slideInterval;
+    let currentSlide = 0;
 
-    const showSlide = (index) => {
-        if (!slides.length) return;
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        currentSlide = index;
-        if (currentSlide >= slides.length) currentSlide = 0;
-        if (currentSlide < 0) currentSlide = slides.length - 1;
-        
-        slides[currentSlide].classList.add('active');
-        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
-    };
-
-    const nextSlide = () => showSlide(currentSlide + 1);
-
-    const startSlider = () => {
-        if (!slides.length) return;
-        slideInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
-    };
-    
-    const resetSliderInterval = () => {
+    function reinitSlider(){
         clearInterval(slideInterval);
-        startSlider();
-    };
+        currentSlide = 0;
+        const slides = Array.from(document.querySelectorAll('.slide-rc'));
+        const dots   = Array.from(document.querySelectorAll('.dot'));
+        if(!slides.length) return;
 
-    if (slides.length > 0) {
+        // Asegurar que el primero esté activo
+        slides.forEach((s,i) => s.classList.toggle('active', i===0));
+        dots.forEach((d,i)   => d.classList.toggle('active', i===0));
+
+        const showSlide = (index) => {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d   => d.classList.remove('active'));
+            currentSlide = ((index % slides.length) + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            if(dots[currentSlide]) dots[currentSlide].classList.add('active');
+        };
+
         dots.forEach(dot => {
-            dot.addEventListener('click', (e) => {
+            // Remove old listeners by cloning
+            const newDot = dot.cloneNode(true);
+            dot.parentNode.replaceChild(newDot, dot);
+            newDot.addEventListener('click', e => {
                 showSlide(parseInt(e.target.dataset.slide));
-                resetSliderInterval();
+                clearInterval(slideInterval);
+                slideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
             });
         });
-        startSlider();
+
+        slideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
     }
+
+    reinitSlider();
 
 
 

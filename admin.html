@@ -501,7 +501,7 @@ async function loadAlbums(){
         <p style="color:#00A650;font-weight:600;font-size:.82rem">${fotos.length}/100 foto(s)</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px">
-        <button class="btn-save" style="padding:7px 14px;font-size:.8rem" onclick="editAlbum(${alb.id})">✏️ Editar Fotos</button>
+        <button class="btn-save" style="padding:7px 14px;font-size:.8rem" data-edit-id="${alb.id}">✏️ Editar Fotos</button>
         <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteAlbum(${alb.id})">🗑 Eliminar</button>
       </div>`;
     d.querySelector('.btn-save').addEventListener('click', ()=>editAlbumById(alb.id, alb.titulo, fotos));

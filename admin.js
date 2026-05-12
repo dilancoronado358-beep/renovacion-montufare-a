@@ -35,80 +35,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Login Submit
     if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-    // Permitir usar la tecla "Enter" para iniciar sesión
-    const handleEnter = (e) => {
-        if (e.key === 'Enter') {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (loginBtn) loginBtn.click();
-        }
-    };
-    document.getElementById('admin-email').addEventListener('keypress', handleEnter);
-    document.getElementById('admin-pass').addEventListener('keypress', handleEnter);
+            
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-pass').value.trim();
+            const errorEl = document.getElementById('login-error');
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
 
-    // Login Action (Clic directo al botón)
-    if (loginBtn) {
-    loginBtn.addEventListener('click', async () => {
-        const errorEl = document.getElementById('login-error');
-        const email = document.getElementById('admin-email').value.trim();
-        const password = document.getElementById('admin-pass').value.trim();
-        const errorEl = document.getElementById('login-error');
-        const submitBtn = loginForm.querySelector('button[type="submit"]');
-        const submitBtn = loginBtn;
-
-        if (!email || !password) {
-            errorEl.innerText = 'Por favor, ingresa tu correo y contraseña.';
-            errorEl.style.display = 'block';
-            return;
-        }
-
-        errorEl.style.display = 'none';
-        errorEl.innerText = '';
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = 'VERIFICANDO...';
-        submitBtn.disabled = true;
-
-        try {
-            // --- LLAVE MAESTRA INFALIBLE ---
-            // Verifica tus datos directamente. Es imposible que falle o se quede cargando.
-            if (email.toLowerCase() === 'dilancoronado358@gmail.com' && password === 'Dilan123') {
-                localStorage.setItem('admin_session', 'true');
-                document.getElementById('admin-pass').value = '';
-                showDashboard();
-                return; // Corta la función aquí y te deja entrar de inmediato
-            }
-
-            let loginExitoso = false;
-
-            if (supabase) {
-                const { data, error } = await supabase
-                    .from('usuarios_admin')
-                    .select('*')
-                    .eq('email', email)
-                    .eq('password', password);
-                
-                if (!error && data && data.length > 0) loginExitoso = true;
-            }
-
-            if (loginExitoso) {
-                localStorage.setItem('admin_session', 'true');
-                document.getElementById('admin-pass').value = '';
-                showDashboard();
-            } else {
-                errorEl.innerText = 'Error: Correo o contraseña incorrectos.';
+            if (!email || !password) {
+                errorEl.innerText = 'Por favor, ingresa tu correo y contraseña.';
                 errorEl.style.display = 'block';
+                return;
             }
-        } catch (err) {
-            errorEl.innerText = 'Error crítico de conexión: ' + err.message;
-            alert('Error crítico de conexión: ' + err.message);
-            errorEl.style.display = 'block';
-        } finally {
-            // 2. Restaurar botón siempre, sin importar lo que pase
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-        }
-    });
+
+            errorEl.style.display = 'none';
+            errorEl.innerText = '';
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'VERIFICANDO...';
+            submitBtn.disabled = true;
+
+            try {
+                // --- LLAVE MAESTRA INFALIBLE ---
+                if (email.toLowerCase() === 'dilancoronado358@gmail.com' && password === 'Dilan123') {
+                    localStorage.setItem('admin_session', 'true');
+                    document.getElementById('admin-pass').value = '';
+                    showDashboard();
+                    return; 
+                }
+
+                let loginExitoso = false;
+
+                if (supabase) {
+                    const { data, error } = await supabase
+                        .from('usuarios_admin')
+                        .select('*')
+                        .eq('email', email)
+                        .eq('password', password);
+                    
+                    if (!error && data && data.length > 0) loginExitoso = true;
+                }
+
+                if (loginExitoso) {
+                    localStorage.setItem('admin_session', 'true');
+                    document.getElementById('admin-pass').value = '';
+                    showDashboard();
+                } else {
+                    errorEl.innerText = 'Error: Correo o contraseña incorrectos.';
+                    errorEl.style.display = 'block';
+                }
+            } catch (err) {
+                errorEl.innerText = 'Error crítico de conexión: ' + err.message;
+                errorEl.style.display = 'block';
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
     }
 
     // Logout

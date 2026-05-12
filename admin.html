@@ -187,7 +187,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           <h3><i class="fas fa-image"></i> Foto Candidato Principal (izquierda)</h3>
           <div class="notice ok"><i class="fas fa-cloud"></i> Haz clic en "Subir Foto" para cargarla directamente a Cloudinary.</div>
           <button class="btn-upload" onclick="openCloudinaryWidget('h-img1')"><i class="fas fa-upload"></i> Subir Foto</button>
-          <div class="field" style="display:none"><label>URL de imagen (Cloudinary)</label><input type="url" id="h-img1"></div>
+          <div class="field"><label>URL de imagen (Pega el link o usa el botón de subir)</label><input type="url" id="h-img1"></div>
           <img id="prev-h-img1" class="img-preview" style="display:none">
           <br>
           <button class="btn-save" onclick="saveHeroImg(1)"><i class="fas fa-save"></i> Guardar Cambios</button>
@@ -196,7 +196,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <div class="card">
           <h3><i class="fas fa-image"></i> Foto Candidato Secundario (derecha)</h3>
           <button class="btn-upload" onclick="openCloudinaryWidget('h-img2')"><i class="fas fa-upload"></i> Subir Foto</button>
-          <div class="field" style="display:none"><label>URL de imagen (Cloudinary)</label><input type="url" id="h-img2"></div>
+          <div class="field"><label>URL de imagen (Pega el link o usa el botón de subir)</label><input type="url" id="h-img2"></div>
           <img id="prev-h-img2" class="img-preview" style="display:none">
           <br>
           <button class="btn-save" onclick="saveHeroImg(2)"><i class="fas fa-save"></i> Guardar Cambios</button>
@@ -205,7 +205,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <div class="card">
           <h3><i class="fas fa-mountain"></i> Imagen de Fondo del Hero</h3>
           <button class="btn-upload" onclick="openCloudinaryWidget('h-bg')"><i class="fas fa-upload"></i> Subir Foto</button>
-          <div class="field" style="display:none"><label>URL de imagen de fondo</label><input type="url" id="h-bg"></div>
+          <div class="field"><label>URL de imagen de fondo (Pega el link o usa el botón)</label><input type="url" id="h-bg"></div>
           <img id="prev-h-bg" class="img-preview" style="display:none">
           <br>
           <button class="btn-save" onclick="saveHeroBg()"><i class="fas fa-save"></i> Guardar Cambios</button>
@@ -219,7 +219,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           <h3><i class="fas fa-images"></i> Imágenes del carrusel principal (hasta 100)</h3>
           <div class="notice ok"><i class="fas fa-cloud"></i> Haz clic en "Añadir Fotos" o arrástralas abajo. (Una URL por línea).</div>
           <button class="btn-upload" onclick="openCloudinaryWidget('sl-urls', true)"><i class="fas fa-upload"></i> Añadir Fotos al Carrusel</button>
-          <div class="field" style="margin-top:14px; display:none">
+          <div class="field" style="margin-top:14px">
             <label>URLs de imágenes (una por línea)</label>
             <textarea id="sl-urls" rows="10" placeholder="https://res.cloudinary.com/foto1.jpg&#10;https://res.cloudinary.com/foto2.jpg"></textarea>
           </div>
@@ -295,7 +295,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           <div class="field">
             <label>Imagen de portada (Obligatoria)</label>
             <button class="btn-upload" onclick="openCloudinaryWidget('alb-portada')"><i class="fas fa-upload"></i> Subir Portada</button>
-            <input type="url" id="alb-portada" style="display:none">
+            <input type="url" id="alb-portada" placeholder="Pega aquí el enlace de la imagen..." style="margin-top:8px">
             <img id="prev-alb-portada" class="img-preview" style="display:none">
           </div>
           <button class="btn-save" onclick="createAlbum()"><i class="fas fa-folder-plus"></i> Crear Álbum</button>
@@ -311,7 +311,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           <h3><i class="fas fa-images"></i> Fotos del álbum: <span id="album-edit-name"></span></h3>
           <div class="notice ok">Haz clic en "Añadir Fotos" o arrástralas abajo para reordenar.</div>
           <button class="btn-upload" onclick="openCloudinaryWidget('album-fotos-input', true)"><i class="fas fa-upload"></i> Añadir Fotos</button>
-          <div class="field" style="margin-top:12px; display:none">
+          <div class="field" style="margin-top:12px">
             <label>URLs de fotos (una por línea)</label>
             <textarea id="album-fotos-input" rows="10" placeholder="https://res.cloudinary.com/foto1.jpg"></textarea>
           </div>

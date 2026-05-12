@@ -322,6 +322,20 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           <div class="field"><label>URL TikTok</label><input type="url" id="c-tt" placeholder="https://tiktok.com/..."></div>
           <button class="btn-save" onclick="saveContact()"><i class="fas fa-save"></i> Guardar Redes</button>
         </div>
+        <div class="card" style="border-left:5px solid #25D366;">
+          <h3><i class="fab fa-whatsapp"></i> Generador de Enlaces Rápidos para Difusión</h3>
+          <div class="notice ok">Crea un enlace con un mensaje listo para que los brigadistas o ciudadanos te lo envíen con un clic. Ideal para grupos.</div>
+          <div class="field" style="margin-top:12px;">
+            <label>Mensaje Predefinido para el Ciudadano</label>
+            <input type="text" id="wa-msg-gen" placeholder="Hola equipo, confirmo mi asistencia a la caminata de hoy">
+          </div>
+          <button class="btn-save" style="background:#25D366;" onclick="generarEnlaceWhatsApp()"><i class="fas fa-link"></i> Crear Enlace de WhatsApp</button>
+          <div id="wa-link-res" style="display:none; margin-top:15px; padding:12px; background:#f8f9fa; border-radius:8px; word-break:break-all; font-size:0.85rem; border:1px solid #ddd;">
+            <strong style="display:block; margin-bottom:5px; color:#333;">Enlace Generado:</strong>
+            <a id="wa-link-href" target="_blank" style="color:#1a3a6b;"></a>
+            <button class="btn-secondary" style="margin-top:10px; padding:6px 12px; font-size:0.8rem; display:inline-block; width:auto;" onclick="copiarEnlaceWA()"><i class="fas fa-copy"></i> Copiar Enlace</button>
+          </div>
+        </div>
       </div>
 
       <!-- TAB: MULTIMEDIA -->
@@ -385,7 +399,10 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
 
       <!-- TAB: MAPA TERRITORIAL -->
       <div class="tab-panel" id="tab-mapa">
-        <h1 class="page-title">Mapa <span>Territorial</span></h1>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:28px;">
+          <h1 class="page-title" style="margin:0;">Mapa <span>Territorial</span></h1>
+          <button class="btn-save" style="background:#1a3a6b;" onclick="abrirMapaPresentacion()"><i class="fas fa-expand-arrows-alt"></i> Modo Presentación (Pantalla Completa)</button>
+        </div>
         <div class="card">
           <h3><i class="fas fa-map-pin"></i> Agregar Nuevo Punto</h3>
           <div class="grid2">
@@ -883,6 +900,8 @@ async function deleteProp(id){
   loadProps();
 }
 
+let prioridadesProps = [];
+
 async function loadProps(){
   const list=document.getElementById('props-list');
   list.innerHTML='<p style="color:#888">Cargando...</p>';
@@ -894,23 +913,42 @@ async function loadProps(){
   } else {
     items=JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
   }
+  
+  const priObj = await getConfig('propuestas_prioridad');
+  prioridadesProps = Array.isArray(priObj.ids) ? priObj.ids : [];
+
   if(!items.length){list.innerHTML='<p style="color:#888">No hay propuestas aún.</p>';return;}
   list.innerHTML='';
   items.forEach(p=>{
+    const isPrio = prioridadesProps.includes(p.id);
     const d=document.createElement('div');
     d.className='prop-item';
+    d.style = isPrio ? 'background:#fffde7; border:2px solid #fbc02d;' : '';
     d.innerHTML=`
       <div style="flex:1">
         <span class="badge-cat">${p.category}</span>
+        ${isPrio ? '<span style="background:#fbc02d; color:#000; font-size:0.7rem; font-weight:bold; padding:2px 6px; border-radius:4px; margin-left:6px;">⭐ DESTACADA</span>' : ''}
         <h4>${p.title}</h4>
         <p>${p.desc_text||''}</p>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="${p.is_active?'status-ok':'status-no'}">${p.is_active?'● ACTIVO':'● INACTIVO'}</span>
+        <button class="btn-save" onclick="togglePriorityProp(${p.id})" style="padding:6px 10px; font-size:0.75rem; background:${isPrio ? '#fbc02d' : '#e0e0e0'}; color:${isPrio ? '#000' : '#333'};">${isPrio ? '⭐ Quitar Destacado' : '☆ Destacar'}</button>
         <button class="btn-danger" onclick="deleteProp(${p.id})" style="padding:6px 12px;font-size:.78rem">🗑 Eliminar</button>
       </div>`;
     list.appendChild(d);
   });
+}
+
+async function togglePriorityProp(id) {
+  if(prioridadesProps.includes(id)) {
+    prioridadesProps = prioridadesProps.filter(x => x !== id);
+  } else {
+    prioridadesProps.push(id);
+  }
+  await setConfig('propuestas_prioridad', { ids: prioridadesProps });
+  showToast('Prioridad de propuesta actualizada');
+  loadProps();
 }
 
 async function saveContact(){
@@ -1296,6 +1334,43 @@ function forceMasterRefresh() {
   setTimeout(() => {
     window.location.reload(true);
   }, 600);
+}
+
+function abrirMapaPresentacion() {
+  const url = window.location.origin + window.location.pathname.replace('admin.html', 'index.html') + '#seccion-mapa';
+  const w = window.open(url, '_blank', 'width=1200,height=800,fullscreen=yes');
+  if(!w) {
+    showToast('Habilita las ventanas emergentes para abrir a pantalla completa', 'warn');
+  } else {
+    showToast('Mapa abierto en Modo Presentación');
+  }
+}
+
+function generarEnlaceWhatsApp() {
+  const elWa = document.getElementById('c-wa');
+  const baseNum = elWa && elWa.value ? elWa.value.trim() : '593987851539';
+  const elMsg = document.getElementById('wa-msg-gen');
+  const msgText = elMsg && elMsg.value ? elMsg.value.trim() : 'Hola equipo, confirmo mi asistencia a la caminata de hoy';
+  const link = `https://api.whatsapp.com/send?phone=${baseNum.replace(/\D/g,'')}&text=${encodeURIComponent(msgText)}`;
+  
+  const resDiv = document.getElementById('wa-link-res');
+  const aHref = document.getElementById('wa-link-href');
+  if(aHref && resDiv) {
+    aHref.href = link;
+    aHref.textContent = link;
+    resDiv.style.display = 'block';
+    showToast('Enlace para WhatsApp listo para copiar');
+  }
+}
+
+function copiarEnlaceWA() {
+  const el = document.getElementById('wa-link-href');
+  if(!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    showToast('¡Enlace copiado al portapapeles!');
+  }).catch(() => {
+    showToast('Error copiando enlace', 'error');
+  });
 }
 
 </script>

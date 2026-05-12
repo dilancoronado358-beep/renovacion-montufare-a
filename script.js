@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let slideInterval;
     let currentSlide = 0;
 
-    function reinitSlider(){
+    window.reinitSlider = function(){
         clearInterval(slideInterval);
         currentSlide = 0;
         const slides = Array.from(document.querySelectorAll('.slide-rc'));
@@ -138,9 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         slideInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
-    }
+    };
 
-    reinitSlider();
+    window.reinitSlider();
 
 
 

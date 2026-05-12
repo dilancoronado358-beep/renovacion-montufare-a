@@ -40,16 +40,18 @@
         </div>
     </nav>
 
-    <!-- Multimedia Hero -->
-    <section class="hero-rc bg-navy text-white" style="min-height: 40vh; padding-top: 200px;">
-        <div class="container-rc text-center" data-aos="fade-up">
-            <h1 class="hero-title" style="font-size: 3.5rem;">ARCHIVOS DE LA <br><span class="text-cyan">RENOVACIÓN</span></h1>
-            <p class="lead-rc">Testimonios visuales de nuestro compromiso con Montúfar.</p>
-        </div>
-    </section>
+    <!-- MAIN ALBUMS VIEW -->
+    <div id="main-albums-view">
+        <!-- Multimedia Hero -->
+        <section class="hero-rc bg-navy text-white" style="min-height: 40vh; padding-top: 200px;">
+            <div class="container-rc text-center" data-aos="fade-up">
+                <h1 class="hero-title" style="font-size: 3.5rem;">ARCHIVOS DE LA <br><span class="text-cyan">RENOVACIÓN</span></h1>
+                <p class="lead-rc">Testimonios visuales de nuestro compromiso con Montúfar.</p>
+            </div>
+        </section>
 
-    <!-- Album Gallery Section -->
-    <section class="section-padding bg-white">
+        <!-- Album Gallery Section -->
+        <section class="section-padding bg-white">
         <div class="container-rc">
             <div class="album-grid" id="album-grid">
 
@@ -90,7 +92,35 @@
                 <a href="index.html" class="btn-rc btn-navy"><i class="fas fa-arrow-left"></i> VOLVER AL INICIO</a>
             </div>
         </div>
-    </section>
+        </section>
+    </div>
+
+    <!-- DYNAMIC ALBUM DETAIL VIEW (Initially Hidden) -->
+    <div id="dynamic-album-view" style="display:none">
+        <!-- Project Header -->
+        <section class="hero-rc bg-navy text-white" style="min-height: 30vh; padding-top: 180px; padding-bottom: 60px;">
+            <div class="container-rc">
+                <a href="#" onclick="closeDynamicAlbum(event)" class="text-white" style="text-decoration: none; opacity: 0.7; font-weight: 700;">
+                    <i class="fas fa-arrow-left"></i> VOLVER A LOS ÁLBUMES
+                </a>
+                <h1 class="hero-title mt-20" id="da-title" style="font-size: 3rem; margin-top: 20px;">TÍTULO ÁLBUM</h1>
+                <div class="project-meta" id="da-meta" style="color: var(--white); opacity: 0.9;">Fecha | Lugar</div>
+            </div>
+        </section>
+
+        <!-- Full Photo Grid -->
+        <section class="section-padding bg-white">
+            <div class="container-rc">
+                <div class="gallery-grid" id="da-gallery-grid">
+                    <!-- Photos will be inserted here -->
+                </div>
+
+                <div class="text-center mt-80">
+                    <a href="#" onclick="closeDynamicAlbum(event)" class="btn-rc btn-navy">EXPLORAR OTROS ÁLBUMES</a>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -143,8 +173,35 @@
             const fotos = Array.isArray(alb.fotos) ? alb.fotos : [];
             if(!fotos.length){ alert('Este álbum no tiene fotos aún.'); return; }
             lbFotos = fotos;
-            lbIdx = 0;
-            showLightbox();
+            
+            // Llenar vista dinámica
+            document.getElementById('da-title').innerHTML = alb.titulo;
+            document.getElementById('da-meta').innerHTML = (alb.fecha||'') + ' | ' + (alb.lugar||'');
+            
+            const grid = document.getElementById('da-gallery-grid');
+            grid.innerHTML = '';
+            fotos.forEach((url, i) => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = alb.titulo + ' ' + (i+1);
+                img.setAttribute('data-aos', 'zoom-in');
+                img.setAttribute('data-aos-delay', String((i%5)*100)); // staggered delay
+                img.style.cursor = 'pointer';
+                img.onclick = () => { lbIdx = i; showLightbox(); };
+                grid.appendChild(img);
+            });
+
+            // Cambiar vista
+            document.getElementById('main-albums-view').style.display = 'none';
+            document.getElementById('dynamic-album-view').style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function closeDynamicAlbum(e){
+            if(e) e.preventDefault();
+            document.getElementById('dynamic-album-view').style.display = 'none';
+            document.getElementById('main-albums-view').style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function showLightbox(){

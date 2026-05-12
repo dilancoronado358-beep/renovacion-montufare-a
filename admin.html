@@ -1,551 +1,405 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración | Renovación Montufareña</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f4f8;
-            min-height: 100vh;
-        }
-
-        /* ===== LOGIN PAGE ===== */
-        #page-login {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 100%);
-        }
-
-        .login-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 48px 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-
-        .login-card img {
-            height: 70px;
-            margin-bottom: 24px;
-        }
-
-        .login-card h1 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: #0a1628;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .login-card p.subtitle {
-            font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus {
-            border-color: #1a3a6b;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            background: #1a3a6b;
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-login:hover { background: #0a1628; }
-        .btn-login:active { transform: scale(0.98); }
-        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
-
-        .btn-back {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            margin-top: 12px;
-            background: transparent;
-            color: #1a3a6b;
-            border: 2px solid #1a3a6b;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .btn-back:hover { background: #1a3a6b; color: #fff; }
-
-        .error-msg {
-            background: #fff0f0;
-            color: #c0392b;
-            border: 1px solid #f5c6cb;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 0.9rem;
-            margin-top: 16px;
-            display: none;
-        }
-
-        /* ===== DASHBOARD ===== */
-        #page-dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .admin-wrapper {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: #0a1628;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            padding: 32px 24px;
-            position: fixed;
-            top: 0; left: 0; bottom: 0;
-            z-index: 100;
-        }
-
-        .sidebar img {
-            height: 50px;
-            margin-bottom: 40px;
-            filter: brightness(0) invert(1);
-        }
-
-        .sidebar nav {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .sidebar nav a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .sidebar nav a:hover,
-        .sidebar nav a.active {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-        }
-
-        .btn-logout {
-            margin-top: auto;
-            padding: 12px 16px;
-            background: #c0392b;
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-logout:hover { background: #a93226; }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 260px;
-            padding: 40px;
-            flex: 1;
-        }
-
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #0a1628;
-            margin-bottom: 32px;
-        }
-
-        .page-title span { color: #00A650; }
-
-        .card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 32px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        }
-
-        .card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #0a1628;
-            margin-bottom: 20px;
-        }
-
-        .prop-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .prop-form select,
-        .prop-form input,
-        .prop-form textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .prop-form select:focus,
-        .prop-form input:focus,
-        .prop-form textarea:focus {
-            border-color: #1a3a6b;
-        }
-
-        .prop-form textarea { grid-column: span 2; resize: vertical; }
-
-        .btn-save {
-            grid-column: span 2;
-            padding: 14px;
-            background: #00A650;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-save:hover { background: #008f44; }
-
-        .prop-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            margin-bottom: 12px;
-        }
-
-        .prop-item h4 { font-size: 0.95rem; color: #0a1628; margin: 4px 0; }
-        .prop-item p  { font-size: 0.82rem; color: #888; }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            background: #1a3a6b;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .status-active   { color: #00A650; font-weight: 700; }
-        .status-inactive { color: #c0392b; font-weight: 700; }
-
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; position: relative; height: auto; }
-            .main-content { margin-left: 0; padding: 20px; }
-            .admin-wrapper { flex-direction: column; }
-            .prop-form { grid-template-columns: 1fr; }
-            .prop-form textarea, .btn-save { grid-column: span 1; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin | Renovación Montufareña</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
+/* LOGIN */
+#pg-login{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0a1628,#1a3a6b)}
+.login-card{background:#fff;border-radius:24px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
+.login-card img{height:65px;margin-bottom:20px}
+.login-card h1{font-size:1.3rem;font-weight:900;color:#0a1628;margin-bottom:6px;letter-spacing:1px}
+.login-card p{font-size:.82rem;color:#999;margin-bottom:28px}
+.inp{width:100%;padding:13px 16px;border:2px solid #e0e0e0;border-radius:12px;font-size:.95rem;font-family:inherit;outline:none;margin-bottom:14px;transition:border-color .2s}
+.inp:focus{border-color:#1a3a6b}
+.btn-primary{width:100%;padding:15px;background:#1a3a6b;color:#fff;border:none;border-radius:12px;font-size:.95rem;font-weight:700;letter-spacing:1px;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:#0a1628}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed}
+.btn-secondary{display:block;width:100%;padding:13px;margin-top:10px;background:transparent;color:#1a3a6b;border:2px solid #1a3a6b;border-radius:12px;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;text-align:center;transition:all .2s}
+.btn-secondary:hover{background:#1a3a6b;color:#fff}
+.err-box{background:#fff0f0;color:#c0392b;border:1px solid #f5c6cb;border-radius:10px;padding:12px;font-size:.88rem;margin-top:14px;display:none}
+/* DASHBOARD */
+#pg-dash{display:none;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:250px;background:#0a1628;color:#fff;display:flex;flex-direction:column;padding:28px 20px;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sidebar img{height:45px;margin-bottom:32px;filter:brightness(0) invert(1)}
+.sidebar nav{display:flex;flex-direction:column;gap:4px}
+.sidebar nav button{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.65);background:transparent;border:none;font-size:.87rem;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .2s}
+.sidebar nav button:hover,.sidebar nav button.active{background:rgba(255,255,255,.12);color:#fff}
+.btn-logout{margin-top:auto;padding:11px 14px;background:#c0392b;color:#fff;border:none;border-radius:10px;font-size:.87rem;font-weight:600;cursor:pointer;transition:background .2s;width:100%;text-align:left}
+.btn-logout:hover{background:#a93226}
+.main{margin-left:250px;padding:36px;flex:1}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.page-title{font-size:1.7rem;font-weight:900;color:#0a1628;margin-bottom:28px}
+.page-title span{color:#00A650}
+.card{background:#fff;border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.card h3{font-size:1rem;font-weight:700;color:#0a1628;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.78rem;font-weight:700;color:#666;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.field input,.field textarea,.field select{width:100%;padding:11px 14px;border:2px solid #e0e0e0;border-radius:10px;font-size:.92rem;font-family:inherit;outline:none;transition:border-color .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#1a3a6b}
+.field textarea{resize:vertical}
+.btn-save{padding:12px 24px;background:#00A650;color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-save:hover{background:#008f44}
+.btn-danger{padding:10px 18px;background:#c0392b;color:#fff;border:none;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.prop-item{display:flex;align-items:flex-start;justify-content:space-between;padding:14px;background:#f8f9fa;border-radius:12px;margin-bottom:10px;gap:10px}
+.prop-item h4{font-size:.9rem;color:#0a1628;margin:3px 0}
+.prop-item p{font-size:.8rem;color:#888}
+.badge-cat{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;background:#1a3a6b;color:#fff;margin-bottom:3px}
+.status-ok{color:#00A650;font-weight:700;font-size:.82rem;white-space:nowrap}
+.status-no{color:#c0392b;font-weight:700;font-size:.82rem;white-space:nowrap}
+.notice{padding:10px 14px;border-radius:8px;font-size:.85rem;margin-bottom:14px}
+.notice.warn{background:#fff8e1;border-left:4px solid #f59e0b;color:#92400e}
+.notice.ok{background:#f0fdf4;border-left:4px solid #00A650;color:#065f46}
+img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;object-fit:cover}
+@media(max-width:768px){.sidebar{width:100%;position:relative;height:auto}.main{margin-left:0;padding:20px}.layout{flex-direction:column}.grid2{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
-<div id="page-login">
-    <div class="login-card">
-        <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
-        <h1>ACCESO PRIVADO</h1>
-        <p class="subtitle">Panel de Administración — Renovación Montufareña</p>
-
-        <div class="form-group">
-            <label>Correo electrónico</label>
-            <input type="email" id="admin-email" placeholder="correo@ejemplo.com">
-        </div>
-        <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" id="admin-pass" placeholder="••••••••">
-        </div>
-
-        <button class="btn-login" id="btn-login">INICIAR SESIÓN</button>
-        <a href="index.html" class="btn-back">← Regresar a la página principal</a>
-
-        <div class="error-msg" id="login-error"></div>
-    </div>
+<!-- LOGIN -->
+<div id="pg-login">
+  <div class="login-card">
+    <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
+    <h1>ACCESO PRIVADO</h1>
+    <p>Panel de Administración — Renovación Montufareña</p>
+    <input class="inp" type="email" id="em" placeholder="Correo electrónico">
+    <input class="inp" type="password" id="pw" placeholder="Contraseña">
+    <button class="btn-primary" id="btn-in">INICIAR SESIÓN</button>
+    <a href="index.html" class="btn-secondary">← Volver al sitio</a>
+    <div class="err-box" id="err"></div>
+  </div>
 </div>
 
-<!-- ===== DASHBOARD ===== -->
-<div id="page-dashboard">
-    <div class="admin-wrapper">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
-            <nav>
-                <a href="#" class="active"><i class="fas fa-home"></i> Panel Principal</a>
-                <a href="#"><i class="fas fa-list-check"></i> Propuestas</a>
-                <a href="#"><i class="fas fa-newspaper"></i> Noticias</a>
-                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
-            </nav>
-            <button class="btn-logout" id="btn-logout">
-                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-            </button>
-        </aside>
+<!-- DASHBOARD -->
+<div id="pg-dash">
+  <div class="layout">
+    <aside class="sidebar">
+      <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
+      <nav>
+        <button class="active" onclick="showTab('hero')"><i class="fas fa-user"></i> Hero / Candidato</button>
+        <button onclick="showTab('slider')"><i class="fas fa-images"></i> Carrusel Imágenes</button>
+        <button onclick="showTab('propuestas')"><i class="fas fa-list-check"></i> Propuestas</button>
+        <button onclick="showTab('contacto')"><i class="fas fa-phone"></i> Contacto / Redes</button>
+      </nav>
+      <button class="btn-logout" id="btn-out"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
 
-        <!-- Contenido principal -->
-        <main class="main-content">
-            <h1 class="page-title">Gestión de <span>Propuestas</span></h1>
+    <main class="main">
 
-            <!-- Formulario nueva propuesta -->
-            <div class="card">
-                <h3><i class="fas fa-plus-circle"></i> Agregar Nueva Propuesta</h3>
-                <form class="prop-form" id="proposal-form">
-                    <select id="prop-cat">
-                        <option value="agro">🌾 Agro</option>
-                        <option value="seguridad">🛡️ Seguridad</option>
-                        <option value="salud">🏥 Salud</option>
-                        <option value="vialidad">🚧 Vialidad</option>
-                    </select>
-                    <input type="text" id="prop-title" placeholder="Título de la propuesta" required>
-                    <textarea id="prop-desc" rows="3" placeholder="Descripción de la propuesta..." required></textarea>
-                    <button type="submit" class="btn-save">💾 GUARDAR PROPUESTA</button>
-                </form>
+      <!-- TAB: HERO -->
+      <div class="tab-panel active" id="tab-hero">
+        <h1 class="page-title">Hero / <span>Candidato</span></h1>
+        <div class="notice warn"><i class="fas fa-info-circle"></i> Los cambios de texto e imágenes se guardan en la base de datos y se reflejan en la página pública al recargar.</div>
+
+        <div class="card">
+          <h3><i class="fas fa-heading"></i> Título Principal</h3>
+          <div class="field"><label>Línea 1 del título (ej: CON)</label><input type="text" id="h-titulo1" placeholder="CON"></div>
+          <div class="field"><label>Nombre del candidato (texto verde)</label><input type="text" id="h-nombre" placeholder="FABIÁN ROBLES"></div>
+          <div class="field"><label>Línea 3 (ej: MONTÚFAR AVANZA)</label><input type="text" id="h-titulo2" placeholder="MONTÚFAR AVANZA"></div>
+          <div class="field"><label>Subtexto / eslogan</label><textarea id="h-sub" rows="2" placeholder="La fuerza del trabajo y el corazón de nuestra gente..."></textarea></div>
+          <button class="btn-save" onclick="saveHeroText()"><i class="fas fa-save"></i> Guardar Texto</button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-image"></i> Foto Candidato Principal (izquierda)</h3>
+          <div class="notice warn"><i class="fas fa-cloud"></i> Sube la imagen a <strong>Cloudinary</strong> (cloudinary.com) y pega aquí la URL directa.</div>
+          <div class="field"><label>URL de imagen (Cloudinary)</label><input type="url" id="h-img1" placeholder="https://res.cloudinary.com/..."></div>
+          <button class="btn-save" onclick="saveHeroImg(1)"><i class="fas fa-save"></i> Actualizar Foto Principal</button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-image"></i> Foto Candidato Secundario (derecha)</h3>
+          <div class="field"><label>URL de imagen (Cloudinary)</label><input type="url" id="h-img2" placeholder="https://res.cloudinary.com/..."></div>
+          <button class="btn-save" onclick="saveHeroImg(2)"><i class="fas fa-save"></i> Actualizar Foto Secundaria</button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-mountain"></i> Imagen de Fondo del Hero</h3>
+          <div class="field"><label>URL de imagen de fondo</label><input type="url" id="h-bg" placeholder="https://res.cloudinary.com/..."></div>
+          <button class="btn-save" onclick="saveHeroBg()"><i class="fas fa-save"></i> Actualizar Fondo</button>
+        </div>
+      </div>
+
+      <!-- TAB: SLIDER -->
+      <div class="tab-panel" id="tab-slider">
+        <h1 class="page-title">Carrusel de <span>Imágenes</span></h1>
+        <div class="card">
+          <h3><i class="fas fa-images"></i> Imágenes del carrusel principal</h3>
+          <div class="notice warn"><i class="fas fa-cloud"></i> Sube imágenes a Cloudinary y pega las URLs aquí.</div>
+          <div class="field"><label>Imagen 1 (URL)</label><input type="url" id="sl-1" placeholder="https://res.cloudinary.com/..."></div>
+          <div class="field"><label>Imagen 2 (URL)</label><input type="url" id="sl-2" placeholder="https://res.cloudinary.com/..."></div>
+          <div class="field"><label>Imagen 3 (URL) — opcional</label><input type="url" id="sl-3" placeholder="https://res.cloudinary.com/..."></div>
+          <button class="btn-save" onclick="saveSlider()"><i class="fas fa-save"></i> Guardar Imágenes</button>
+        </div>
+      </div>
+
+      <!-- TAB: PROPUESTAS -->
+      <div class="tab-panel" id="tab-propuestas">
+        <h1 class="page-title">Gestión de <span>Propuestas</span></h1>
+
+        <div class="card">
+          <h3><i class="fas fa-plus"></i> Nueva Propuesta</h3>
+          <div class="grid2">
+            <div class="field"><label>Categoría</label>
+              <select id="p-cat">
+                <option value="agro">🌾 Agro</option>
+                <option value="seguridad">🛡️ Seguridad</option>
+                <option value="salud">🏥 Salud</option>
+                <option value="vialidad">🚧 Vialidad</option>
+              </select>
             </div>
+            <div class="field"><label>Título</label><input type="text" id="p-title" placeholder="Título de la propuesta"></div>
+          </div>
+          <div class="field"><label>Descripción</label><textarea id="p-desc" rows="3" placeholder="Descripción detallada..."></textarea></div>
+          <button class="btn-save" onclick="saveProp()"><i class="fas fa-save"></i> Guardar Propuesta</button>
+        </div>
 
-            <!-- Lista de propuestas -->
-            <div class="card">
-                <h3><i class="fas fa-list"></i> Propuestas Activas</h3>
-                <div id="proposals-list">
-                    <p style="color:#888;">Cargando propuestas...</p>
-                </div>
-            </div>
-        </main>
-    </div>
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Propuestas Guardadas</h3>
+          <div id="props-list"><p style="color:#888">Cargando...</p></div>
+        </div>
+      </div>
+
+      <!-- TAB: CONTACTO -->
+      <div class="tab-panel" id="tab-contacto">
+        <h1 class="page-title">Contacto / <span>Redes</span></h1>
+        <div class="card">
+          <h3><i class="fas fa-phone"></i> Número de WhatsApp</h3>
+          <div class="field"><label>Número con código de país (ej: 593987851539)</label><input type="text" id="c-wa" placeholder="593987851539"></div>
+          <button class="btn-save" onclick="saveContact()"><i class="fas fa-save"></i> Guardar</button>
+        </div>
+        <div class="card">
+          <h3><i class="fab fa-facebook"></i> Redes Sociales</h3>
+          <div class="field"><label>URL Facebook</label><input type="url" id="c-fb" placeholder="https://facebook.com/..."></div>
+          <div class="field"><label>URL TikTok</label><input type="url" id="c-tt" placeholder="https://tiktok.com/..."></div>
+          <button class="btn-save" onclick="saveContact()"><i class="fas fa-save"></i> Guardar Redes</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
 </div>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // ---- Config ----
-    const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
-    const SB_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
-    const db = (window.supabase && window.supabase.createClient)
-        ? window.supabase.createClient(SB_URL, SB_KEY)
-        : null;
+const MASTER = {email:'dilancoronado358@gmail.com', pass:'Dilan123'};
+const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
+// IMPORTANTE: Reemplaza esta clave con tu anon key real de Supabase (empieza con eyJ...)
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFncXJ5dGljdHFtanp1cHFybnFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxMzY5NjgsImV4cCI6MjA2MTcxMjk2OH0.placeholder_replace_me';
 
-    const MASTER_EMAIL = 'dilancoronado358@gmail.com';
-    const MASTER_PASS  = 'Dilan123';
+let db = null;
+try {
+  if(window.supabase && window.supabase.createClient) {
+    db = window.supabase.createClient(SB_URL, SB_KEY);
+  }
+} catch(e){}
 
-    // ---- Elementos ----
-    const pageLogin    = document.getElementById('page-login');
-    const pageDash     = document.getElementById('page-dashboard');
-    const btnLogin     = document.getElementById('btn-login');
-    const btnLogout    = document.getElementById('btn-logout');
-    const errorBox     = document.getElementById('login-error');
-    const propForm     = document.getElementById('proposal-form');
+const login   = document.getElementById('pg-login');
+const dash    = document.getElementById('pg-dash');
+const btnIn   = document.getElementById('btn-in');
+const btnOut  = document.getElementById('btn-out');
+const errBox  = document.getElementById('err');
 
-    // ---- Verificar sesión al cargar ----
-    if (localStorage.getItem('admin_auth') === '1') {
-        goToDashboard();
+// Check session
+if(localStorage.getItem('adm')===('1')) go();
+
+btnIn.onclick = function(){
+  const e = document.getElementById('em').value.trim();
+  const p = document.getElementById('pw').value.trim();
+  errBox.style.display='none';
+  if(!e||!p){showErr('Completa todos los campos');return;}
+  if(e.toLowerCase()===MASTER.email.toLowerCase() && p===MASTER.pass){
+    localStorage.setItem('adm','1');
+    go();
+  } else {
+    showErr('Correo o contraseña incorrectos');
+  }
+};
+
+document.getElementById('pw').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
+document.getElementById('em').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
+
+btnOut.onclick=function(){
+  localStorage.removeItem('adm');
+  dash.style.display='none';
+  login.style.display='flex';
+};
+
+function go(){
+  login.style.display='none';
+  dash.style.display='block';
+  loadContent();
+  loadProps();
+}
+
+function showErr(m){errBox.textContent=m;errBox.style.display='block';}
+
+function showTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ---- LOAD from localStorage or DB ----
+async function loadContent(){
+  // Hero text
+  const ht = JSON.parse(localStorage.getItem('hero_text')||'{}');
+  if(ht.titulo1) document.getElementById('h-titulo1').value=ht.titulo1;
+  if(ht.nombre)  document.getElementById('h-nombre').value=ht.nombre;
+  if(ht.titulo2) document.getElementById('h-titulo2').value=ht.titulo2;
+  if(ht.sub)     document.getElementById('h-sub').value=ht.sub;
+  // Hero images
+  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
+  if(hi.img1) document.getElementById('h-img1').value=hi.img1;
+  if(hi.img2) document.getElementById('h-img2').value=hi.img2;
+  if(hi.bg)   document.getElementById('h-bg').value=hi.bg;
+  // Slider
+  const sl = JSON.parse(localStorage.getItem('slider_imgs')||'{}');
+  if(sl.s1) document.getElementById('sl-1').value=sl.s1;
+  if(sl.s2) document.getElementById('sl-2').value=sl.s2;
+  if(sl.s3) document.getElementById('sl-3').value=sl.s3||'';
+  // Contact
+  const ct = JSON.parse(localStorage.getItem('contacto')||'{}');
+  if(ct.wa) document.getElementById('c-wa').value=ct.wa;
+  if(ct.fb) document.getElementById('c-fb').value=ct.fb;
+  if(ct.tt) document.getElementById('c-tt').value=ct.tt;
+}
+
+// ---- SAVE HERO TEXT ----
+async function saveHeroText(){
+  const data={
+    titulo1: document.getElementById('h-titulo1').value,
+    nombre:  document.getElementById('h-nombre').value,
+    titulo2: document.getElementById('h-titulo2').value,
+    sub:     document.getElementById('h-sub').value
+  };
+  localStorage.setItem('hero_text', JSON.stringify(data));
+  if(db){
+    await db.from('site_config').upsert({key:'hero_text', value: JSON.stringify(data)},{onConflict:'key'});
+  }
+  alert('✅ Texto del hero guardado correctamente');
+}
+
+// ---- SAVE HERO IMAGES ----
+async function saveHeroImg(num){
+  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
+  if(num===1) hi.img1 = document.getElementById('h-img1').value;
+  if(num===2) hi.img2 = document.getElementById('h-img2').value;
+  localStorage.setItem('hero_imgs', JSON.stringify(hi));
+  if(db){
+    await db.from('site_config').upsert({key:'hero_imgs', value: JSON.stringify(hi)},{onConflict:'key'});
+  }
+  alert('✅ Foto actualizada. Los cambios se verán en la página pública.');
+}
+
+async function saveHeroBg(){
+  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
+  hi.bg = document.getElementById('h-bg').value;
+  localStorage.setItem('hero_imgs', JSON.stringify(hi));
+  if(db){
+    await db.from('site_config').upsert({key:'hero_imgs', value: JSON.stringify(hi)},{onConflict:'key'});
+  }
+  alert('✅ Fondo actualizado');
+}
+
+// ---- SAVE SLIDER ----
+async function saveSlider(){
+  const data={
+    s1: document.getElementById('sl-1').value,
+    s2: document.getElementById('sl-2').value,
+    s3: document.getElementById('sl-3').value
+  };
+  localStorage.setItem('slider_imgs', JSON.stringify(data));
+  if(db){
+    await db.from('site_config').upsert({key:'slider_imgs', value: JSON.stringify(data)},{onConflict:'key'});
+  }
+  alert('✅ Imágenes del carrusel guardadas');
+}
+
+// ---- SAVE PROPUESTA ----
+async function saveProp(){
+  const cat   = document.getElementById('p-cat').value;
+  const title = document.getElementById('p-title').value;
+  const desc  = document.getElementById('p-desc').value;
+  if(!title||!desc){alert('Completa título y descripción');return;}
+
+  if(db){
+    const {error} = await db.from('propuestas').insert([{category:cat, title, desc_text:desc}]);
+    if(error){alert('Error Supabase: '+error.message);return;}
+  } else {
+    // localStorage fallback
+    const props = JSON.parse(localStorage.getItem('props_local')||'[]');
+    props.push({id:Date.now(),category:cat,title,desc_text:desc,is_active:true});
+    localStorage.setItem('props_local', JSON.stringify(props));
+  }
+  document.getElementById('p-title').value='';
+  document.getElementById('p-desc').value='';
+  alert('✅ Propuesta guardada');
+  loadProps();
+}
+
+// ---- LOAD PROPUESTAS ----
+async function loadProps(){
+  const list = document.getElementById('props-list');
+  list.innerHTML='<p style="color:#888">Cargando...</p>';
+  let items=[];
+
+  if(db){
+    const {data,error} = await db.from('propuestas').select('*').order('id',{ascending:false});
+    if(error){
+      list.innerHTML=`<div class="notice warn">⚠️ Error Supabase: ${error.message}<br>Verifica la clave API en Supabase Dashboard → Settings → API.</div>`;
+      // Load from localStorage as fallback
+      items = JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
+      if(items.length) renderProps(items, list);
+      return;
     }
+    items=data||[];
+  } else {
+    items = JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
+  }
 
-    // ---- Login ----
-    btnLogin.addEventListener('click', async function() {
-        const email = document.getElementById('admin-email').value.trim();
-        const pass  = document.getElementById('admin-pass').value.trim();
+  renderProps(items, list);
+}
 
-        errorBox.style.display = 'none';
+function renderProps(items, list){
+  if(!items.length){list.innerHTML='<p style="color:#888">No hay propuestas aún.</p>';return;}
+  list.innerHTML='';
+  items.forEach(p=>{
+    const d=document.createElement('div');
+    d.className='prop-item';
+    d.innerHTML=`
+      <div>
+        <span class="badge-cat">${p.category}</span>
+        <h4>${p.title}</h4>
+        <p>${p.desc_text||''}</p>
+      </div>
+      <span class="${p.is_active?'status-ok':'status-no'}">${p.is_active?'● ACTIVO':'● INACTIVO'}</span>`;
+    list.appendChild(d);
+  });
+}
 
-        if (!email || !pass) {
-            showErr('Por favor completa todos los campos.');
-            return;
-        }
-
-        btnLogin.disabled    = true;
-        btnLogin.textContent = 'VERIFICANDO...';
-
-        // Credencial maestra
-        if (email.toLowerCase() === MASTER_EMAIL.toLowerCase() && pass === MASTER_PASS) {
-            localStorage.setItem('admin_auth', '1');
-            goToDashboard();
-            return;
-        }
-
-        // Consulta Supabase
-        let ok = false;
-        if (db) {
-            try {
-                const { data } = await db.from('usuarios_admin')
-                    .select('id').eq('email', email).eq('password', pass);
-                if (data && data.length > 0) ok = true;
-            } catch(e) {}
-        }
-
-        if (ok) {
-            localStorage.setItem('admin_auth', '1');
-            goToDashboard();
-        } else {
-            showErr('Correo o contraseña incorrectos.');
-            btnLogin.disabled    = false;
-            btnLogin.textContent = 'INICIAR SESIÓN';
-        }
-    });
-
-    // También permitir Enter en los campos
-    document.getElementById('admin-pass').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') btnLogin.click();
-    });
-    document.getElementById('admin-email').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') btnLogin.click();
-    });
-
-    // ---- Logout ----
-    btnLogout.addEventListener('click', function() {
-        localStorage.removeItem('admin_auth');
-        pageDash.style.display  = 'none';
-        pageLogin.style.display = 'flex';
-        btnLogin.disabled    = false;
-        btnLogin.textContent = 'INICIAR SESIÓN';
-        document.getElementById('admin-email').value = '';
-        document.getElementById('admin-pass').value  = '';
-    });
-
-    // ---- Guardar propuesta ----
-    propForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        if (!db) { alert('Sin conexión a base de datos.'); return; }
-
-        const category  = document.getElementById('prop-cat').value;
-        const title     = document.getElementById('prop-title').value;
-        const desc_text = document.getElementById('prop-desc').value;
-
-        const { error } = await db.from('propuestas').insert([{ category, title, desc_text }]);
-        if (!error) {
-            propForm.reset();
-            loadProposals();
-            alert('¡Propuesta guardada!');
-        } else {
-            alert('Error: ' + error.message);
-        }
-    });
-
-    // ---- Ir al dashboard ----
-    function goToDashboard() {
-        pageLogin.style.display = 'none';
-        pageDash.style.display  = 'block';
-        btnLogin.disabled    = false;
-        btnLogin.textContent = 'INICIAR SESIÓN';
-        loadProposals();
-    }
-
-    // ---- Mostrar error ----
-    function showErr(msg) {
-        errorBox.textContent   = msg;
-        errorBox.style.display = 'block';
-    }
-
-    // ---- Cargar propuestas ----
-    async function loadProposals() {
-        const list = document.getElementById('proposals-list');
-        list.innerHTML = '<p style="color:#888;">Cargando...</p>';
-
-        if (!db) {
-            list.innerHTML = '<p style="color:red;">Sin conexión a base de datos.</p>';
-            return;
-        }
-
-        const { data, error } = await db.from('propuestas').select('*').order('id', { ascending: false });
-
-        if (error) {
-            list.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
-            return;
-        }
-
-        if (!data || data.length === 0) {
-            list.innerHTML = '<p style="color:#888;">No hay propuestas registradas aún.</p>';
-            return;
-        }
-
-        list.innerHTML = '';
-        data.forEach(p => {
-            const div = document.createElement('div');
-            div.className = 'prop-item';
-            div.innerHTML = `
-                <div>
-                    <span class="badge">${p.category}</span>
-                    <h4>${p.title}</h4>
-                    <p>${p.desc_text || ''}</p>
-                </div>
-                <span class="${p.is_active ? 'status-active' : 'status-inactive'}">
-                    ${p.is_active ? '● ACTIVO' : '● INACTIVO'}
-                </span>
-            `;
-            list.appendChild(div);
-        });
-    }
+// ---- SAVE CONTACT ----
+async function saveContact(){
+  const data={
+    wa: document.getElementById('c-wa').value,
+    fb: document.getElementById('c-fb').value,
+    tt: document.getElementById('c-tt').value
+  };
+  localStorage.setItem('contacto', JSON.stringify(data));
+  if(db){
+    await db.from('site_config').upsert({key:'contacto', value: JSON.stringify(data)},{onConflict:'key'});
+  }
+  alert('✅ Datos de contacto guardados');
+}
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>

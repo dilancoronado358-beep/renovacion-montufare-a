@@ -1478,28 +1478,29 @@ textarea.input-rc {
     .hero-portrait-frame {
         max-width: 100%;
         justify-content: center;
-        overflow: hidden; /* Asegura que no extiendan el body */
+        overflow: visible; /* Permitir que se superpongan si es necesario */
     }
 
     .hero-img-dominant {
-        height: 280px; /* Un poco más altos para que llenen la pantalla */
+        height: 260px; /* Proporción exacta para móvil */
         width: auto;
+        max-width: 55vw; /* Previene que se salgan demasiado de la pantalla */
         object-fit: contain;
         object-position: bottom;
     }
 
     .hero-portrait-frame img:nth-child(1) {
-        margin-right: -5%; /* Menos solapamiento para separarlos */
+        margin-right: -8%;
         z-index: 3;
-        transform: scale(1.15);
-        transform-origin: bottom right; 
+        transform: scale(1.25);
+        transform-origin: bottom center; /* Centro para que no se desplace a la izquierda */
     }
 
     .hero-portrait-frame img:nth-child(2) {
-        margin-left: -5%; /* Menos solapamiento, lo mueve hacia la derecha */
+        margin-left: -8%;
         z-index: 2;
         transform: scale(0.9);
-        transform-origin: bottom left; 
+        transform-origin: bottom center; /* Centro para que no se desplace a la izquierda */
     }
 
     .hero-actions {

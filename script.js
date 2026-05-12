@@ -75,9 +75,9 @@ async function applyDynamicContent(){
     } catch(e){ console.warn('Dynamic content error:', e); }
 }
 
-applyDynamicContent();
-
 document.addEventListener('DOMContentLoaded', () => {
+    applyDynamicContent();
+
     const mobileToggle = document.getElementById('mobile-toggle');
     const navMenu = document.getElementById('nav-menu');
     const contactForm = document.getElementById('contact-form');

@@ -271,6 +271,7 @@ async function go(){
   login.style.display='none';
   dash.style.display='block';
   await testDB();
+  await seedStaticAlbums();
   await loadContent();
   await loadProps();
 }
@@ -287,6 +288,19 @@ async function testDB(){
 }
 
 function showErr(m){errBox.textContent=m;errBox.style.display='block';}
+
+// Migrar los 3 álbumes estáticos originales a Supabase (solo si la tabla está vacía)
+async function seedStaticAlbums(){
+  if(!db) return;
+  const {data} = await db.from('albumes').select('id').limit(1);
+  if(data && data.length > 0) return; // Ya hay álbumes, no hacer nada
+  const estaticos = [
+    {titulo:'Capacitación: Manejo de Redes Sociales', fecha:'11 DE ABRIL, 2026', lugar:'Casa El Arrayán', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776307899/WhatsApp_Image_2026-04-15_at_9.49.48_PM_4_yj3qtv.jpg', fotos:[]},
+    {titulo:'Brigada Chutan Bajo', fecha:'20 DE ABRIL, 2026', lugar:'Montúfar', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776664480/IMG-20260419-WA0107_zci17q.jpg', fotos:[]},
+    {titulo:'Recorrido y Actividades', fecha:'26 DE ABRIL, 2026', lugar:'Montúfar', portada_url:'https://res.cloudinary.com/dtmqftcsr/image/upload/v1777300536/lv_0_20260425120457_vvkaun.jpg', fotos:[]}
+  ];
+  await db.from('albumes').insert(estaticos);
+}
 
 function showTab(name, btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
@@ -310,7 +324,9 @@ async function setConfig(key, obj){
   localStorage.setItem(key, val);
   if(db){
     const {error} = await db.from('site_config').upsert({key, value:val, updated_at:new Date().toISOString()},{onConflict:'key'});
-    if(error) console.warn('Supabase write error:',error.message);
+    if(error){
+      alert('⚠️ Error al guardar en Supabase: '+error.message+'\nLos cambios se guardaron localmente.');
+    }
   }
 }
 

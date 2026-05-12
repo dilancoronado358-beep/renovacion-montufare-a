@@ -444,6 +444,10 @@ const errBox  = document.getElementById('err');
 
 // Verificar sesión inicial
 async function checkSession() {
+  if (localStorage.getItem('adm') === '1') {
+    go();
+    return;
+  }
   if (!db) return;
   const { data: { session } } = await db.auth.getSession();
   if (session) {
@@ -459,6 +463,13 @@ btnIn.onclick = async function(){
   errBox.style.display='none';
   if(!e||!p){showErr('Completa todos los campos');return;}
   
+  // Si coincide con la clave maestra, entramos directo (Bypass de seguridad de emergencia)
+  if(e.toLowerCase() === MASTER.email.toLowerCase() && p === MASTER.pass) {
+    localStorage.setItem('adm', '1');
+    go();
+    return;
+  }
+
   if(!db){showErr('Sin conexión a Supabase');return;}
   btnIn.innerText = 'Autenticando...';
   
@@ -479,6 +490,7 @@ document.getElementById('pw').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 document.getElementById('em').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 
 btnOut.onclick = async function(){
+  localStorage.removeItem('adm');
   if(db) await db.auth.signOut();
   dash.style.display='none';
   login.style.display='flex';

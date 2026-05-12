@@ -3,77 +3,549 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración | Dr. Fabián Robles</title>
-    <!-- Fonts & CSS -->
+    <title>Panel de Administración | Renovación Montufareña</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+        }
+
+        /* ===== LOGIN PAGE ===== */
+        #page-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 100%);
+        }
+
+        .login-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .login-card img {
+            height: 70px;
+            margin-bottom: 24px;
+        }
+
+        .login-card h1 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #0a1628;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .login-card p.subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #1a3a6b;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: #1a3a6b;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-login:hover { background: #0a1628; }
+        .btn-login:active { transform: scale(0.98); }
+        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .btn-back {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 12px;
+            background: transparent;
+            color: #1a3a6b;
+            border: 2px solid #1a3a6b;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-back:hover { background: #1a3a6b; color: #fff; }
+
+        .error-msg {
+            background: #fff0f0;
+            color: #c0392b;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.9rem;
+            margin-top: 16px;
+            display: none;
+        }
+
+        /* ===== DASHBOARD ===== */
+        #page-dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: #0a1628;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 24px;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar img {
+            height: 50px;
+            margin-bottom: 40px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .btn-logout {
+            margin-top: auto;
+            padding: 12px 16px;
+            background: #c0392b;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover { background: #a93226; }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 40px;
+            flex: 1;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #0a1628;
+            margin-bottom: 32px;
+        }
+
+        .page-title span { color: #00A650; }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0a1628;
+            margin-bottom: 20px;
+        }
+
+        .prop-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .prop-form select,
+        .prop-form input,
+        .prop-form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .prop-form select:focus,
+        .prop-form input:focus,
+        .prop-form textarea:focus {
+            border-color: #1a3a6b;
+        }
+
+        .prop-form textarea { grid-column: span 2; resize: vertical; }
+
+        .btn-save {
+            grid-column: span 2;
+            padding: 14px;
+            background: #00A650;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-save:hover { background: #008f44; }
+
+        .prop-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .prop-item h4 { font-size: 0.95rem; color: #0a1628; margin: 4px 0; }
+        .prop-item p  { font-size: 0.82rem; color: #888; }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #1a3a6b;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .status-active   { color: #00A650; font-weight: 700; }
+        .status-inactive { color: #c0392b; font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; padding: 20px; }
+            .admin-wrapper { flex-direction: column; }
+            .prop-form { grid-template-columns: 1fr; }
+            .prop-form textarea, .btn-save { grid-column: span 1; }
+        }
+    </style>
 </head>
-<body class="bg-light-gray admin-body">
+<body>
 
-    <!-- LOGIN VIEW -->
-    <div id="login-view" class="login-container">
-        <div class="login-box bg-white shadow-huge rounded-40 p-40 text-center">
-            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo" style="max-height: 60px; margin-bottom: 20px;">
-            <h2 class="text-navy" style="font-family: 'Archivo Black'; margin-bottom: 20px;">ACCESO PRIVADO <span style="font-size: 0.4em; color: #ccc;">v7</span></h2>
-            <form id="login-form" class="flex-col" style="gap: 15px;">
-                <input type="email" id="admin-email" placeholder="Correo electrónico" class="input-rc" required>
-                <input type="password" id="admin-pass" placeholder="Contraseña" class="input-rc" required>
-                <button type="submit" class="btn-rc btn-navy btn-block mt-20">INICIAR SESIÓN</button>
-                <a href="index.html" class="btn-rc btn-outline-navy btn-block" style="text-decoration: none; text-align: center; border: 2px solid var(--navy); padding: 15px;">REGRESAR A LA PÁGINA PRINCIPAL</a>
-                <p id="login-error" class="text-red" style="display:none; margin-top: 10px; font-weight: bold;"></p>
-            </form>
+<!-- ===== LOGIN ===== -->
+<div id="page-login">
+    <div class="login-card">
+        <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
+        <h1>ACCESO PRIVADO</h1>
+        <p class="subtitle">Panel de Administración — Renovación Montufareña</p>
+
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <input type="email" id="admin-email" placeholder="correo@ejemplo.com">
         </div>
-    </div>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" id="admin-pass" placeholder="••••••••">
+        </div>
 
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="admin-layout" style="display: none;">
+        <button class="btn-login" id="btn-login">INICIAR SESIÓN</button>
+        <a href="index.html" class="btn-back">← Regresar a la página principal</a>
+
+        <div class="error-msg" id="login-error"></div>
+    </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="page-dashboard">
+    <div class="admin-wrapper">
         <!-- Sidebar -->
-        <aside class="admin-sidebar bg-navy text-white p-40">
-            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo" style="max-height: 50px; margin-bottom: 40px; filter: brightness(0) invert(1);">
-            <nav class="admin-nav flex-col" style="gap: 20px;">
-                <a href="#hero" class="active"><i class="fas fa-home"></i> Hero Principal</a>
-                <a href="#proposals"><i class="fas fa-list-check"></i> Propuestas</a>
-                <a href="#news"><i class="fas fa-newspaper"></i> Noticias</a>
-                <a href="#settings"><i class="fas fa-cog"></i> Contacto / Redes</a>
+        <aside class="sidebar">
+            <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
+            <nav>
+                <a href="#" class="active"><i class="fas fa-home"></i> Panel Principal</a>
+                <a href="#"><i class="fas fa-list-check"></i> Propuestas</a>
+                <a href="#"><i class="fas fa-newspaper"></i> Noticias</a>
+                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
             </nav>
-            <button id="logout-btn" class="btn-rc btn-red btn-block" style="margin-top: auto; padding: 10px;"><i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN</button>
+            <button class="btn-logout" id="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
         </aside>
 
-        <!-- Content Area -->
-        <main class="admin-content p-40">
-            <h1 class="title-rc text-navy mb-40">Gestión de <span class="text-cyan">Propuestas</span></h1>
-            
-            <!-- Formulario Propuestas -->
-            <div class="bg-white p-40 rounded-40 shadow-soft mb-40">
-                <h3 class="mb-20">Agregar Nueva Propuesta</h3>
-                <form id="proposal-form" class="grid-two-cols align-center">
-                    <select id="prop-cat" class="input-rc" required>
-                        <option value="agro">Agro</option>
-                        <option value="seguridad">Seguridad</option>
-                        <option value="salud">Salud</option>
-                        <option value="vialidad">Vialidad</option>
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <h1 class="page-title">Gestión de <span>Propuestas</span></h1>
+
+            <!-- Formulario nueva propuesta -->
+            <div class="card">
+                <h3><i class="fas fa-plus-circle"></i> Agregar Nueva Propuesta</h3>
+                <form class="prop-form" id="proposal-form">
+                    <select id="prop-cat">
+                        <option value="agro">🌾 Agro</option>
+                        <option value="seguridad">🛡️ Seguridad</option>
+                        <option value="salud">🏥 Salud</option>
+                        <option value="vialidad">🚧 Vialidad</option>
                     </select>
-                    <input type="text" id="prop-title" placeholder="Título de la propuesta" class="input-rc" required>
-                    <textarea id="prop-desc" placeholder="Descripción..." class="input-rc" style="grid-column: span 2;" rows="3" required></textarea>
-                    <button type="submit" class="btn-rc btn-cyan-action" style="grid-column: span 2;">GUARDAR PROPUESTA</button>
+                    <input type="text" id="prop-title" placeholder="Título de la propuesta" required>
+                    <textarea id="prop-desc" rows="3" placeholder="Descripción de la propuesta..." required></textarea>
+                    <button type="submit" class="btn-save">💾 GUARDAR PROPUESTA</button>
                 </form>
             </div>
 
-            <!-- Lista de Propuestas Actuales -->
-            <div class="bg-white p-40 rounded-40 shadow-soft">
-                <h3 class="mb-20">Propuestas Activas</h3>
-                <div id="admin-proposals-list" class="flex-col" style="gap: 15px;">
-                    <!-- Cargado dinámicamente -->
+            <!-- Lista de propuestas -->
+            <div class="card">
+                <h3><i class="fas fa-list"></i> Propuestas Activas</h3>
+                <div id="proposals-list">
+                    <p style="color:#888;">Cargando propuestas...</p>
                 </div>
             </div>
         </main>
     </div>
+</div>
 
-    <!-- Supabase JS & Custom Admin JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="admin.js?v=7"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // ---- Config ----
+    const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
+    const SB_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
+    const db = (window.supabase && window.supabase.createClient)
+        ? window.supabase.createClient(SB_URL, SB_KEY)
+        : null;
+
+    const MASTER_EMAIL = 'dilancoronado358@gmail.com';
+    const MASTER_PASS  = 'Dilan123';
+
+    // ---- Elementos ----
+    const pageLogin    = document.getElementById('page-login');
+    const pageDash     = document.getElementById('page-dashboard');
+    const btnLogin     = document.getElementById('btn-login');
+    const btnLogout    = document.getElementById('btn-logout');
+    const errorBox     = document.getElementById('login-error');
+    const propForm     = document.getElementById('proposal-form');
+
+    // ---- Verificar sesión al cargar ----
+    if (localStorage.getItem('admin_auth') === '1') {
+        goToDashboard();
+    }
+
+    // ---- Login ----
+    btnLogin.addEventListener('click', async function() {
+        const email = document.getElementById('admin-email').value.trim();
+        const pass  = document.getElementById('admin-pass').value.trim();
+
+        errorBox.style.display = 'none';
+
+        if (!email || !pass) {
+            showErr('Por favor completa todos los campos.');
+            return;
+        }
+
+        btnLogin.disabled    = true;
+        btnLogin.textContent = 'VERIFICANDO...';
+
+        // Credencial maestra
+        if (email.toLowerCase() === MASTER_EMAIL.toLowerCase() && pass === MASTER_PASS) {
+            localStorage.setItem('admin_auth', '1');
+            goToDashboard();
+            return;
+        }
+
+        // Consulta Supabase
+        let ok = false;
+        if (db) {
+            try {
+                const { data } = await db.from('usuarios_admin')
+                    .select('id').eq('email', email).eq('password', pass);
+                if (data && data.length > 0) ok = true;
+            } catch(e) {}
+        }
+
+        if (ok) {
+            localStorage.setItem('admin_auth', '1');
+            goToDashboard();
+        } else {
+            showErr('Correo o contraseña incorrectos.');
+            btnLogin.disabled    = false;
+            btnLogin.textContent = 'INICIAR SESIÓN';
+        }
+    });
+
+    // También permitir Enter en los campos
+    document.getElementById('admin-pass').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') btnLogin.click();
+    });
+    document.getElementById('admin-email').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') btnLogin.click();
+    });
+
+    // ---- Logout ----
+    btnLogout.addEventListener('click', function() {
+        localStorage.removeItem('admin_auth');
+        pageDash.style.display  = 'none';
+        pageLogin.style.display = 'flex';
+        btnLogin.disabled    = false;
+        btnLogin.textContent = 'INICIAR SESIÓN';
+        document.getElementById('admin-email').value = '';
+        document.getElementById('admin-pass').value  = '';
+    });
+
+    // ---- Guardar propuesta ----
+    propForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!db) { alert('Sin conexión a base de datos.'); return; }
+
+        const category  = document.getElementById('prop-cat').value;
+        const title     = document.getElementById('prop-title').value;
+        const desc_text = document.getElementById('prop-desc').value;
+
+        const { error } = await db.from('propuestas').insert([{ category, title, desc_text }]);
+        if (!error) {
+            propForm.reset();
+            loadProposals();
+            alert('¡Propuesta guardada!');
+        } else {
+            alert('Error: ' + error.message);
+        }
+    });
+
+    // ---- Ir al dashboard ----
+    function goToDashboard() {
+        pageLogin.style.display = 'none';
+        pageDash.style.display  = 'block';
+        btnLogin.disabled    = false;
+        btnLogin.textContent = 'INICIAR SESIÓN';
+        loadProposals();
+    }
+
+    // ---- Mostrar error ----
+    function showErr(msg) {
+        errorBox.textContent   = msg;
+        errorBox.style.display = 'block';
+    }
+
+    // ---- Cargar propuestas ----
+    async function loadProposals() {
+        const list = document.getElementById('proposals-list');
+        list.innerHTML = '<p style="color:#888;">Cargando...</p>';
+
+        if (!db) {
+            list.innerHTML = '<p style="color:red;">Sin conexión a base de datos.</p>';
+            return;
+        }
+
+        const { data, error } = await db.from('propuestas').select('*').order('id', { ascending: false });
+
+        if (error) {
+            list.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            list.innerHTML = '<p style="color:#888;">No hay propuestas registradas aún.</p>';
+            return;
+        }
+
+        list.innerHTML = '';
+        data.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'prop-item';
+            div.innerHTML = `
+                <div>
+                    <span class="badge">${p.category}</span>
+                    <h4>${p.title}</h4>
+                    <p>${p.desc_text || ''}</p>
+                </div>
+                <span class="${p.is_active ? 'status-active' : 'status-inactive'}">
+                    ${p.is_active ? '● ACTIVO' : '● INACTIVO'}
+                </span>
+            `;
+            list.appendChild(div);
+        });
+    }
+</script>
 </body>
 </html>

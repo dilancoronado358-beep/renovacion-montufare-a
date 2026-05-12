@@ -1482,21 +1482,21 @@ textarea.input-rc {
     }
 
     .hero-img-dominant {
-        height: 250px;
+        height: 280px; /* Un poco más altos para que llenen la pantalla */
         width: auto;
         object-fit: contain;
         object-position: bottom;
     }
 
     .hero-portrait-frame img:nth-child(1) {
-        margin-right: -15%;
+        margin-right: -5%; /* Menos solapamiento para separarlos */
         z-index: 3;
-        transform: scale(1.15); /* Mantenemos la proporción del escritorio */
+        transform: scale(1.15);
         transform-origin: bottom right; 
     }
 
     .hero-portrait-frame img:nth-child(2) {
-        margin-left: -15%;
+        margin-left: -5%; /* Menos solapamiento, lo mueve hacia la derecha */
         z-index: 2;
         transform: scale(0.9);
         transform-origin: bottom left; 

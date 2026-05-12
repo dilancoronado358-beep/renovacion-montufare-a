@@ -1462,20 +1462,25 @@ textarea.input-rc {
     }
 
     .hero-text-box {
-        order: 2;
+        order: 1; /* Texto primero */
         flex: 1;
         text-align: center;
         padding-bottom: 0;
     }
 
     .hero-img-box {
-        order: 1;
+        order: 2; /* Imagen al fondo para que toque la línea roja */
         flex: 1;
         width: 100%;
+        align-items: flex-end;
     }
 
     .hero-portrait-frame {
-        max-width: 480px;
+        max-width: 100%;
+    }
+
+    .hero-img-dominant {
+        height: 320px; /* Reducido para que quepa en móviles */
     }
 
     .hero-actions {

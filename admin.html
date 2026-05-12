@@ -1554,6 +1554,8 @@ async function guardarDatosEncuesta() {
   showToast('Sondeo interno guardado con éxito');
 }
 
+let gafetesGuardados = [];
+
 function actualizarGafete() {
   const elNom = document.getElementById('cred-nombre');
   const nom = elNom && elNom.value ? elNom.value.trim() : 'CARLOS MENDOZA';
@@ -1561,6 +1563,8 @@ function actualizarGafete() {
   const rol = elRol && elRol.value ? elRol.value.trim() : 'COORDINADOR PARROQUIAL';
   const elCid = document.getElementById('cred-id');
   const cid = elCid && elCid.value ? elCid.value.trim() : 'ID: 040152...';
+  const elFoto = document.getElementById('cred-foto');
+  const foto = elFoto && elFoto.value ? elFoto.value.trim() : '';
 
   const lblNom = document.getElementById('lbl-cred-nombre');
   if(lblNom) lblNom.textContent = nom.toUpperCase();
@@ -1568,6 +1572,19 @@ function actualizarGafete() {
   if(lblRol) lblRol.textContent = rol.toUpperCase();
   const lblCid = document.getElementById('lbl-cred-id');
   if(lblCid) lblCid.textContent = cid;
+
+  const previewImg = document.getElementById('gafete-img-preview');
+  const fallbackIcon = document.getElementById('gafete-icon-fallback');
+  if(previewImg && fallbackIcon) {
+    if(foto) {
+      previewImg.src = foto;
+      previewImg.style.display = 'block';
+      fallbackIcon.style.display = 'none';
+    } else {
+      previewImg.style.display = 'none';
+      fallbackIcon.style.display = 'block';
+    }
+  }
 }
 
 function descargarGafete() {
@@ -1577,6 +1594,8 @@ function descargarGafete() {
   const rol = elRol ? elRol.textContent : 'COORDINADOR PARROQUIAL';
   const elCid = document.getElementById('lbl-cred-id');
   const cid = elCid ? elCid.textContent : 'ID: 040152...';
+  const elFoto = document.getElementById('cred-foto');
+  const foto = elFoto ? elFoto.value.trim() : '';
 
   const canvas = document.createElement('canvas');
   canvas.width = 400;
@@ -1605,7 +1624,41 @@ function descargarGafete() {
   ctx.font = 'bold 14px sans-serif';
   ctx.fillText('CREDENCIAL OFICIAL DE CAMPAÑA', 200, 100);
 
-  // Icono central
+  const finalizarDibujo = () => {
+    // Textos del portador
+    ctx.fillStyle = '#0a192f';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(nom, 200, 350);
+
+    ctx.fillStyle = '#00A650';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText(rol, 200, 400);
+
+    ctx.fillStyle = '#666666';
+    ctx.font = '15px sans-serif';
+    ctx.fillText(cid, 200, 450);
+
+    // Pie inferior
+    ctx.fillStyle = '#00A650';
+    ctx.fillRect(12, 530, 376, 58);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText('BRIGADISTA AUTORIZADO', 200, 566);
+
+    // Descargar
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `credencial_${nom.replace(/\s+/g,'_').toLowerCase()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('¡Credencial descargada exitosamente en alta calidad!');
+  };
+
+  // Dibujar Foto o Icono
+  ctx.save();
   ctx.beginPath();
   ctx.arc(200, 230, 55, 0, Math.PI * 2);
   ctx.fillStyle = '#f1f2f6';
@@ -1613,41 +1666,104 @@ function descargarGafete() {
   ctx.lineWidth = 4;
   ctx.strokeStyle = '#00A650';
   ctx.stroke();
+  ctx.clip();
 
-  ctx.fillStyle = '#1a3a6b';
-  ctx.font = 'bold 45px sans-serif';
-  ctx.fillText('👤', 200, 248);
+  if(foto) {
+    const imgObj = new Image();
+    // Prevenir problemas de Canvas Tainted mediante un proxy o crossOrigin
+    imgObj.crossOrigin = 'Anonymous';
+    imgObj.onload = () => {
+      ctx.drawImage(imgObj, 145, 175, 110, 110);
+      ctx.restore();
+      // Redibujar borde verde tras el clip
+      ctx.beginPath();
+      ctx.arc(200, 230, 55, 0, Math.PI * 2);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#00A650';
+      ctx.stroke();
+      finalizarDibujo();
+    };
+    imgObj.onerror = () => {
+      ctx.restore();
+      ctx.fillStyle = '#1a3a6b';
+      ctx.font = 'bold 45px sans-serif';
+      ctx.fillText('👤', 200, 248);
+      finalizarDibujo();
+    };
+    imgObj.src = foto;
+  } else {
+    ctx.restore();
+    ctx.fillStyle = '#1a3a6b';
+    ctx.font = 'bold 45px sans-serif';
+    ctx.fillText('👤', 200, 248);
+    finalizarDibujo();
+  }
+}
 
-  // Textos del portador
-  ctx.fillStyle = '#0a192f';
-  ctx.font = 'bold 26px sans-serif';
-  ctx.fillText(nom, 200, 350);
+async function cargarGafetesSupabase() {
+  const gObj = await getConfig('gafetes_guardados');
+  gafetesGuardados = Array.isArray(gObj.list) ? gObj.list : [];
+  renderizarListaGafetes();
+}
 
-  ctx.fillStyle = '#00A650';
-  ctx.font = 'bold 18px sans-serif';
-  ctx.fillText(rol, 200, 400);
+function renderizarListaGafetes() {
+  const container = document.getElementById('list-gafetes-guardados');
+  if(!container) return;
+  if(!gafetesGuardados.length) {
+    container.innerHTML = '<p style="color:#888; font-size:0.8rem; margin:0;">No hay credenciales guardadas en la base de datos.</p>';
+    return;
+  }
+  container.innerHTML = '';
+  gafetesGuardados.forEach(item => {
+    const d = document.createElement('div');
+    d.style = 'display:flex; justify-content:space-between; align-items:center; background:#f8f9fa; padding:8px 12px; border-radius:8px; border:1px solid #ddd; font-size:0.85rem;';
+    d.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${item.foto || 'https://via.placeholder.com/40'}" style="width:35px; height:35px; border-radius:50%; object-fit:cover; border:1px solid #00A650;" onerror="this.src='https://via.placeholder.com/40'">
+        <div>
+          <strong style="display:block; color:#1a3a6b;">${item.nombre}</strong>
+          <span style="font-size:0.75rem; color:#666;">${item.rol} | ${item.cid}</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="cargarGafeteEnFormulario(${item.id})"><i class="fas fa-edit"></i> Cargar</button>
+        <button class="btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="eliminarGafeteSupabase(${item.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    `;
+    container.appendChild(d);
+  });
+}
 
-  ctx.fillStyle = '#666666';
-  ctx.font = '15px sans-serif';
-  ctx.fillText(cid, 200, 450);
+function cargarGafeteEnFormulario(id) {
+  const item = gafetesGuardados.find(x => x.id === id);
+  if(!item) return;
+  document.getElementById('cred-nombre').value = item.nombre || '';
+  document.getElementById('cred-rol').value = item.rol || '';
+  document.getElementById('cred-id').value = item.cid || '';
+  document.getElementById('cred-foto').value = item.foto || '';
+  actualizarGafete();
+  showToast('Datos cargados en el generador');
+}
 
-  // Pie inferior
-  ctx.fillStyle = '#00A650';
-  ctx.fillRect(12, 530, 376, 58);
+async function guardarGafeteSupabase() {
+  const nombre = document.getElementById('cred-nombre').value.trim() || 'CARLOS MENDOZA';
+  const rol = document.getElementById('cred-rol').value.trim() || 'COORDINADOR PARROQUIAL';
+  const cid = document.getElementById('cred-id').value.trim() || 'ID: 040152...';
+  const foto = document.getElementById('cred-foto').value.trim() || '';
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 18px sans-serif';
-  ctx.fillText('BRIGADISTA AUTORIZADO', 200, 566);
+  const nuevo = { id: Date.now(), nombre, rol, cid, foto };
+  gafetesGuardados.unshift(nuevo);
+  await setConfig('gafetes_guardados', { list: gafetesGuardados });
+  showToast('¡Credencial guardada en Supabase exitosamente!');
+  renderizarListaGafetes();
+}
 
-  // Descargar
-  const url = canvas.toDataURL('image/png');
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `credencial_${nom.replace(/\s+/g,'_').toLowerCase()}.png`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  showToast('¡Credencial descargada exitosamente en alta calidad!');
+async function eliminarGafeteSupabase(id) {
+  if(!confirm('¿Eliminar esta credencial de la base de datos?')) return;
+  gafetesGuardados = gafetesGuardados.filter(x => x.id !== id);
+  await setConfig('gafetes_guardados', { list: gafetesGuardados });
+  showToast('Credencial eliminada');
+  renderizarListaGafetes();
 }
 
 </script>

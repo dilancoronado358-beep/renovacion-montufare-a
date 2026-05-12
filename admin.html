@@ -432,8 +432,8 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <h1 class="page-title">Bandeja de <span>Mensajes</span></h1>
         
         <div class="card" style="border-left:5px solid #1a3a6b; margin-bottom:25px;">
-          <h3><i class="fas fa-id-card"></i> Generador de Credenciales / Gafetes Oficiales</h3>
-          <p style="font-size:0.85rem; color:#666;">Crea identificaciones personalizadas para tus brigadistas territoriales y descárgalas en un clic.</p>
+          <h3><i class="fas fa-id-card"></i> Generador de Credenciales con Foto (Sincronizado en Supabase)</h3>
+          <p style="font-size:0.85rem; color:#666;">Diseña gafetes personalizados para tus brigadistas, sube su foto a Cloudinary y guárdalos de forma centralizada en Supabase.</p>
           <div class="grid2" style="margin-top:15px; align-items:flex-start;">
             <div>
               <div class="field" style="margin-bottom:10px;">
@@ -448,7 +448,15 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
                 <label>Cédula o Código Interno</label>
                 <input type="text" id="cred-id" placeholder="Ej: ID: 040152..." oninput="actualizarGafete()">
               </div>
-              <button class="btn-save" style="background:#00A650; margin-top:5px;" onclick="descargarGafete()"><i class="fas fa-download"></i> Descargar Credencial (.PNG)</button>
+              <div class="field" style="margin-bottom:12px;">
+                <label>Foto del Brigadista (URL de Cloudinary)</label>
+                <button class="btn-upload" onclick="openCloudinaryWidget('cred-foto')"><i class="fas fa-upload"></i> Subir Foto</button>
+                <input type="url" id="cred-foto" placeholder="https://res.cloudinary.com/..." oninput="actualizarGafete()" style="margin-top:6px;">
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn-save" style="background:#00A650; flex:1; min-width:140px;" onclick="descargarGafete()"><i class="fas fa-download"></i> Descargar (.PNG)</button>
+                <button class="btn-save" style="background:#1a3a6b; flex:1; min-width:140px;" onclick="guardarGafeteSupabase()"><i class="fas fa-cloud-upload-alt"></i> Guardar en Supabase</button>
+              </div>
             </div>
             <div style="display:flex; justify-content:center;">
               <!-- Tarjeta Gafete en Vivo -->
@@ -458,8 +466,9 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
                   <div style="font-size:0.65rem; letter-spacing:1px; margin-top:4px; color:#64ffda; font-weight:bold;">CAMPAÑA OFICIAL</div>
                 </div>
                 <div style="padding:20px 10px;">
-                  <div style="width:65px; height:65px; background:#f1f2f6; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border:2px solid #00A650; color:#1a3a6b;">
-                    <i class="fas fa-user-check" style="font-size:1.8rem;"></i>
+                  <div id="gafete-img-container" style="width:75px; height:75px; background:#f1f2f6; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border:2px solid #00A650; color:#1a3a6b; overflow:hidden;">
+                    <i id="gafete-icon-fallback" class="fas fa-user-check" style="font-size:2rem;"></i>
+                    <img id="gafete-img-preview" style="width:100%; height:100%; object-fit:cover; display:none;">
                   </div>
                   <div id="lbl-cred-nombre" style="font-weight:800; font-size:0.95rem; color:#0a192f; word-break:break-word;">CARLOS MENDOZA</div>
                   <div id="lbl-cred-rol" style="font-size:0.7rem; color:#00A650; font-weight:700; margin-top:3px;">COORDINADOR PARROQUIAL</div>
@@ -469,6 +478,14 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
                   AUTORIZADO
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Directorio de Gafetes Guardados en Supabase -->
+          <div style="margin-top:20px; border-top:1px solid #eee; padding-top:15px;">
+            <h4 style="margin-top:0; color:#333; font-size:0.85rem;"><i class="fas fa-database" style="color:#1a3a6b;"></i> Directorio de Gafetes en Base de Datos</h4>
+            <div id="list-gafetes-guardados" style="display:flex; flex-direction:column; gap:8px; max-height:200px; overflow-y:auto; margin-top:8px;">
+              <p style="color:#888; font-size:0.8rem; margin:0;">Cargando directorio de credenciales...</p>
             </div>
           </div>
         </div>
@@ -806,6 +823,7 @@ async function go(){
   await loadDashboardStats();
   await loadContent();
   await loadProps();
+  await cargarGafetesSupabase();
 }
 
 async function testDB(){

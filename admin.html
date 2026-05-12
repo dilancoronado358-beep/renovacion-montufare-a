@@ -122,10 +122,13 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <button onclick="showTab('config',this)"><i class="fas fa-paint-roller"></i> SEO y Configuración</button>
         <button onclick="showTab('usuarios',this)"><i class="fas fa-users-cog"></i> Usuarios del Sistema</button>
         
-        <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+        <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; display:flex; flex-direction:column; gap:8px;">
           <a href="index.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);font-size:.87rem;font-weight:600;text-decoration:none;transition:all .2s;">
             <i class="fas fa-external-link-alt"></i> Ver Sitio Público
           </a>
+          <button onclick="forceMasterRefresh()" style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:#64ffda;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.2);font-size:.87rem;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .2s;">
+            <i class="fas fa-sync-alt"></i> Sincronizar Servidor
+          </button>
         </div>
       </nav>
       <div id="db-status" style="margin-top:20px;padding:10px 12px;border-radius:10px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">
@@ -178,6 +181,35 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
             subir fotos directamente usando el botón de <strong>Cloudinary</strong>, y escribir descripciones con el nuevo 
             <strong>Editor de Texto Avanzado</strong>.
           </p>
+        </div>
+
+        <div class="grid2">
+          <div class="card" style="border-left:5px solid #1a3a6b;">
+            <h3><i class="fas fa-bullseye"></i> Meta Territorial de Voluntarios</h3>
+            <div class="field" style="margin-top:10px;">
+              <label>Objetivo de Voluntarios Registrados</label>
+              <div style="display:flex; gap:10px;">
+                <input type="number" id="meta-input" value="500" style="flex:1;">
+                <button class="btn-save" onclick="saveMetaVoluntarios()" style="background:#1a3a6b;">Fijar Meta</button>
+              </div>
+            </div>
+            <div style="margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700; color:#666; margin-bottom:6px;">
+                <span id="meta-texto">Progreso: 0 / 500</span>
+                <span id="meta-porcentaje">0%</span>
+              </div>
+              <div style="width:100%; height:12px; background:#e0e0e0; border-radius:10px; overflow:hidden;">
+                <div id="meta-bar" style="width:0%; height:100%; background:linear-gradient(90deg, #1a3a6b, #00A650); transition:width 0.5s ease;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #f59e0b;">
+            <h3><i class="fas fa-book"></i> Bitácora Compartida del Equipo</h3>
+            <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">Notas persistentes sincronizadas en tiempo real con todos los administradores.</p>
+            <textarea id="bitacora-area" rows="4" placeholder="Escribe aquí acuerdos de reuniones, tareas urgentes o recordatorios para los brigadistas..." style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:10px; font-size:0.88rem; outline:none; resize:vertical;"></textarea>
+            <button class="btn-save" onclick="saveBitacora()" style="background:#f59e0b; width:100%; margin-top:8px;"><i class="fas fa-cloud-upload-alt"></i> Sincronizar Bitácora</button>
+          </div>
         </div>
       </div>
 
@@ -595,8 +627,9 @@ async function loadDashboardStats() {
   try {
     // Mensajes / Voluntarios
     const { count: msgsCount } = await db.from('mensajes').select('id', { count: 'exact', head: true });
+    const currentMsgs = msgsCount || 0;
     const elMsgs = document.getElementById('stat-msgs');
-    if(elMsgs) elMsgs.textContent = msgsCount || 0;
+    if(elMsgs) elMsgs.textContent = currentMsgs;
 
     // Puntos del Mapa
     const { count: mapCount } = await db.from('mapa_puntos').select('id', { count: 'exact', head: true });
@@ -612,6 +645,26 @@ async function loadDashboardStats() {
     const { count: albumsCount } = await db.from('albumes').select('id', { count: 'exact', head: true });
     const elAlbums = document.getElementById('stat-albums');
     if(elAlbums) elAlbums.textContent = albumsCount || 0;
+
+    // Cargar Meta y Bitácora compartida
+    const metaObj = await getConfig('meta_voluntarios');
+    const targetMeta = metaObj && metaObj.meta ? parseInt(metaObj.meta) : 500;
+    const elMetaIn = document.getElementById('meta-input');
+    if(elMetaIn) elMetaIn.value = targetMeta;
+    
+    const pct = targetMeta > 0 ? Math.min(100, Math.round((currentMsgs / targetMeta) * 100)) : 0;
+    const elMetaTxt = document.getElementById('meta-texto');
+    if(elMetaTxt) elMetaTxt.textContent = `Progreso: ${currentMsgs} / ${targetMeta}`;
+    const elMetaPct = document.getElementById('meta-porcentaje');
+    if(elMetaPct) elMetaPct.textContent = `${pct}%`;
+    const elMetaBar = document.getElementById('meta-bar');
+    if(elMetaBar) elMetaBar.style.width = `${pct}%`;
+
+    const bitObj = await getConfig('bitacora_equipo');
+    const elBitArea = document.getElementById('bitacora-area');
+    if(elBitArea && bitObj && bitObj.texto) {
+      elBitArea.value = bitObj.texto;
+    }
   } catch(e) { console.warn('Stats load error:', e); }
 }
 
@@ -1223,6 +1276,26 @@ async function exportTotalBackup() {
   } catch(e) {
     showToast('Error creando backup: ' + e.message, 'error');
   }
+}
+
+async function saveMetaVoluntarios() {
+  const metaVal = document.getElementById('meta-input').value;
+  await setConfig('meta_voluntarios', { meta: metaVal });
+  showToast('Meta territorial actualizada');
+  loadDashboardStats();
+}
+
+async function saveBitacora() {
+  const txt = document.getElementById('bitacora-area').value.trim();
+  await setConfig('bitacora_equipo', { texto: txt });
+  showToast('Bitácora del equipo sincronizada');
+}
+
+function forceMasterRefresh() {
+  showToast('Sincronizando y purgando caché del servidor...', 'info');
+  setTimeout(() => {
+    window.location.reload(true);
+  }, 600);
 }
 
 </script>

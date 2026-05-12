@@ -3,6 +3,80 @@
 // =========================================
 const _supabase = window.supabase ? window.supabase.createClient('https://agqrytictqmjzupqrnqp.supabase.co', 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf') : null;
 
+// ---- Aplicar contenido dinámico desde Supabase (site_config) ----
+async function applyDynamicContent(){
+    if(!_supabase) return;
+    try {
+        const {data} = await _supabase.from('site_config').select('key,value');
+        if(!data) return;
+        const cfg = {};
+        data.forEach(row => { try{ cfg[row.key]=JSON.parse(row.value); }catch(e){} });
+
+        // Hero text
+        if(cfg.hero_text){
+            const t = cfg.hero_text;
+            const heroTitle = document.querySelector('.hero-title');
+            if(heroTitle && t.titulo1 && t.nombre && t.titulo2){
+                heroTitle.innerHTML = `CON <br><span class="text-green">${t.nombre}</span> <br>${t.titulo2}`;
+            }
+            const heroSub = document.querySelector('.hero-subtext');
+            if(heroSub && t.sub) heroSub.textContent = t.sub;
+        }
+
+        // Hero images
+        if(cfg.hero_imgs){
+            const hi = cfg.hero_imgs;
+            const imgs = document.querySelectorAll('.hero-img-dominant');
+            if(imgs[0] && hi.img1) imgs[0].src = hi.img1;
+            if(imgs[1] && hi.img2) imgs[1].src = hi.img2;
+            const heroSec = document.getElementById('presentacion');
+            if(heroSec && hi.bg){
+                heroSec.style.background = `linear-gradient(135deg, rgba(11,22,44,0.85) 0%, rgba(21,41,78,0.85) 100%), url('${hi.bg}') center/cover no-repeat`;
+            }
+        }
+
+        // Slider images
+        if(cfg.slider_imgs){
+            const sl = cfg.slider_imgs;
+            const slides = document.querySelectorAll('.slide-rc img');
+            if(slides[0] && sl.s1) slides[0].src = sl.s1;
+            if(slides[1] && sl.s2) slides[1].src = sl.s2;
+            // Slide 3: add if s3 exists
+            if(sl.s3 && sl.s3.trim()){
+                const wrapper = document.getElementById('slider-wrapper');
+                const dotsEl  = document.getElementById('slider-dots');
+                if(wrapper && !wrapper.querySelector('[data-dynamic-slide]')){
+                    const div=document.createElement('div');
+                    div.className='slide-rc';
+                    div.setAttribute('data-dynamic-slide','1');
+                    div.innerHTML=`<img src="${sl.s3}" alt="Imagen 3">`;
+                    wrapper.appendChild(div);
+                    if(dotsEl){
+                        const dot=document.createElement('span');
+                        dot.className='dot';
+                        dot.dataset.slide=String(dotsEl.children.length);
+                        dotsEl.appendChild(dot);
+                    }
+                }
+            }
+        }
+
+        // Contact / social links
+        if(cfg.contacto){
+            const ct = cfg.contacto;
+            if(ct.wa){
+                document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+                    a.href=`https://wa.me/${ct.wa}?text=Quiero%20formar%20parte%20de%20su%20equipo`;
+                });
+            }
+            if(ct.fb) document.querySelectorAll('a[href*="facebook.com"]').forEach(a=>a.href=ct.fb);
+            if(ct.tt) document.querySelectorAll('a[href*="tiktok.com"]').forEach(a=>a.href=ct.tt);
+        }
+    } catch(e){ console.warn('Dynamic content error:', e); }
+}
+
+applyDynamicContent();
+
 document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.getElementById('mobile-toggle');
     const navMenu = document.getElementById('nav-menu');

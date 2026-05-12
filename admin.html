@@ -87,6 +87,7 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
         <button class="active" onclick="showTab('hero',this)"><i class="fas fa-user"></i> Hero / Candidato</button>
         <button onclick="showTab('slider',this)"><i class="fas fa-images"></i> Carrusel Imágenes</button>
         <button onclick="showTab('propuestas',this)"><i class="fas fa-list-check"></i> Propuestas</button>
+        <button onclick="showTab('multimedia',this)"><i class="fas fa-photo-film"></i> Multimedia / Álbumes</button>
         <button onclick="showTab('contacto',this)"><i class="fas fa-phone"></i> Contacto / Redes</button>
       </nav>
       <div id="db-status" style="margin-top:20px;padding:10px 12px;border-radius:10px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">
@@ -187,6 +188,43 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
         </div>
       </div>
 
+      <!-- TAB: MULTIMEDIA -->
+      <div class="tab-panel" id="tab-multimedia">
+        <h1 class="page-title">Multimedia / <span>Álbumes</span></h1>
+        <div class="notice warn"><i class="fas fa-cloud"></i> Sube tus fotos a <strong>Cloudinary</strong> y pega la URL de cada imagen aquí. Máximo 100 fotos por álbum.</div>
+
+        <div class="card">
+          <h3><i class="fas fa-plus"></i> Crear Nuevo Álbum</h3>
+          <div class="grid2">
+            <div class="field"><label>Título del álbum</label><input type="text" id="alb-titulo" placeholder="Ej: Brigada San Gabriel"></div>
+            <div class="field"><label>Fecha</label><input type="text" id="alb-fecha" placeholder="Ej: 15 DE MAYO, 2026"></div>
+          </div>
+          <div class="field"><label>Lugar</label><input type="text" id="alb-lugar" placeholder="Ej: San Gabriel, Montúfar"></div>
+          <div class="field"><label>URL de imagen de portada (Cloudinary)</label><input type="url" id="alb-portada" placeholder="https://res.cloudinary.com/..."></div>
+          <button class="btn-save" onclick="createAlbum()"><i class="fas fa-folder-plus"></i> Crear Álbum</button>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-folder-open"></i> Álbumes Existentes</h3>
+          <div id="albums-list"><p style="color:#888">Cargando álbumes...</p></div>
+        </div>
+
+        <!-- Panel editar fotos de un álbum -->
+        <div class="card" id="album-edit-panel" style="display:none">
+          <h3><i class="fas fa-images"></i> Fotos del álbum: <span id="album-edit-name"></span></h3>
+          <div class="notice ok">Pega URLs de Cloudinary, una por línea. Máximo 100 fotos.</div>
+          <div class="field" style="margin-top:12px">
+            <label>URLs de fotos (una por línea)</label>
+            <textarea id="album-fotos-input" rows="10" placeholder="https://res.cloudinary.com/foto1.jpg&#10;https://res.cloudinary.com/foto2.jpg"></textarea>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn-save" onclick="saveAlbumFotos()"><i class="fas fa-save"></i> Guardar Fotos</button>
+            <button class="btn-danger" onclick="document.getElementById('album-edit-panel').style.display='none'">Cancelar</button>
+          </div>
+          <div id="album-fotos-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px"></div>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
@@ -256,6 +294,7 @@ function showTab(name, btn){
   document.getElementById('tab-'+name).classList.add('active');
   if(btn) btn.classList.add('active');
   if(name==='propuestas') loadProps();
+  if(name==='multimedia') loadAlbums();
 }
 
 async function getConfig(key){
@@ -399,6 +438,105 @@ async function saveContact(){
     tt:document.getElementById('c-tt').value
   });
   alert('✅ Datos de contacto guardados');
+}
+
+// ---- ALBUMS ----
+let currentAlbumId = null;
+
+async function loadAlbums(){
+  const list = document.getElementById('albums-list');
+  if(!list) return;
+  list.innerHTML='<p style="color:#888">Cargando...</p>';
+  if(!db){list.innerHTML='<p style="color:#aaa">Sin conexión a Supabase.</p>';return;}
+  const {data,error} = await db.from('albumes').select('id,titulo,fecha,lugar,portada_url,fotos').order('id',{ascending:false});
+  if(error){list.innerHTML=`<p style="color:red">Error: ${error.message}</p>`;return;}
+  if(!data||!data.length){list.innerHTML='<p style="color:#aaa">No hay álbumes aún. Crea el primero arriba.</p>';return;}
+  list.innerHTML='';
+  data.forEach(alb=>{
+    const fotos = Array.isArray(alb.fotos)?alb.fotos:[];
+    const fotosJson = JSON.stringify(fotos);
+    const tituloEsc = alb.titulo.replace(/'/g,"\\'");
+    const d=document.createElement('div');
+    d.className='prop-item';
+    d.style='align-items:flex-start;gap:14px';
+    d.innerHTML=`
+      <img src="${alb.portada_url||''}" style="width:80px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0" onerror="this.style.display='none'">
+      <div style="flex:1">
+        <h4>${alb.titulo}</h4>
+        <p>${alb.fecha||''} ${alb.lugar?'— '+alb.lugar:''}</p>
+        <p style="color:#00A650;font-weight:600;font-size:.82rem">${fotos.length}/100 foto(s)</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="btn-save" style="padding:7px 14px;font-size:.8rem" onclick="editAlbum(${alb.id})">✏️ Editar Fotos</button>
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteAlbum(${alb.id})">🗑 Eliminar</button>
+      </div>`;
+    d.querySelector('.btn-save').addEventListener('click', ()=>editAlbumById(alb.id, alb.titulo, fotos));
+    list.appendChild(d);
+  });
+}
+
+async function createAlbum(){
+  const titulo  = document.getElementById('alb-titulo').value.trim();
+  const fecha   = document.getElementById('alb-fecha').value.trim();
+  const lugar   = document.getElementById('alb-lugar').value.trim();
+  const portada = document.getElementById('alb-portada').value.trim();
+  if(!titulo||!portada){alert('El título y la portada son obligatorios');return;}
+  if(!db){alert('Sin conexión a Supabase');return;}
+  const {error} = await db.from('albumes').insert([{titulo,fecha,lugar,portada_url:portada,fotos:[]}]);
+  if(error){alert('Error: '+error.message);return;}
+  ['alb-titulo','alb-fecha','alb-lugar','alb-portada'].forEach(id=>document.getElementById(id).value='');
+  alert('✅ Álbum creado correctamente');
+  loadAlbums();
+}
+
+function editAlbumById(id, titulo, fotosArr){
+  currentAlbumId = id;
+  document.getElementById('album-edit-name').textContent = titulo;
+  const panel = document.getElementById('album-edit-panel');
+  panel.style.display='block';
+  const input = document.getElementById('album-fotos-input');
+  input.value = fotosArr.join('\n');
+  updateFotoPreview(fotosArr);
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+function updateFotoPreview(urls){
+  const prev = document.getElementById('album-fotos-preview');
+  if(!prev) return;
+  prev.innerHTML='';
+  urls.slice(0,100).forEach(url=>{
+    const img = document.createElement('img');
+    img.src=url;
+    img.style='width:100%;height:90px;object-fit:cover;border-radius:8px';
+    img.onerror=()=>img.style.display='none';
+    prev.appendChild(img);
+  });
+}
+
+document.getElementById('album-fotos-input') && document.getElementById('album-fotos-input').addEventListener('input', function(){
+  const urls = this.value.split('\n').map(u=>u.trim()).filter(u=>u);
+  updateFotoPreview(urls);
+});
+
+async function saveAlbumFotos(){
+  if(!currentAlbumId){alert('No hay álbum seleccionado');return;}
+  const urls = document.getElementById('album-fotos-input').value
+    .split('\n').map(u=>u.trim()).filter(u=>u).slice(0,100);
+  if(!db){alert('Sin conexión');return;}
+  const {error} = await db.from('albumes').update({fotos:urls}).eq('id',currentAlbumId);
+  if(error){alert('Error: '+error.message);return;}
+  alert('✅ '+urls.length+' fotos guardadas');
+  document.getElementById('album-edit-panel').style.display='none';
+  loadAlbums();
+}
+
+async function deleteAlbum(id){
+  if(!confirm('¿Eliminar este álbum y todas sus fotos?'))return;
+  if(!db){alert('Sin conexión');return;}
+  const {error} = await db.from('albumes').delete().eq('id',id);
+  if(error){alert('Error: '+error.message);return;}
+  alert('✅ Álbum eliminado');
+  loadAlbums();
 }
 
 </script>

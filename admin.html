@@ -332,8 +332,14 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
       <div class="tab-panel" id="tab-mensajes">
         <h1 class="page-title">Bandeja de <span>Mensajes</span></h1>
         <div class="card">
-          <h3><i class="fas fa-inbox"></i> Mensajes Recibidos</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+            <h3 style="margin:0;"><i class="fas fa-inbox"></i> Mensajes Recibidos</h3>
+            <button class="btn-save" onclick="exportMensajesCSV()" style="padding:10px 16px; font-size:0.85rem;"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
+          </div>
           <div class="notice ok">Aquí aparecen los mensajes enviados desde el formulario de contacto de la página principal.</div>
+          <div class="field" style="margin-bottom:20px;">
+            <input type="text" id="buscar-msg" placeholder="🔍 Buscar internamente por nombre, teléfono o contenido..." onkeyup="filterMensajes(this.value)">
+          </div>
           <div id="mensajes-list"><p style="color:#888">Cargando mensajes...</p></div>
         </div>
       </div>
@@ -945,6 +951,8 @@ async function deleteAlbum(id){
   loadAlbums();
 }
 // ---- MENSAJES ----
+let allMensajes = [];
+
 async function loadMensajes() {
   const list = document.getElementById('mensajes-list');
   if(!list) return;
@@ -955,8 +963,17 @@ async function loadMensajes() {
   if(error){list.innerHTML=`<p style="color:red">Error: ${error.message}</p>`;return;}
   if(!data||!data.length){list.innerHTML='<p style="color:#aaa">No hay mensajes aún.</p>';return;}
   
+  allMensajes = data;
+  renderMensajes(data);
+}
+
+function renderMensajes(items) {
+  const list = document.getElementById('mensajes-list');
+  if(!list) return;
   list.innerHTML='';
-  data.forEach(msg => {
+  if(!items.length) { list.innerHTML='<p style="color:#aaa">No se encontraron coincidencias.</p>'; return; }
+  
+  items.forEach(msg => {
     const d=document.createElement('div');
     d.className='prop-item';
     d.style = msg.leido ? 'opacity:0.7' : 'border-left: 4px solid var(--primary-color)';
@@ -977,6 +994,35 @@ async function loadMensajes() {
     `;
     list.appendChild(d);
   });
+}
+
+function filterMensajes(val) {
+  if(!val) { renderMensajes(allMensajes); return; }
+  const q = val.toLowerCase();
+  const filtered = allMensajes.filter(m => 
+    (m.nombre && m.nombre.toLowerCase().includes(q)) || 
+    (m.telefono && m.telefono.toLowerCase().includes(q)) ||
+    (m.mensaje && m.mensaje.toLowerCase().includes(q))
+  );
+  renderMensajes(filtered);
+}
+
+function exportMensajesCSV() {
+  if(!allMensajes || !allMensajes.length) { showToast('No hay datos para exportar', 'error'); return; }
+  let csv = 'ID,Nombre,Telefono,Mensaje,Estado,Fecha\n';
+  allMensajes.forEach(m => {
+    const cleanMsg = m.mensaje ? m.mensaje.replace(/"/g, '""').replace(/\n/g, ' ') : '';
+    csv += `"${m.id}","${m.nombre}","${m.telefono || ''}","${cleanMsg}","${m.leido ? 'Leido' : 'Nuevo'}","${m.created_at}"\n`;
+  });
+  const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'voluntarios_renovacion_montufarena.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('Archivo CSV generado con éxito');
 }
 
 async function markMensajeLeido(id) {

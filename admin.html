@@ -547,6 +547,7 @@ async function saveHeroText(){
     nombre: document.getElementById('h-nombre').value,
     titulo2:document.getElementById('h-titulo2').value,
     sub:    document.getElementById('h-sub').value
+  });
   showToast('Texto del hero guardado');
 }
 
@@ -555,14 +556,12 @@ async function saveHeroImg(num){
   if(num===1) hi.img1=document.getElementById('h-img1').value;
   if(num===2) hi.img2=document.getElementById('h-img2').value;
   await setConfig('hero_imgs', hi);
-  await setConfig('hero_imgs', hi);
   showToast('Foto candidato actualizada');
 }
 
 async function saveHeroBg(){
   const hi = await getConfig('hero_imgs');
   hi.bg=document.getElementById('h-bg').value;
-  await setConfig('hero_imgs', hi);
   await setConfig('hero_imgs', hi);
   showToast('Fondo actualizado');
 }

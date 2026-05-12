@@ -1477,10 +1477,28 @@ textarea.input-rc {
 
     .hero-portrait-frame {
         max-width: 100%;
+        justify-content: center;
+        overflow: hidden; /* Asegura que no extiendan el body */
     }
 
     .hero-img-dominant {
-        height: 320px; /* Reducido para que quepa en móviles */
+        width: 50%;
+        height: auto;
+        max-height: 40vh;
+        object-fit: contain;
+        object-position: bottom;
+    }
+
+    .hero-portrait-frame img:nth-child(1) {
+        margin-right: -5%;
+        transform: scale(1.1); /* Escala suave */
+        transform-origin: bottom right; /* Crece hacia el centro */
+    }
+
+    .hero-portrait-frame img:nth-child(2) {
+        margin-left: -5%;
+        transform: scale(0.9);
+        transform-origin: bottom left; /* Crece hacia el centro */
     }
 
     .hero-actions {

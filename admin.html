@@ -84,11 +84,14 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
     <aside class="sidebar">
       <img src="https://res.cloudinary.com/dtmqftcsr/image/upload/q_auto/f_auto/v1776302644/WhatsApp_Image_2026-04-15_at_11.28.42_AM_ieuo0z.jpg" alt="Logo">
       <nav>
-        <button class="active" onclick="showTab('hero')"><i class="fas fa-user"></i> Hero / Candidato</button>
-        <button onclick="showTab('slider')"><i class="fas fa-images"></i> Carrusel Imágenes</button>
-        <button onclick="showTab('propuestas')"><i class="fas fa-list-check"></i> Propuestas</button>
-        <button onclick="showTab('contacto')"><i class="fas fa-phone"></i> Contacto / Redes</button>
+        <button class="active" onclick="showTab('hero',this)"><i class="fas fa-user"></i> Hero / Candidato</button>
+        <button onclick="showTab('slider',this)"><i class="fas fa-images"></i> Carrusel Imágenes</button>
+        <button onclick="showTab('propuestas',this)"><i class="fas fa-list-check"></i> Propuestas</button>
+        <button onclick="showTab('contacto',this)"><i class="fas fa-phone"></i> Contacto / Redes</button>
       </nav>
+      <div id="db-status" style="margin-top:20px;padding:10px 12px;border-radius:10px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">
+        <i class="fas fa-circle-notch fa-spin"></i> Conectando a BD...
+      </div>
       <button class="btn-logout" id="btn-out"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
     </aside>
 
@@ -191,15 +194,14 @@ img-preview{display:block;max-height:120px;border-radius:8px;margin-top:8px;obje
 <script>
 const MASTER = {email:'dilancoronado358@gmail.com', pass:'Dilan123'};
 const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
-// IMPORTANTE: Reemplaza esta clave con tu anon key real de Supabase (empieza con eyJ...)
 const SB_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
 
 let db = null;
-try {
-  if(window.supabase && window.supabase.createClient) {
+window.addEventListener('load', function(){
+  if(window.supabase && window.supabase.createClient){
     db = window.supabase.createClient(SB_URL, SB_KEY);
   }
-} catch(e){}
+});
 
 const login   = document.getElementById('pg-login');
 const dash    = document.getElementById('pg-dash');
@@ -207,8 +209,7 @@ const btnIn   = document.getElementById('btn-in');
 const btnOut  = document.getElementById('btn-out');
 const errBox  = document.getElementById('err');
 
-// Check session
-if(localStorage.getItem('adm')===('1')) go();
+if(localStorage.getItem('adm')==='1') go();
 
 btnIn.onclick = function(){
   const e = document.getElementById('em').value.trim();
@@ -216,13 +217,9 @@ btnIn.onclick = function(){
   errBox.style.display='none';
   if(!e||!p){showErr('Completa todos los campos');return;}
   if(e.toLowerCase()===MASTER.email.toLowerCase() && p===MASTER.pass){
-    localStorage.setItem('adm','1');
-    go();
-  } else {
-    showErr('Correo o contraseña incorrectos');
-  }
+    localStorage.setItem('adm','1'); go();
+  } else { showErr('Correo o contraseña incorrectos'); }
 };
-
 document.getElementById('pw').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 document.getElementById('em').onkeydown=e=>{if(e.key==='Enter')btnIn.click()};
 
@@ -232,113 +229,121 @@ btnOut.onclick=function(){
   login.style.display='flex';
 };
 
-function go(){
+async function go(){
   login.style.display='none';
   dash.style.display='block';
-  loadContent();
-  loadProps();
+  await testDB();
+  await loadContent();
+  await loadProps();
+}
+
+async function testDB(){
+  const el = document.getElementById('db-status');
+  if(!db){el.innerHTML='<i class="fas fa-times-circle" style="color:#e74c3c"></i> Sin Supabase';return;}
+  const {error} = await db.from('site_config').select('key').limit(1);
+  if(error){
+    el.innerHTML='<i class="fas fa-exclamation-circle" style="color:#f59e0b"></i> BD: '+error.message;
+  } else {
+    el.innerHTML='<i class="fas fa-check-circle" style="color:#00A650"></i> Supabase conectado';
+  }
 }
 
 function showErr(m){errBox.textContent=m;errBox.style.display='block';}
 
-function showTab(name){
+function showTab(name, btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sidebar nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  event.target.classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(name==='propuestas') loadProps();
 }
 
-// ---- LOAD from localStorage or DB ----
+async function getConfig(key){
+  if(db){
+    const {data} = await db.from('site_config').select('value').eq('key',key).maybeSingle();
+    if(data) return JSON.parse(data.value||'{}');
+  }
+  return JSON.parse(localStorage.getItem(key)||'{}');
+}
+
+async function setConfig(key, obj){
+  const val = JSON.stringify(obj);
+  localStorage.setItem(key, val);
+  if(db){
+    const {error} = await db.from('site_config').upsert({key, value:val, updated_at:new Date().toISOString()},{onConflict:'key'});
+    if(error) console.warn('Supabase write error:',error.message);
+  }
+}
+
 async function loadContent(){
-  // Hero text
-  const ht = JSON.parse(localStorage.getItem('hero_text')||'{}');
+  const ht = await getConfig('hero_text');
   if(ht.titulo1) document.getElementById('h-titulo1').value=ht.titulo1;
   if(ht.nombre)  document.getElementById('h-nombre').value=ht.nombre;
   if(ht.titulo2) document.getElementById('h-titulo2').value=ht.titulo2;
   if(ht.sub)     document.getElementById('h-sub').value=ht.sub;
-  // Hero images
-  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
+
+  const hi = await getConfig('hero_imgs');
   if(hi.img1) document.getElementById('h-img1').value=hi.img1;
   if(hi.img2) document.getElementById('h-img2').value=hi.img2;
   if(hi.bg)   document.getElementById('h-bg').value=hi.bg;
-  // Slider
-  const sl = JSON.parse(localStorage.getItem('slider_imgs')||'{}');
+
+  const sl = await getConfig('slider_imgs');
   if(sl.s1) document.getElementById('sl-1').value=sl.s1;
   if(sl.s2) document.getElementById('sl-2').value=sl.s2;
-  if(sl.s3) document.getElementById('sl-3').value=sl.s3||'';
-  // Contact
-  const ct = JSON.parse(localStorage.getItem('contacto')||'{}');
+  if(sl.s3) document.getElementById('sl-3').value=sl.s3;
+
+  const ct = await getConfig('contacto');
   if(ct.wa) document.getElementById('c-wa').value=ct.wa;
   if(ct.fb) document.getElementById('c-fb').value=ct.fb;
   if(ct.tt) document.getElementById('c-tt').value=ct.tt;
 }
 
-// ---- SAVE HERO TEXT ----
 async function saveHeroText(){
-  const data={
-    titulo1: document.getElementById('h-titulo1').value,
-    nombre:  document.getElementById('h-nombre').value,
-    titulo2: document.getElementById('h-titulo2').value,
-    sub:     document.getElementById('h-sub').value
-  };
-  localStorage.setItem('hero_text', JSON.stringify(data));
-  if(db){
-    await db.from('site_config').upsert({key:'hero_text', value: JSON.stringify(data)},{onConflict:'key'});
-  }
-  alert('✅ Texto del hero guardado correctamente');
+  await setConfig('hero_text',{
+    titulo1:document.getElementById('h-titulo1').value,
+    nombre: document.getElementById('h-nombre').value,
+    titulo2:document.getElementById('h-titulo2').value,
+    sub:    document.getElementById('h-sub').value
+  });
+  alert('✅ Texto del hero guardado');
 }
 
-// ---- SAVE HERO IMAGES ----
 async function saveHeroImg(num){
-  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
-  if(num===1) hi.img1 = document.getElementById('h-img1').value;
-  if(num===2) hi.img2 = document.getElementById('h-img2').value;
-  localStorage.setItem('hero_imgs', JSON.stringify(hi));
-  if(db){
-    await db.from('site_config').upsert({key:'hero_imgs', value: JSON.stringify(hi)},{onConflict:'key'});
-  }
-  alert('✅ Foto actualizada. Los cambios se verán en la página pública.');
+  const hi = await getConfig('hero_imgs');
+  if(num===1) hi.img1=document.getElementById('h-img1').value;
+  if(num===2) hi.img2=document.getElementById('h-img2').value;
+  await setConfig('hero_imgs', hi);
+  alert('✅ Foto candidato actualizada');
 }
 
 async function saveHeroBg(){
-  const hi = JSON.parse(localStorage.getItem('hero_imgs')||'{}');
-  hi.bg = document.getElementById('h-bg').value;
-  localStorage.setItem('hero_imgs', JSON.stringify(hi));
-  if(db){
-    await db.from('site_config').upsert({key:'hero_imgs', value: JSON.stringify(hi)},{onConflict:'key'});
-  }
+  const hi = await getConfig('hero_imgs');
+  hi.bg=document.getElementById('h-bg').value;
+  await setConfig('hero_imgs', hi);
   alert('✅ Fondo actualizado');
 }
 
-// ---- SAVE SLIDER ----
 async function saveSlider(){
-  const data={
-    s1: document.getElementById('sl-1').value,
-    s2: document.getElementById('sl-2').value,
-    s3: document.getElementById('sl-3').value
-  };
-  localStorage.setItem('slider_imgs', JSON.stringify(data));
-  if(db){
-    await db.from('site_config').upsert({key:'slider_imgs', value: JSON.stringify(data)},{onConflict:'key'});
-  }
+  await setConfig('slider_imgs',{
+    s1:document.getElementById('sl-1').value,
+    s2:document.getElementById('sl-2').value,
+    s3:document.getElementById('sl-3').value
+  });
   alert('✅ Imágenes del carrusel guardadas');
 }
 
-// ---- SAVE PROPUESTA ----
 async function saveProp(){
   const cat   = document.getElementById('p-cat').value;
-  const title = document.getElementById('p-title').value;
-  const desc  = document.getElementById('p-desc').value;
+  const title = document.getElementById('p-title').value.trim();
+  const desc  = document.getElementById('p-desc').value.trim();
   if(!title||!desc){alert('Completa título y descripción');return;}
-
   if(db){
-    const {error} = await db.from('propuestas').insert([{category:cat, title, desc_text:desc}]);
-    if(error){alert('Error Supabase: '+error.message);return;}
+    const {error}=await db.from('propuestas').insert([{category:cat,title,desc_text:desc,is_active:true}]);
+    if(error){alert('Error: '+error.message);return;}
   } else {
-    // localStorage fallback
-    const props = JSON.parse(localStorage.getItem('props_local')||'[]');
-    props.push({id:Date.now(),category:cat,title,desc_text:desc,is_active:true});
-    localStorage.setItem('props_local', JSON.stringify(props));
+    const arr=JSON.parse(localStorage.getItem('props_local')||'[]');
+    arr.push({id:Date.now(),category:cat,title,desc_text:desc,is_active:true});
+    localStorage.setItem('props_local',JSON.stringify(arr));
   }
   document.getElementById('p-title').value='';
   document.getElementById('p-desc').value='';
@@ -346,59 +351,56 @@ async function saveProp(){
   loadProps();
 }
 
-// ---- LOAD PROPUESTAS ----
-async function loadProps(){
-  const list = document.getElementById('props-list');
-  list.innerHTML='<p style="color:#888">Cargando...</p>';
-  let items=[];
-
+async function deleteProp(id){
+  if(!confirm('¿Eliminar esta propuesta?'))return;
   if(db){
-    const {data,error} = await db.from('propuestas').select('*').order('id',{ascending:false});
-    if(error){
-      list.innerHTML=`<div class="notice warn">⚠️ Error Supabase: ${error.message}<br>Verifica la clave API en Supabase Dashboard → Settings → API.</div>`;
-      // Load from localStorage as fallback
-      items = JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
-      if(items.length) renderProps(items, list);
-      return;
-    }
-    items=data||[];
+    await db.from('propuestas').delete().eq('id',id);
   } else {
-    items = JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
+    const arr=JSON.parse(localStorage.getItem('props_local')||'[]').filter(p=>p.id!==id);
+    localStorage.setItem('props_local',JSON.stringify(arr));
   }
-
-  renderProps(items, list);
+  loadProps();
 }
 
-function renderProps(items, list){
+async function loadProps(){
+  const list=document.getElementById('props-list');
+  list.innerHTML='<p style="color:#888">Cargando...</p>';
+  let items=[];
+  if(db){
+    const {data,error}=await db.from('propuestas').select('*').order('id',{ascending:false});
+    if(error){list.innerHTML=`<div class="notice warn">⚠️ ${error.message}</div>`;return;}
+    items=data||[];
+  } else {
+    items=JSON.parse(localStorage.getItem('props_local')||'[]').reverse();
+  }
   if(!items.length){list.innerHTML='<p style="color:#888">No hay propuestas aún.</p>';return;}
   list.innerHTML='';
   items.forEach(p=>{
     const d=document.createElement('div');
     d.className='prop-item';
     d.innerHTML=`
-      <div>
+      <div style="flex:1">
         <span class="badge-cat">${p.category}</span>
         <h4>${p.title}</h4>
         <p>${p.desc_text||''}</p>
       </div>
-      <span class="${p.is_active?'status-ok':'status-no'}">${p.is_active?'● ACTIVO':'● INACTIVO'}</span>`;
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="${p.is_active?'status-ok':'status-no'}">${p.is_active?'● ACTIVO':'● INACTIVO'}</span>
+        <button class="btn-danger" onclick="deleteProp(${p.id})" style="padding:6px 12px;font-size:.78rem">🗑 Eliminar</button>
+      </div>`;
     list.appendChild(d);
   });
 }
 
-// ---- SAVE CONTACT ----
 async function saveContact(){
-  const data={
-    wa: document.getElementById('c-wa').value,
-    fb: document.getElementById('c-fb').value,
-    tt: document.getElementById('c-tt').value
-  };
-  localStorage.setItem('contacto', JSON.stringify(data));
-  if(db){
-    await db.from('site_config').upsert({key:'contacto', value: JSON.stringify(data)},{onConflict:'key'});
-  }
+  await setConfig('contacto',{
+    wa:document.getElementById('c-wa').value,
+    fb:document.getElementById('c-fb').value,
+    tt:document.getElementById('c-tt').value
+  });
   alert('✅ Datos de contacto guardados');
 }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>

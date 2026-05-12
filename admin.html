@@ -257,6 +257,43 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
             </div>
           </div>
         </div>
+
+        <div class="card" style="border-left:5px solid #e67e22; margin-top:25px;">
+          <h3><i class="fas fa-boxes-packing"></i> Inventario Logístico y Control de Materiales</h3>
+          <p style="font-size:0.85rem; color:#666;">Monitorea la entrega de insumos de campaña en el territorio para prever con exactitud los pedidos a imprenta y proveedores.</p>
+          <div class="grid2" style="margin-top:15px; align-items:center;">
+            <div>
+              <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <div class="field" style="flex:2;"><label>Lonas Colgadas</label><input type="number" id="inv-lonas-act" value="350" oninput="actualizarGraficoInventario()"></div>
+                <div class="field" style="flex:1;"><label>Meta Lonas</label><input type="number" id="inv-lonas-tot" value="500" oninput="actualizarGraficoInventario()"></div>
+              </div>
+              <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <div class="field" style="flex:2;"><label>Camisetas Entregadas</label><input type="number" id="inv-cam-act" value="120" oninput="actualizarGraficoInventario()"></div>
+                <div class="field" style="flex:1;"><label>Meta Camisetas</label><input type="number" id="inv-cam-tot" value="200" oninput="actualizarGraficoInventario()"></div>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <div class="field" style="flex:2;"><label>Banderas Repartidas</label><input type="number" id="inv-ban-act" value="85" oninput="actualizarGraficoInventario()"></div>
+                <div class="field" style="flex:1;"><label>Meta Banderas</label><input type="number" id="inv-ban-tot" value="150" oninput="actualizarGraficoInventario()"></div>
+              </div>
+              <button class="btn-save" style="background:#e67e22; margin-top:12px;" onclick="guardarInventario()"><i class="fas fa-save"></i> Guardar Inventario en Supabase</button>
+            </div>
+            <div style="background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+              <h4 style="margin-top:0; margin-bottom:15px; text-align:center; color:#333;">Consumo de Stock Físico</h4>
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Lonas de Fachada</span><span id="lbl-inv-lonas">350/500 (70%)</span></div>
+                <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;"><div id="bar-inv-lonas" style="height:100%; width:70%; background:#e67e22; transition:width 0.4s;"></div></div>
+              </div>
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Camisetas Oficiales</span><span id="lbl-inv-cam">120/200 (60%)</span></div>
+                <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;"><div id="bar-inv-cam" style="height:100%; width:60%; background:#2980b9; transition:width 0.4s;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Banderas y Volantes</span><span id="lbl-inv-ban">85/150 (56%)</span></div>
+                <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;"><div id="bar-inv-ban" style="height:100%; width:56%; background:#27ae60; transition:width 0.4s;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- TAB: HERO -->
@@ -351,6 +388,60 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <div class="card">
           <h3><i class="fas fa-list"></i> Propuestas Guardadas</h3>
           <div id="props-list"><p style="color:#888">Cargando...</p></div>
+        </div>
+
+        <div class="card" style="border-left:5px solid #2980b9; margin-top:25px;">
+          <h3><i class="fas fa-file-invoice"></i> Generador de Guiones Rápidos (Argumentarios Puerta a Puerta)</h3>
+          <p style="font-size:0.85rem; color:#666;">Crea "Tarjetas de Bolsillo" con respuestas optimizadas para que tus brigadistas respondan con seguridad y firmeza durante las visitas casa por casa.</p>
+          <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+            <div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Eje Temático de Campaña</label>
+                <select id="guion-eje" onchange="cargarGuionPredefinido()">
+                  <option value="agro">🌾 Impulso al Sector Agropecuario</option>
+                  <option value="seguridad">🛡️ Plan de Seguridad Integral</option>
+                  <option value="salud">🏥 Atención y Clínicas Móviles</option>
+                  <option value="vialidad">🚧 Rescate Vial y Caminos Vecinales</option>
+                </select>
+              </div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Argumento Principal (Respuesta Inmediata)</label>
+                <textarea id="guion-arg1" rows="2" placeholder="Ej: Reactivación mediante créditos directos y tecnificación del campo..." oninput="actualizarVistaGuion()"></textarea>
+              </div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Compromiso Clave (El Diferenciador)</label>
+                <textarea id="guion-arg2" rows="2" placeholder="Ej: Adquisición de maquinaria pesada permanente por parroquia..." oninput="actualizarVistaGuion()"></textarea>
+              </div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Llamado a la Acción (Cierre con el Ciudadano)</label>
+                <input type="text" id="guion-cierre" placeholder="Ej: Vote por Fabián Robles / Únase a la Renovación" oninput="actualizarVistaGuion()">
+              </div>
+              <button class="btn-save" style="background:#2980b9; margin-top:5px;" onclick="descargarGuionBolsillo()"><i class="fas fa-download"></i> Descargar Tarjeta de Guion (.PNG)</button>
+            </div>
+            <div style="display:flex; justify-content:center;">
+              <!-- Tarjeta Guion en Vivo -->
+              <div id="guion-card-box" style="width:260px; background:#fff; border:2px solid #2980b9; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.12);">
+                <div style="background:linear-gradient(135deg, #0a192f, #2980b9); padding:12px 10px; color:#fff; text-align:center;">
+                  <div style="font-size:0.65rem; color:#64ffda; font-weight:bold; letter-spacing:1px;">GUÍA PUERTA A PUERTA</div>
+                  <div id="lbl-guion-eje" style="font-size:0.85rem; font-weight:800; margin-top:2px;">🌾 SECTOR AGROPECUARIO</div>
+                </div>
+                <div style="padding:15px 12px; font-size:0.75rem; line-height:1.4; color:#333;">
+                  <div style="margin-bottom:10px;">
+                    <span style="color:#2980b9; font-weight:bold; display:block; font-size:0.7rem;">RESPUESTA RÁPIDA:</span>
+                    <div id="lbl-guion-arg1" style="font-weight:600;">Reactivación mediante créditos directos y tecnificación del campo...</div>
+                  </div>
+                  <div style="margin-bottom:10px; border-top:1px dashed #ddd; padding-top:8px;">
+                    <span style="color:#00A650; font-weight:bold; display:block; font-size:0.7rem;">NUESTRO COMPROMISO:</span>
+                    <div id="lbl-guion-arg2" style="font-weight:600;">Adquisición de maquinaria pesada permanente por parroquia...</div>
+                  </div>
+                  <div style="background:#f1f2f6; padding:8px; border-radius:6px; text-align:center; margin-top:12px; border:1px solid #ddd;">
+                    <span style="color:#c0392b; font-weight:bold; display:block; font-size:0.65rem;">CIERRE:</span>
+                    <strong id="lbl-guion-cierre" style="color:#0a192f; font-size:0.8rem;">Vote por Fabián Robles</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -522,6 +613,62 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         <div class="card">
           <h3><i class="fas fa-list"></i> Puntos Existentes</h3>
           <div id="map-list"><p style="color:#888">Cargando puntos...</p></div>
+        </div>
+
+        <div class="card" style="border-left:5px solid #27ae60; margin-top:25px;">
+          <h3><i class="fas fa-traffic-light"></i> Semáforo de Apoyo Parroquial (Mapa Estratégico de Calor)</h3>
+          <p style="font-size:0.85rem; color:#666;">Evalúa la fuerza política territorial en las parroquias de Montúfar para focalizar el despliegue logístico y visitas del candidato.</p>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">San Gabriel (Cabecera)</strong>
+              <select id="semaf-sg" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">La Paz</strong>
+              <select id="semaf-lp" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;" selected>🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">Cristóbal Colón</strong>
+              <select id="semaf-cc" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;" selected>🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">Chitán de Navarretes</strong>
+              <select id="semaf-cn" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;" selected>🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">Fernández Salvador</strong>
+              <select id="semaf-fs" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;" selected>🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+              <strong style="flex:2; min-width:150px; color:#1a3a6b;">Piartal</strong>
+              <select id="semaf-pt" style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;" onchange="actualizarSemaforoColor(this)">
+                <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                <option value="rojo" style="background:#c0392b; color:#fff;" selected>🔴 Refuerzo Urgente</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-save" style="background:#27ae60; margin-top:16px;" onclick="guardarSemaforoParroquial()"><i class="fas fa-cloud-upload-alt"></i> Sincronizar Semáforo Estratégico</button>
         </div>
       </div>
 
@@ -824,6 +971,9 @@ async function go(){
   await loadContent();
   await loadProps();
   await cargarGafetesSupabase();
+  await cargarInventario();
+  await cargarSemaforoParroquial();
+  cargarGuionPredefinido();
 }
 
 async function testDB(){
@@ -1764,6 +1914,295 @@ async function eliminarGafeteSupabase(id) {
   await setConfig('gafetes_guardados', { list: gafetesGuardados });
   showToast('Credencial eliminada');
   renderizarListaGafetes();
+}
+
+// --- FUNCIONES INVENTARIO LOGÍSTICO ---
+function actualizarGraficoInventario() {
+  const elLonasAct = document.getElementById('inv-lonas-act');
+  const lonasAct = elLonasAct ? parseInt(elLonasAct.value) || 0 : 350;
+  const elLonasTot = document.getElementById('inv-lonas-tot');
+  const lonasTot = elLonasTot ? parseInt(elLonasTot.value) || 1 : 500;
+  const pctLonas = Math.min(100, Math.round((lonasAct / lonasTot) * 100));
+
+  const elCamAct = document.getElementById('inv-cam-act');
+  const camAct = elCamAct ? parseInt(elCamAct.value) || 0 : 120;
+  const elCamTot = document.getElementById('inv-cam-tot');
+  const camTot = elCamTot ? parseInt(elCamTot.value) || 1 : 200;
+  const pctCam = Math.min(100, Math.round((camAct / camTot) * 100));
+
+  const elBanAct = document.getElementById('inv-ban-act');
+  const banAct = elBanAct ? parseInt(elBanAct.value) || 0 : 85;
+  const elBanTot = document.getElementById('inv-ban-tot');
+  const banTot = elBanTot ? parseInt(elBanTot.value) || 1 : 150;
+  const pctBan = Math.min(100, Math.round((banAct / banTot) * 100));
+
+  const lblLonas = document.getElementById('lbl-inv-lonas');
+  if(lblLonas) lblLonas.textContent = `${lonasAct}/${lonasTot} (${pctLonas}%)`;
+  const barLonas = document.getElementById('bar-inv-lonas');
+  if(barLonas) barLonas.style.width = `${pctLonas}%`;
+
+  const lblCam = document.getElementById('lbl-inv-cam');
+  if(lblCam) lblCam.textContent = `${camAct}/${camTot} (${pctCam}%)`;
+  const barCam = document.getElementById('bar-inv-cam');
+  if(barCam) barCam.style.width = `${pctCam}%`;
+
+  const lblBan = document.getElementById('lbl-inv-ban');
+  if(lblBan) lblBan.textContent = `${banAct}/${banTot} (${pctBan}%)`;
+  const barBan = document.getElementById('bar-inv-ban');
+  if(barBan) barBan.style.width = `${pctBan}%`;
+}
+
+async function guardarInventario() {
+  const elLonasAct = document.getElementById('inv-lonas-act');
+  const lonasAct = elLonasAct ? parseInt(elLonasAct.value) || 0 : 350;
+  const elLonasTot = document.getElementById('inv-lonas-tot');
+  const lonasTot = elLonasTot ? parseInt(elLonasTot.value) || 1 : 500;
+  const elCamAct = document.getElementById('inv-cam-act');
+  const camAct = elCamAct ? parseInt(elCamAct.value) || 0 : 120;
+  const elCamTot = document.getElementById('inv-cam-tot');
+  const camTot = elCamTot ? parseInt(elCamTot.value) || 1 : 200;
+  const elBanAct = document.getElementById('inv-ban-act');
+  const banAct = elBanAct ? parseInt(elBanAct.value) || 0 : 85;
+  const elBanTot = document.getElementById('inv-ban-tot');
+  const banTot = elBanTot ? parseInt(elBanTot.value) || 1 : 150;
+
+  await setConfig('inventario_logistico', { lonasAct, lonasTot, camAct, camTot, banAct, banTot });
+  showToast('¡Inventario de materiales actualizado en Supabase!');
+}
+
+async function cargarInventario() {
+  const obj = await getConfig('inventario_logistico');
+  if(obj && obj.lonasTot !== undefined) {
+    const ids = ['lonas-act','lonas-tot','cam-act','cam-tot','ban-act','ban-tot'];
+    const keys = ['lonasAct','lonasTot','camAct','camTot','banAct','banTot'];
+    ids.forEach((id, idx) => {
+      const el = document.getElementById(`inv-${id}`);
+      if(el && obj[keys[idx]] !== undefined) el.value = obj[keys[idx]];
+    });
+  }
+  actualizarGraficoInventario();
+}
+
+// --- FUNCIONES SEMÁFORO PARROQUIAL ---
+function actualizarSemaforoColor(sel) {
+  if(!sel) return;
+  const v = sel.value;
+  if(v === 'verde') {
+    sel.style.background = '#27ae60';
+    sel.style.color = '#fff';
+  } else if(v === 'amarillo') {
+    sel.style.background = '#f1c40f';
+    sel.style.color = '#000';
+  } else {
+    sel.style.background = '#c0392b';
+    sel.style.color = '#fff';
+  }
+}
+
+async function guardarSemaforoParroquial() {
+  const sg = document.getElementById('semaf-sg') ? document.getElementById('semaf-sg').value : 'verde';
+  const lp = document.getElementById('semaf-lp') ? document.getElementById('semaf-lp').value : 'amarillo';
+  const cc = document.getElementById('semaf-cc') ? document.getElementById('semaf-cc').value : 'rojo';
+  const cn = document.getElementById('semaf-cn') ? document.getElementById('semaf-cn').value : 'verde';
+  const fs = document.getElementById('semaf-fs') ? document.getElementById('semaf-fs').value : 'amarillo';
+  const pt = document.getElementById('semaf-pt') ? document.getElementById('semaf-pt').value : 'rojo';
+
+  await setConfig('semaforo_apoyo', { sg, lp, cc, cn, fs, pt });
+  showToast('¡Semáforo de fuerza territorial respaldado en Supabase!');
+}
+
+async function cargarSemaforoParroquial() {
+  const obj = await getConfig('semaforo_apoyo');
+  const ids = ['sg','lp','cc','cn','fs','pt'];
+  if(obj && obj.sg) {
+    ids.forEach(k => {
+      const el = document.getElementById(`semaf-${k}`);
+      if(el && obj[k]) {
+        el.value = obj[k];
+        actualizarSemaforoColor(el);
+      }
+    });
+  } else {
+    ids.forEach(k => {
+      const el = document.getElementById(`semaf-${k}`);
+      if(el) actualizarSemaforoColor(el);
+    });
+  }
+}
+
+// --- FUNCIONES GUIONES RÁPIDOS ---
+const guionesTextos = {
+  agro: {
+    t: '🌾 SECTOR AGROPECUARIO',
+    arg1: 'Reactivación mediante créditos directos de bajo interés y tecnificación del campo para pequeños productores.',
+    arg2: 'Adquisición de un banco de maquinaria pesada permanente asignado para uso exclusivo en las parroquias rurales.',
+    cierre: 'Vote por Fabián Robles'
+  },
+  seguridad: {
+    t: '🛡️ PLAN DE SEGURIDAD',
+    arg1: 'Implementación del centro de monitoreo y cámaras inteligentes conectadas al ECU 911 en las entradas del cantón.',
+    arg2: 'Creación del cuerpo de patrullaje ciudadano y entrega de alarmas comunitarias a los barrios organizados.',
+    cierre: 'Juntos cuidamos Montúfar'
+  },
+  salud: {
+    t: '🏥 ATENCIÓN Y SALUD',
+    arg1: 'Despliegue de brigadas médicas móviles con dotación gratuita de medicamentos básicos para adultos mayores.',
+    arg2: 'Firma de convenios de salud integral y repotenciación de los dispensarios médicos parroquiales.',
+    cierre: 'Salud digna para todos'
+  },
+  vialidad: {
+    t: '🚧 RESCATE VIAL',
+    arg1: 'Plan intensivo de lastrado y mantenimiento de caminos vecinales para sacar los productos sin pérdidas.',
+    arg2: 'Adoquinado participativo de las cabeceras parroquiales en coordinación directa con los barrios.',
+    cierre: 'Caminos al desarrollo'
+  }
+};
+
+function cargarGuionPredefinido() {
+  const elEje = document.getElementById('guion-eje');
+  const eje = elEje ? elEje.value : 'agro';
+  const item = guionesTextos[eje];
+  if(item) {
+    const elArg1 = document.getElementById('guion-arg1');
+    if(elArg1) elArg1.value = item.arg1;
+    const elArg2 = document.getElementById('guion-arg2');
+    if(elArg2) elArg2.value = item.arg2;
+    const elCierre = document.getElementById('guion-cierre');
+    if(elCierre) elCierre.value = item.cierre;
+    actualizarVistaGuion();
+    showToast('Guion precargado exitosamente');
+  }
+}
+
+function actualizarVistaGuion() {
+  const elEje = document.getElementById('guion-eje');
+  const eje = elEje ? elEje.value : 'agro';
+  const item = guionesTextos[eje] || { t: 'GUÍA RÁPIDA' };
+  const elArg1 = document.getElementById('guion-arg1');
+  const arg1 = elArg1 && elArg1.value ? elArg1.value : 'Sin respuesta configurada...';
+  const elArg2 = document.getElementById('guion-arg2');
+  const arg2 = elArg2 && elArg2.value ? elArg2.value : 'Sin compromiso configurado...';
+  const elCierre = document.getElementById('guion-cierre');
+  const cierre = elCierre && elCierre.value ? elCierre.value : 'Vote por Fabián Robles';
+
+  const lblEje = document.getElementById('lbl-guion-eje');
+  if(lblEje) lblEje.textContent = item.t;
+  const lblArg1 = document.getElementById('lbl-guion-arg1');
+  if(lblArg1) lblArg1.textContent = arg1;
+  const lblArg2 = document.getElementById('lbl-guion-arg2');
+  if(lblArg2) lblArg2.textContent = arg2;
+  const lblCierre = document.getElementById('lbl-guion-cierre');
+  if(lblCierre) lblCierre.textContent = cierre;
+}
+
+function descargarGuionBolsillo() {
+  const elEje = document.getElementById('lbl-guion-eje');
+  const eje = elEje ? elEje.textContent : 'GUÍA DE CAMPAÑA';
+  const elArg1 = document.getElementById('lbl-guion-arg1');
+  const arg1 = elArg1 ? elArg1.textContent : '';
+  const elArg2 = document.getElementById('lbl-guion-arg2');
+  const arg2 = elArg2 ? elArg2.textContent : '';
+  const elCierre = document.getElementById('lbl-guion-cierre');
+  const cierre = elCierre ? elCierre.textContent : '';
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 400;
+  canvas.height = 500;
+  const ctx = canvas.getContext('2d');
+
+  // Fondo
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, 400, 500);
+
+  // Borde
+  ctx.strokeStyle = '#2980b9';
+  ctx.lineWidth = 10;
+  ctx.strokeRect(5, 5, 390, 490);
+
+  // Cabecera superior
+  ctx.fillStyle = '#0a192f';
+  ctx.fillRect(10, 10, 380, 90);
+
+  ctx.fillStyle = '#64ffda';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('ARGUMENTARIO DE BOLSILLO', 200, 42);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 18px sans-serif';
+  ctx.fillText(eje, 200, 72);
+
+  const wrapText = (text, x, y, maxWidth, lineHeight) => {
+    const words = text.split(' ');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      if(metrics.width > maxWidth && n > 0) {
+        ctx.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, x, y);
+    return y + lineHeight;
+  };
+
+  ctx.textAlign = 'left';
+  
+  // Arg 1
+  ctx.fillStyle = '#2980b9';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.fillText('RESPUESTA RÁPIDA:', 30, 140);
+  ctx.fillStyle = '#333333';
+  ctx.font = '15px sans-serif';
+  let nextY = wrapText(arg1, 30, 165, 340, 22);
+
+  // Separador
+  ctx.strokeStyle = '#dddddd';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath();
+  ctx.moveTo(30, nextY + 10);
+  ctx.lineTo(370, nextY + 10);
+  ctx.stroke();
+  ctx.setLineDash([]); 
+
+  // Arg 2
+  nextY += 35;
+  ctx.fillStyle = '#00A650';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.fillText('NUESTRO COMPROMISO:', 30, nextY);
+  ctx.fillStyle = '#333333';
+  ctx.font = '15px sans-serif';
+  nextY = wrapText(arg2, 30, nextY + 25, 340, 22);
+
+  // Pie de Cierre
+  ctx.fillStyle = '#f1f2f6';
+  ctx.fillRect(20, 395, 360, 75);
+  ctx.strokeStyle = '#dddddd';
+  ctx.strokeRect(20, 395, 360, 75);
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#c0392b';
+  ctx.font = 'bold 12px sans-serif';
+  ctx.fillText('CIERRE DE VISITA:', 200, 420);
+
+  ctx.fillStyle = '#0a192f';
+  ctx.font = 'bold 20px sans-serif';
+  ctx.fillText(cierre, 200, 450);
+
+  // Descargar
+  const url = canvas.toDataURL('image/png');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `guion_bolsillo_${eje.replace(/\s+/g,'_').toLowerCase()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('¡Guion de bolsillo descargado exitosamente!');
 }
 
 </script>

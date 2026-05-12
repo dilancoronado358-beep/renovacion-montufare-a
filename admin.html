@@ -142,6 +142,20 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
         
         <div class="stats-grid">
           <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-inbox"></i></div>
+            <div class="stat-info">
+              <h4>Voluntarios / Msgs</h4>
+              <h2 id="stat-msgs">-</h2>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <div class="stat-info">
+              <h4>Puntos Mapa</h4>
+              <h2 id="stat-map">-</h2>
+            </div>
+          </div>
+          <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-list-check"></i></div>
             <div class="stat-info">
               <h4>Propuestas</h4>
@@ -153,13 +167,6 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
             <div class="stat-info">
               <h4>Álbumes</h4>
               <h2 id="stat-albums">-</h2>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-images"></i></div>
-            <div class="stat-info">
-              <h4>Fotos Carrusel</h4>
-              <h2 id="stat-slider">-</h2>
             </div>
           </div>
         </div>
@@ -396,6 +403,30 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
           </div>
           <button class="btn-save" onclick="saveSEO()"><i class="fas fa-save"></i> Guardar SEO</button>
         </div>
+
+        <div class="card">
+          <h3><i class="fas fa-qrcode"></i> Generador de Código QR</h3>
+          <div class="notice ok">Genera y descarga instantáneamente un código QR oficial para volantes, afiches o redes sociales.</div>
+          <div class="field" style="margin-top:15px">
+            <label>Enlace URL para el Código QR</label>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <input type="url" id="qr-url" placeholder="https://renovacionmontufarena.com" style="flex:1; min-width:200px;">
+              <button class="btn-save" onclick="generateQRCode()" style="background:#1a3a6b;"><i class="fas fa-magic"></i> Dibujar QR</button>
+            </div>
+          </div>
+          <div id="qr-preview" style="display:none; text-align:center; margin-top:20px; padding:20px; background:#f8f9fa; border-radius:12px;">
+            <img id="qr-img" style="max-width:220px; border-radius:12px; border:8px solid #fff; box-shadow:0 4px 15px rgba(0,0,0,0.15); display:inline-block;">
+            <div style="margin-top:16px;">
+              <a id="qr-download" class="btn-save" style="display:inline-block; width:auto; padding:10px 24px; background:#00A650; text-decoration:none;" download="codigo_qr_campana.png"><i class="fas fa-download"></i> Descargar QR (.PNG)</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:5px solid #c0392b;">
+          <h3><i class="fas fa-box-archive"></i> Respaldo Total de Seguridad (Backup)</h3>
+          <div class="notice warn">Empaqueta todas tus propuestas, álbumes, textos y coordenadas actuales en un archivo JSON seguro.</div>
+          <button class="btn-save" style="background:#c0392b; margin-top:10px;" onclick="exportTotalBackup()"><i class="fas fa-download"></i> Crear Copia de Respaldo (.JSON)</button>
+        </div>
       </div>
 
       <!-- TAB: USUARIOS -->
@@ -561,18 +592,27 @@ function openCloudinaryWidget(targetId, multiple = false) {
 // --- Cargar Estadísticas del Dashboard ---
 async function loadDashboardStats() {
   if (!db) return;
-  // Propuestas
-  const { count: propsCount } = await db.from('propuestas').select('id', { count: 'exact', head: true });
-  document.getElementById('stat-props').textContent = propsCount || 0;
-  
-  // Álbumes
-  const { count: albumsCount } = await db.from('albumes').select('id', { count: 'exact', head: true });
-  document.getElementById('stat-albums').textContent = albumsCount || 0;
-  
-  // Fotos Slider
-  const sl = await getConfig('slider_imgs');
-  const slUrls = Array.isArray(sl.urls) ? sl.urls : [sl.s1,sl.s2,sl.s3].filter(u=>u&&u.trim());
-  document.getElementById('stat-slider').textContent = slUrls.length;
+  try {
+    // Mensajes / Voluntarios
+    const { count: msgsCount } = await db.from('mensajes').select('id', { count: 'exact', head: true });
+    const elMsgs = document.getElementById('stat-msgs');
+    if(elMsgs) elMsgs.textContent = msgsCount || 0;
+
+    // Puntos del Mapa
+    const { count: mapCount } = await db.from('mapa_puntos').select('id', { count: 'exact', head: true });
+    const elMap = document.getElementById('stat-map');
+    if(elMap) elMap.textContent = mapCount || 0;
+
+    // Propuestas
+    const { count: propsCount } = await db.from('propuestas').select('id', { count: 'exact', head: true });
+    const elProps = document.getElementById('stat-props');
+    if(elProps) elProps.textContent = propsCount || 0;
+    
+    // Álbumes
+    const { count: albumsCount } = await db.from('albumes').select('id', { count: 'exact', head: true });
+    const elAlbums = document.getElementById('stat-albums');
+    if(elAlbums) elAlbums.textContent = albumsCount || 0;
+  } catch(e) { console.warn('Stats load error:', e); }
 }
 
 async function go(){
@@ -1134,6 +1174,54 @@ async function createUser() {
     document.getElementById('new-user-email').value = '';
     document.getElementById('new-user-pass').value = '';
     showToast('Usuario creado exitosamente');
+  }
+}
+
+// ---- HERRAMIENTAS PREMIUM INTERNAS ----
+function generateQRCode() {
+  const u = document.getElementById('qr-url').value.trim();
+  if(!u) { showToast('Ingresa una URL válida', 'error'); return; }
+  const img = document.getElementById('qr-img');
+  const preview = document.getElementById('qr-preview');
+  const dl = document.getElementById('qr-download');
+  
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(u)}&margin=10`;
+  img.src = qrUrl;
+  dl.href = qrUrl;
+  preview.style.display = 'block';
+  showToast('Código QR generado en alta resolución');
+}
+
+async function exportTotalBackup() {
+  if(!db) { showToast('Sin conexión a base de datos', 'error'); return; }
+  showToast('Recopilando y empaquetando datos del sistema...');
+  try {
+    const backup = { timestamp: new Date().toISOString(), platform: "Renovación Montufareña Ultimate" };
+    const [cfg, prop, alb, msg, map] = await Promise.all([
+      db.from('site_config').select('*'),
+      db.from('propuestas').select('*'),
+      db.from('albumes').select('*'),
+      db.from('mensajes').select('*'),
+      db.from('mapa_puntos').select('*')
+    ]);
+    backup.config = cfg.data || [];
+    backup.propuestas = prop.data || [];
+    backup.albumes = alb.data || [];
+    backup.mensajes = msg.data || [];
+    backup.mapa_puntos = map.data || [];
+
+    const str = JSON.stringify(backup, null, 2);
+    const blob = new Blob([str], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup_renovacion_montufarena_${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('¡Copia de respaldo (.JSON) descargada con éxito!');
+  } catch(e) {
+    showToast('Error creando backup: ' + e.message, 'error');
   }
 }
 

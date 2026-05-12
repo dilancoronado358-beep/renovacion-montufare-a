@@ -294,6 +294,75 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
             </div>
           </div>
         </div>
+
+        <!-- MÓDULO DÍA D: CONTROL DE MESAS ELECTORALES -->
+        <div class="card" style="border-left:5px solid #c0392b; margin-top:25px;">
+          <h3><i class="fas fa-person-booth"></i> Módulo "Día D": Control de Veedores en Mesas Electorales</h3>
+          <p style="font-size:0.85rem; color:#666;">Garantiza la defensa del voto asignando delegados y testigos electorales en todas las Juntas Receptoras del Voto (JRV) de Montúfar.</p>
+          <div class="grid2" style="margin-top:15px; align-items:center;">
+            <div>
+              <div style="display:flex; gap:10px; margin-bottom:12px;">
+                <div class="field" style="flex:1;"><label>Total Mesas (JRV)</label><input type="number" id="diad-tot" value="120" oninput="actualizarDiaD()"></div>
+                <div class="field" style="flex:1;"><label>Veedores Asignados</label><input type="number" id="diad-act" value="95" oninput="actualizarDiaD()"></div>
+              </div>
+              <div class="field" style="margin-bottom:12px;">
+                <label>Responsable General de Control Electoral</label>
+                <input type="text" id="diad-resp" placeholder="Ej: Abg. Marco Tulio" oninput="actualizarDiaD()">
+              </div>
+              <button class="btn-save" style="background:#c0392b;" onclick="guardarDiaD()"><i class="fas fa-shield-alt"></i> Respaldar Operativo Día D</button>
+            </div>
+            <div style="text-align:center; background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+              <div style="font-size:0.75rem; color:#888; font-weight:bold; letter-spacing:1px;">COBERTURA TERRITORIAL</div>
+              <div id="lbl-diad-pct" style="font-size:3rem; font-weight:900; color:#c0392b; line-height:1.1; margin:10px 0;">79%</div>
+              <div style="height:12px; background:#e0e0e0; border-radius:6px; overflow:hidden; margin-bottom:10px;">
+                <div id="bar-diad" style="height:100%; width:79%; background:#c0392b; transition:width 0.5s;"></div>
+              </div>
+              <div id="lbl-diad-txt" style="font-size:0.85rem; color:#333; font-weight:bold;">Mesas Cubiertas: 95 / 120</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIMULADOR FINANCIERO DE CAMPAÑA -->
+        <div class="card" style="border-left:5px solid #2980b9; margin-top:25px;">
+          <h3><i class="fas fa-chart-pie"></i> Simulador de Presupuesto y Gastos de Campaña</h3>
+          <p style="font-size:0.85rem; color:#666;">Monitorea la distribución y el nivel de ejecución de los recursos económicos para optimizar la inversión por rubro estratégico.</p>
+          <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+            <div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Presupuesto Total Estimado ($ USD)</label>
+                <input type="number" id="fin-tot" value="25000" oninput="actualizarFinanzas()">
+              </div>
+              <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <div class="field" style="flex:1;"><label>Gasto Pauta Digital</label><input type="number" id="fin-pauta" value="4500" oninput="actualizarFinanzas()"></div>
+                <div class="field" style="flex:1;"><label>Gasto Logística/Eventos</label><input type="number" id="fin-log" value="8200" oninput="actualizarFinanzas()"></div>
+              </div>
+              <div class="field" style="margin-bottom:12px;">
+                <label>Gasto Impresos / Merchandising</label>
+                <input type="number" id="fin-imp" value="3100" oninput="actualizarFinanzas()">
+              </div>
+              <button class="btn-save" style="background:#2980b9;" onclick="guardarFinanzas()"><i class="fas fa-wallet"></i> Guardar Estado Presupuestario</button>
+            </div>
+            <div style="background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+              <h4 style="margin-top:0; margin-bottom:15px; text-align:center; color:#333;">Ejecución del Presupuesto</h4>
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Pauta Digital</span><span id="lbl-fin-pauta">$4,500</span></div>
+                <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;"><div id="bar-fin-pauta" style="height:100%; width:18%; background:#9b59b6;"></div></div>
+              </div>
+              <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Logística y Eventos</span><span id="lbl-fin-log">$8,200</span></div>
+                <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;"><div id="bar-fin-log" style="height:100%; width:32%; background:#e67e22;"></div></div>
+              </div>
+              <div style="margin-bottom:15px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;"><span>Impresos y Otros</span><span id="lbl-fin-imp">$3,100</span></div>
+                <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;"><div id="bar-fin-imp" style="height:100%; width:12%; background:#27ae60;"></div></div>
+              </div>
+              <div style="border-top:2px solid #ddd; padding-top:10px; text-align:center;">
+                <div style="font-size:0.75rem; color:#666;">TOTAL EJECUTADO</div>
+                <strong id="lbl-fin-ejec" style="font-size:1.2rem; color:#1a3a6b;">$15,800 / $25,000 (63%)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- TAB: HERO -->
@@ -471,6 +540,43 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh}
             <strong style="display:block; margin-bottom:5px; color:#333;">Enlace Generado:</strong>
             <a id="wa-link-href" target="_blank" style="color:#1a3a6b;"></a>
             <button class="btn-secondary" style="margin-top:10px; padding:6px 12px; font-size:0.8rem; display:inline-block; width:auto;" onclick="copiarEnlaceWA()"><i class="fas fa-copy"></i> Copiar Enlace</button>
+          </div>
+        </div>
+
+        <!-- GENERADOR DE COPYS PARA REDES SOCIALES -->
+        <div class="card" style="border-left:5px solid #8e44ad; margin-top:25px;">
+          <h3><i class="fas fa-bullhorn"></i> Generador de Textos ("Copys") para Redes Sociales</h3>
+          <p style="font-size:0.85rem; color:#666;">Crea publicaciones de alto impacto optimizadas con gatillos mentales, emojis y hashtags oficiales listos para copiar y pegar.</p>
+          <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+            <div>
+              <div class="field" style="margin-bottom:10px;">
+                <label>Plataforma de Destino</label>
+                <select id="copy-plat" onchange="generarCopyRedes()">
+                  <option value="fb">📘 Facebook (Informativo y Detallado)</option>
+                  <option value="tt">🎵 TikTok / Reels (Dinámico y Directo)</option>
+                  <option value="wa">🟢 WhatsApp (Cercano y Movilizador)</option>
+                </select>
+              </div>
+              <div class="field" style="margin-bottom:12px;">
+                <label>Público Objetivo</label>
+                <select id="copy-pub" onchange="generarCopyRedes()">
+                  <option value="general">👥 Ciudadanía en General</option>
+                  <option value="jovenes">🎓 Jóvenes y Primer Votante</option>
+                  <option value="agro">🌾 Sector Campesino y Agrícola</option>
+                  <option value="comerciantes">🏬 Comerciantes y Emprendedores</option>
+                </select>
+              </div>
+              <button class="btn-save" style="background:#8e44ad;" onclick="generarCopyRedes()"><i class="fas fa-magic"></i> Generar Copy Optimizado</button>
+            </div>
+            <div>
+              <div style="background:#f8f9fa; padding:15px; border-radius:10px; border:1px solid #ddd;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-size:0.75rem; color:#666; font-weight:bold;">VISTA PREVIA DEL COPY:</span>
+                  <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="copiarTextoCopy()"><i class="fas fa-copy"></i> Copiar Texto</button>
+                </div>
+                <textarea id="copy-res-txt" rows="7" style="width:100%; font-size:0.85rem; line-height:1.4; padding:8px; border-radius:6px; border:1px solid #ccc; background:#fff; color:#333; resize:none;" readonly>Cargando texto sugerido...</textarea>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -973,7 +1079,10 @@ async function go(){
   await cargarGafetesSupabase();
   await cargarInventario();
   await cargarSemaforoParroquial();
+  await cargarDiaD();
+  await cargarFinanzas();
   cargarGuionPredefinido();
+  generarCopyRedes();
 }
 
 async function testDB(){
@@ -2203,6 +2312,168 @@ function descargarGuionBolsillo() {
   a.click();
   document.body.removeChild(a);
   showToast('¡Guion de bolsillo descargado exitosamente!');
+}
+
+// --- FUNCIONES MÓDULO DÍA D ---
+function actualizarDiaD() {
+  const elTot = document.getElementById('diad-tot');
+  const tot = elTot ? parseInt(elTot.value) || 1 : 120;
+  const elAct = document.getElementById('diad-act');
+  const act = elAct ? parseInt(elAct.value) || 0 : 95;
+  const pct = Math.min(100, Math.round((act / tot) * 100));
+
+  const lblPct = document.getElementById('lbl-diad-pct');
+  if(lblPct) lblPct.textContent = `${pct}%`;
+  const bar = document.getElementById('bar-diad');
+  if(bar) bar.style.width = `${pct}%`;
+  const lblTxt = document.getElementById('lbl-diad-txt');
+  if(lblTxt) lblTxt.textContent = `Mesas Cubiertas: ${act} / ${tot}`;
+}
+
+async function guardarDiaD() {
+  const elTot = document.getElementById('diad-tot');
+  const tot = elTot ? parseInt(elTot.value) || 1 : 120;
+  const elAct = document.getElementById('diad-act');
+  const act = elAct ? parseInt(elAct.value) || 0 : 95;
+  const elResp = document.getElementById('diad-resp');
+  const resp = elResp ? elResp.value.trim() : '';
+
+  await setConfig('control_diad', { tot, act, resp });
+  showToast('¡Estructura de Veedores Día D actualizada en Supabase!');
+}
+
+async function cargarDiaD() {
+  const obj = await getConfig('control_diad');
+  if(obj && obj.tot !== undefined) {
+    const elTot = document.getElementById('diad-tot');
+    if(elTot) elTot.value = obj.tot;
+    const elAct = document.getElementById('diad-act');
+    if(elAct) elAct.value = obj.act;
+    const elResp = document.getElementById('diad-resp');
+    if(elResp && obj.resp) elResp.value = obj.resp;
+  }
+  actualizarDiaD();
+}
+
+// --- FUNCIONES SIMULADOR FINANCIERO ---
+function actualizarFinanzas() {
+  const elTot = document.getElementById('fin-tot');
+  const tot = elTot ? parseFloat(elTot.value) || 1 : 25000;
+  const elPauta = document.getElementById('fin-pauta');
+  const pauta = elPauta ? parseFloat(elPauta.value) || 0 : 4500;
+  const elLog = document.getElementById('fin-log');
+  const log = elLog ? parseFloat(elLog.value) || 0 : 8200;
+  const elImp = document.getElementById('fin-imp');
+  const imp = elImp ? parseFloat(elImp.value) || 0 : 3100;
+
+  const totalEjec = pauta + log + imp;
+  const pctEjec = Math.min(100, Math.round((totalEjec / tot) * 100));
+
+  const pctPauta = Math.min(100, Math.round((pauta / tot) * 100));
+  const pctLog = Math.min(100, Math.round((log / tot) * 100));
+  const pctImp = Math.min(100, Math.round((imp / tot) * 100));
+
+  const fmt = n => '$' + n.toLocaleString('en-US');
+
+  const lblPauta = document.getElementById('lbl-fin-pauta');
+  if(lblPauta) lblPauta.textContent = fmt(pauta);
+  const barPauta = document.getElementById('bar-fin-pauta');
+  if(barPauta) barPauta.style.width = `${pctPauta}%`;
+
+  const lblLog = document.getElementById('lbl-fin-log');
+  if(lblLog) lblLog.textContent = fmt(log);
+  const barLog = document.getElementById('bar-fin-log');
+  if(barLog) barLog.style.width = `${pctLog}%`;
+
+  const lblImp = document.getElementById('lbl-fin-imp');
+  if(lblImp) lblImp.textContent = fmt(imp);
+  const barImp = document.getElementById('bar-fin-imp');
+  if(barImp) barImp.style.width = `${pctImp}%`;
+
+  const lblEjec = document.getElementById('lbl-fin-ejec');
+  if(lblEjec) lblEjec.textContent = `${fmt(totalEjec)} / ${fmt(tot)} (${pctEjec}%)`;
+}
+
+async function guardarFinanzas() {
+  const elTot = document.getElementById('fin-tot');
+  const tot = elTot ? parseFloat(elTot.value) || 1 : 25000;
+  const elPauta = document.getElementById('fin-pauta');
+  const pauta = elPauta ? parseFloat(elPauta.value) || 0 : 4500;
+  const elLog = document.getElementById('fin-log');
+  const log = elLog ? parseFloat(elLog.value) || 0 : 8200;
+  const elImp = document.getElementById('fin-imp');
+  const imp = elImp ? parseFloat(elImp.value) || 0 : 3100;
+
+  await setConfig('presupuesto_finanzas', { tot, pauta, log, imp });
+  showToast('¡Estado de inversión financiera respaldado en Supabase!');
+}
+
+async function cargarFinanzas() {
+  const obj = await getConfig('presupuesto_finanzas');
+  if(obj && obj.tot !== undefined) {
+    const elTot = document.getElementById('fin-tot');
+    if(elTot) elTot.value = obj.tot;
+    const elPauta = document.getElementById('fin-pauta');
+    if(elPauta) elPauta.value = obj.pauta;
+    const elLog = document.getElementById('fin-log');
+    if(elLog) elLog.value = obj.log;
+    const elImp = document.getElementById('fin-imp');
+    if(elImp) elImp.value = obj.imp;
+  }
+  actualizarFinanzas();
+}
+
+// --- FUNCIONES COPYS REDES SOCIALES ---
+function generarCopyRedes() {
+  const elPlat = document.getElementById('copy-plat');
+  const plat = elPlat ? elPlat.value : 'fb';
+  const elPub = document.getElementById('copy-pub');
+  const pub = elPub ? elPub.value : 'general';
+
+  let txt = '';
+
+  if(plat === 'fb') {
+    txt += '¡Seguimos caminando con firmeza por el futuro de Montúfar! 🟢🤝\n\n';
+    if(pub === 'jovenes') {
+      txt += 'La juventud no es solo el futuro, ¡es el presente que transforma! Vamos a garantizar becas técnicas, conectividad de alta velocidad y apoyo real al primer emprendimiento joven. 🚀💻\n\n';
+    } else if(pub === 'agro') {
+      txt += 'Nuestros campos alimentan a la provincia entera. Por eso, nuestro compromiso irrenunciable es el lastrado permanente de vías secundarias y el banco de maquinaria pesada por parroquia. 🚜🌾\n\n';
+    } else if(pub === 'comerciantes') {
+      txt += 'El motor de nuestra economía local necesita respiro. Impulsaremos ferias seguras, ordenamiento sin persecución y simplificación de trámites para patentes y permisos. 🏬🤝\n\n';
+    } else {
+      txt += 'Cada barrio y cada parroquia rural tiene nuestra palabra: obras bien hechas, fiscalización transparente y una administración de puertas abiertas que escuche a la gente. 🏗️✨\n\n';
+    }
+    txt += '📌 Acompáñanos en este gran proyecto de transformación cantonal.\n';
+    txt += '🗳️ Este domingo, vota todo verde. ¡Vota Fabián Robles Alcalde!\n\n';
+    txt += '#FabiánRoblesAlcalde #RenovaciónMontufareña #MontúfarAvanza';
+  } else if(plat === 'tt') {
+    txt += '🚨 ¡El cambio ya es imparable en Montúfar! 🚨\n\n';
+    if(pub === 'jovenes') txt += '¿Cansado de que no haya oportunidades? 🎓 Con Fabián Robles activamos el Coworking Municipal y capital semilla. ¡Pasa la voz! 📱💥\n\n';
+    else if(pub === 'agro') txt += '¡Vías dignas para sacar los productos! 🌾🚜 Con Fabián Robles, maquinaria propia por parroquia. ¡Eso es compromiso real! 🙌\n\n';
+    else if(pub === 'comerciantes') txt += 'Menos papeleo, más ventas. 🏬 Apoyo total al comerciante local con ferias dignas y seguras. 🤝✨\n\n';
+    else txt += 'La fuerza de nuestra gente se siente en cada calle. 🟢🙌 ¡Únete a la caminata de la victoria!\n\n';
+    txt += '👉 Dale like, comenta tu barrio y comparte.\n';
+    txt += '#FabiánRoblesAlcalde #RenovaciónMontufareña #EleccionesMontúfar #ParaTi #Viral';
+  } else {
+    txt += '🟢 *¡Familia y amigos de Montúfar!* 🟢\n\n';
+    if(pub === 'jovenes') txt += 'Les invito a respaldar a Fabián Robles. Tiene las mejores propuestas para los jóvenes: internet gratuito en plazas y apoyo al emprendimiento. 🚀📱\n\n';
+    else if(pub === 'agro') txt += 'Apoyemos a Fabián Robles. Es el único que ha propuesto de verdad comprar maquinaria para mantener nuestros caminos vecinales todo el año. 🚜🌾\n\n';
+    else if(pub === 'comerciantes') txt += 'Compañeros comerciantes, con Fabián Robles tendremos reactivación de los mercados y seguridad en nuestras zonas comerciales. 🏬🤝\n\n';
+    else txt += 'Es momento de una renovación de verdad con obras que lleguen a todos los rincones del cantón. 🤝✨\n\n';
+    txt += '🗳️ *Vota Fabián Robles Alcalde*\n';
+    txt += '📲 _Reenvía este mensaje a tus contactos para sumar fuerzas._';
+  }
+
+  const elResTxt = document.getElementById('copy-res-txt');
+  if(elResTxt) elResTxt.value = txt;
+}
+
+function copiarTextoCopy() {
+  const elResTxt = document.getElementById('copy-res-txt');
+  if(!elResTxt) return;
+  elResTxt.select();
+  document.execCommand('copy');
+  showToast('¡Texto del Copy copiado al portapapeles!');
 }
 
 </script>

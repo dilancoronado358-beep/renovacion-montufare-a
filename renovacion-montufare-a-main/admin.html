@@ -1,0 +1,3217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin | Renovación Montufareña</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Toastify -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Quill JS -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <!-- Cloudinary -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh
+    }
+
+    /* LOGIN */
+    #pg-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628, #1a3a6b)
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+      text-align: center
+    }
+
+    .login-card img {
+      height: 65px;
+      margin-bottom: 20px
+    }
+
+    .login-card h1 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #0a1628;
+      margin-bottom: 6px;
+      letter-spacing: 1px
+    }
+
+    .login-card p {
+      font-size: .82rem;
+      color: #999;
+      margin-bottom: 28px
+    }
+
+    .inp {
+      width: 100%;
+      padding: 13px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: .95rem;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color .2s
+    }
+
+    .inp:focus {
+      border-color: #1a3a6b
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: #1a3a6b;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .btn-primary:hover {
+      background: #0a1628
+    }
+
+    .btn-primary:disabled {
+      opacity: .6;
+      cursor: not-allowed
+    }
+
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      background: transparent;
+      color: #1a3a6b;
+      border: 2px solid #1a3a6b;
+      border-radius: 12px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all .2s
+    }
+
+    .btn-secondary:hover {
+      background: #1a3a6b;
+      color: #fff
+    }
+
+    .err-box {
+      background: #fff0f0;
+      color: #c0392b;
+      border: 1px solid #f5c6cb;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: .88rem;
+      margin-top: 14px;
+      display: none
+    }
+
+    /* DASHBOARD */
+    #pg-dash {
+      display: none;
+      min-height: 100vh
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #0a1628;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .sidebar nav button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: rgba(255, 255, 255, .65);
+      background: transparent;
+      border: none;
+      font-size: .87rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all .2s
+    }
+
+    .sidebar nav button:hover,
+    .sidebar nav button.active {
+      background: rgba(255, 255, 255, .12);
+      color: #fff
+    }
+
+    .btn-logout {
+      margin-top: auto;
+      padding: 11px 14px;
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .87rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+      width: 100%;
+      text-align: left
+    }
+
+    .btn-logout:hover {
+      background: #a93226
+    }
+
+    .main {
+      margin-left: 250px;
+      padding: 36px;
+      flex: 1
+    }
+
+    .tab-panel {
+      display: none
+    }
+
+    .tab-panel.active {
+      display: block
+    }
+
+    .page-title {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #0a1628;
+      margin-bottom: 28px
+    }
+
+    .page-title span {
+      color: #00A650
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .06)
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0a1628;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .field {
+      margin-bottom: 14px
+    }
+
+    .field label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #666;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: .92rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #1a3a6b
+    }
+
+    .field textarea {
+      resize: vertical
+    }
+
+    .btn-save {
+      padding: 12px 24px;
+      background: #00A650;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .btn-save:hover {
+      background: #008f44
+    }
+
+    .btn-danger {
+      padding: 10px 18px;
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .prop-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 14px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      gap: 10px
+    }
+
+    .prop-item h4 {
+      font-size: .9rem;
+      color: #0a1628;
+      margin: 3px 0
+    }
+
+    .prop-item p {
+      font-size: .8rem;
+      color: #888
+    }
+
+    .badge-cat {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #1a3a6b;
+      color: #fff;
+      margin-bottom: 3px
+    }
+
+    .status-ok {
+      color: #00A650;
+      font-weight: 700;
+      font-size: .82rem;
+      white-space: nowrap
+    }
+
+    .status-no {
+      color: #c0392b;
+      font-weight: 700;
+      font-size: .82rem;
+      white-space: nowrap
+    }
+
+    .notice {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: .85rem;
+      margin-bottom: 14px
+    }
+
+    .notice.warn {
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      color: #92400e
+    }
+
+    .notice.ok {
+      background: #f0fdf4;
+      border-left: 4px solid #00A650;
+      color: #065f46
+    }
+
+    .img-preview {
+      display: block;
+      max-height: 120px;
+      border-radius: 8px;
+      margin-top: 8px;
+      object-fit: cover
+    }
+
+    /* Nuevos Estilos Premium */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px
+    }
+
+    .stat-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .06);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-left: 5px solid #1a3a6b
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      color: #1a3a6b;
+      opacity: .8
+    }
+
+    .stat-info h4 {
+      font-size: .85rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px
+    }
+
+    .stat-info h2 {
+      font-size: 2rem;
+      color: #0a1628;
+      font-weight: 900
+    }
+
+    .btn-upload {
+      padding: 10px 18px;
+      background: #eef2f6;
+      color: #1a3a6b;
+      border: 2px dashed #1a3a6b;
+      border-radius: 10px;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .btn-upload:hover {
+      background: #1a3a6b;
+      color: #fff
+    }
+
+    .drag-item {
+      cursor: grab;
+      position: relative
+    }
+
+    .drag-item:active {
+      cursor: grabbing
+    }
+
+    .drag-item .del-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(192, 57, 43, .9);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: .7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .2s
+    }
+
+    .drag-item:hover .del-btn {
+      opacity: 1
+    }
+
+    #editor-container {
+      height: 150px;
+      background: #fff;
+      border-radius: 0 0 10px 10px;
+      border-color: #e0e0e0
+    }
+
+    .ql-toolbar {
+      border-radius: 10px 10px 0 0;
+      background: #f8f9fa;
+      border-color: #e0e0e0
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 20px
+      }
+
+      .layout {
+        flex-direction: column
+      }
+
+      .grid2 {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="pg-login">
+    <div class="login-card">
+      <img
+        src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1777329849/LOGO_RENOVACIO%CC%81N_MONTUFAREN%CC%83A_fegxxf.png"
+        alt="Logo Renovación Montufareña" style="height:75px; width:auto; object-fit:contain;">
+      <h1>ACCESO PRIVADO</h1>
+      <p>Panel de Administración — Renovación Montufareña</p>
+      <input class="inp" type="email" id="em" placeholder="Correo electrónico">
+      <input class="inp" type="password" id="pw" placeholder="Contraseña">
+      <button class="btn-primary" id="btn-in">INICIAR SESIÓN</button>
+      <a href="index.html" class="btn-secondary">← Volver al sitio</a>
+      <div class="err-box" id="err"></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="pg-dash">
+    <div class="layout">
+      <aside class="sidebar">
+        <div
+          style="background:#fff; padding:12px 16px; border-radius:14px; margin-bottom:32px; display:flex; justify-content:center; align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+          <img
+            src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1777329849/LOGO_RENOVACIO%CC%81N_MONTUFAREN%CC%83A_fegxxf.png"
+            alt="Logo Renovación Montufareña"
+            style="height:55px; width:auto; max-width:100%; object-fit:contain; display:block;">
+        </div>
+        <nav>
+          <button class="active" onclick="showTab('dashboard',this)"><i class="fas fa-chart-pie"></i> Inicio /
+            Estadísticas</button>
+          <button onclick="showTab('mensajes',this)"><i class="fas fa-inbox"></i> Mensajes / Voluntarios</button>
+          <button onclick="showTab('hero',this)"><i class="fas fa-user"></i> Hero / Candidato</button>
+          <button onclick="showTab('slider',this)"><i class="fas fa-images"></i> Carrusel Imágenes</button>
+          <button onclick="showTab('propuestas',this)"><i class="fas fa-list-check"></i> Propuestas</button>
+          <button onclick="showTab('multimedia',this)"><i class="fas fa-photo-film"></i> Multimedia / Álbumes</button>
+          <button onclick="showTab('mapa',this)"><i class="fas fa-map-marked-alt"></i> Mapa Territorial</button>
+          <button onclick="showTab('contacto',this)"><i class="fas fa-phone"></i> Contacto / Redes</button>
+          <button onclick="showTab('config',this)"><i class="fas fa-paint-roller"></i> SEO y Configuración</button>
+          <button onclick="showTab('usuarios',this)"><i class="fas fa-users-cog"></i> Usuarios del Sistema</button>
+
+          <div
+            style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; display:flex; flex-direction:column; gap:8px;">
+            <a href="index.html" target="_blank"
+              style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);font-size:.87rem;font-weight:600;text-decoration:none;transition:all .2s;">
+              <i class="fas fa-external-link-alt"></i> Ver Sitio Público
+            </a>
+            <button onclick="forceMasterRefresh()"
+              style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:#64ffda;background:rgba(100,255,218,0.1);border:1px solid rgba(100,255,218,0.2);font-size:.87rem;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .2s;">
+              <i class="fas fa-sync-alt"></i> Sincronizar Servidor
+            </button>
+          </div>
+        </nav>
+        <div id="db-status"
+          style="margin-top:20px;padding:10px 12px;border-radius:10px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">
+          <i class="fas fa-circle-notch fa-spin"></i> Conectando a BD...
+        </div>
+        <button class="btn-logout" id="btn-out"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+      </aside>
+
+      <main class="main">
+
+        <!-- TAB: DASHBOARD -->
+        <div class="tab-panel active" id="tab-dashboard">
+          <h1 class="page-title">Vista <span>General</span></h1>
+
+          <div class="card"
+            style="background:linear-gradient(135deg, #0a192f, #1a3a6b); color:#fff; text-align:center; padding:20px; border-radius:16px; margin-bottom:25px; box-shadow:0 8px 25px rgba(10,25,47,0.3);">
+            <div
+              style="font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; color:#64ffda; font-weight:700;">
+              ⏱️ Cuenta Regresiva Oficial</div>
+            <h2 id="cd-text" style="font-size:2rem; margin:10px 0; font-weight:800;">Faltan -- Días para la Victoria
+            </h2>
+            <div
+              style="display:flex; justify-content:center; align-items:center; gap:10px; margin-top:12px; max-width:400px; margin-left:auto; margin-right:auto;">
+              <input type="date" id="cd-target-date"
+                style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:8px 12px; border-radius:8px; font-size:0.85rem; flex:1;">
+              <button class="btn-save" style="background:#00A650; width:auto; padding:8px 16px; font-size:0.85rem;"
+                onclick="guardarFechaElecciones()">Fijar Fecha</button>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-inbox"></i></div>
+              <div class="stat-info">
+                <h4>Voluntarios / Msgs</h4>
+                <h2 id="stat-msgs">-</h2>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+              <div class="stat-info">
+                <h4>Puntos Mapa</h4>
+                <h2 id="stat-map">-</h2>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-list-check"></i></div>
+              <div class="stat-info">
+                <h4>Propuestas</h4>
+                <h2 id="stat-props">-</h2>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-photo-film"></i></div>
+              <div class="stat-info">
+                <h4>Álbumes</h4>
+                <h2 id="stat-albums">-</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #00A650">
+            <h3><i class="fas fa-rocket"></i> Panel Actualizado Premium</h3>
+            <p style="color:#666; font-size:0.9rem; line-height:1.5;">
+              Bienvenido al nuevo panel de administración. Ahora puedes <strong>arrastrar y soltar</strong> las imágenes
+              para reordenarlas,
+              subir fotos directamente usando el botón de <strong>Cloudinary</strong>, y escribir descripciones con el
+              nuevo
+              <strong>Editor de Texto Avanzado</strong>.
+            </p>
+          </div>
+
+          <div class="grid2">
+            <div class="card" style="border-left:5px solid #1a3a6b;">
+              <h3><i class="fas fa-bullseye"></i> Meta Territorial de Voluntarios</h3>
+              <div class="field" style="margin-top:10px;">
+                <label>Objetivo de Voluntarios Registrados</label>
+                <div style="display:flex; gap:10px;">
+                  <input type="number" id="meta-input" value="500" style="flex:1;">
+                  <button class="btn-save" onclick="saveMetaVoluntarios()" style="background:#1a3a6b;">Fijar
+                    Meta</button>
+                </div>
+              </div>
+              <div style="margin-top:16px;">
+                <div
+                  style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:700; color:#666; margin-bottom:6px;">
+                  <span id="meta-texto">Progreso: 0 / 500</span>
+                  <span id="meta-porcentaje">0%</span>
+                </div>
+                <div style="width:100%; height:12px; background:#e0e0e0; border-radius:10px; overflow:hidden;">
+                  <div id="meta-bar"
+                    style="width:0%; height:100%; background:linear-gradient(90deg, #1a3a6b, #00A650); transition:width 0.5s ease;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="border-left:5px solid #f59e0b;">
+              <h3><i class="fas fa-book"></i> Bitácora Compartida del Equipo</h3>
+              <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">Notas persistentes sincronizadas en tiempo
+                real con todos los administradores.</p>
+              <textarea id="bitacora-area" rows="4"
+                placeholder="Escribe aquí acuerdos de reuniones, tareas urgentes o recordatorios para los brigadistas..."
+                style="width:100%; padding:10px; border:2px solid #e0e0e0; border-radius:10px; font-size:0.88rem; outline:none; resize:vertical;"></textarea>
+              <button class="btn-save" onclick="saveBitacora()"
+                style="background:#f59e0b; width:100%; margin-top:8px;"><i class="fas fa-cloud-upload-alt"></i>
+                Sincronizar Bitácora</button>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #8e44ad; margin-top:25px;">
+            <h3><i class="fas fa-chart-simple"></i> Encuestas Internas e Intención de Voto</h3>
+            <p style="font-size:0.85rem; color:#666;">Registra el pulso territorial del movimiento. Ajusta los
+              porcentajes estimados para graficarlos en vivo.</p>
+            <div class="grid2" style="margin-top:15px; align-items:center;">
+              <div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label style="color:#00A650; font-weight:bold;">Fabián Robles (%)</label>
+                  <input type="number" id="poll-robles" value="45" min="0" max="100"
+                    oninput="actualizarGraficoEncuesta()">
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label style="color:#e74c3c; font-weight:bold;">Oponente Principal (%)</label>
+                  <input type="number" id="poll-oponente" value="30" min="0" max="100"
+                    oninput="actualizarGraficoEncuesta()">
+                </div>
+                <div class="field">
+                  <label style="color:#95a5a6; font-weight:bold;">Indecisos / Otros (%)</label>
+                  <input type="number" id="poll-otros" value="25" min="0" max="100"
+                    oninput="actualizarGraficoEncuesta()">
+                </div>
+                <button class="btn-save" style="background:#8e44ad; margin-top:12px;"
+                  onclick="guardarDatosEncuesta()"><i class="fas fa-cloud-upload-alt"></i> Guardar Sondeo</button>
+              </div>
+              <div style="background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+                <h4 style="margin-top:0; margin-bottom:15px; text-align:center; color:#333;">Distribución del Voto
+                  Estimado</h4>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Fabián Robles</span><span id="lbl-poll-robles">45%</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-poll-robles"
+                      style="height:100%; width:45%; background:#00A650; transition:width 0.4s;"></div>
+                  </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Oponente Principal</span><span id="lbl-poll-oponente">30%</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-poll-oponente"
+                      style="height:100%; width:30%; background:#e74c3c; transition:width 0.4s;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Indecisos / Otros</span><span id="lbl-poll-otros">25%</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-poll-otros" style="height:100%; width:25%; background:#95a5a6; transition:width 0.4s;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #e67e22; margin-top:25px;">
+            <h3><i class="fas fa-boxes-packing"></i> Inventario Logístico y Control de Materiales</h3>
+            <p style="font-size:0.85rem; color:#666;">Monitorea la entrega de insumos de campaña en el territorio para
+              prever con exactitud los pedidos a imprenta y proveedores.</p>
+            <div class="grid2" style="margin-top:15px; align-items:center;">
+              <div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                  <div class="field" style="flex:2;"><label>Lonas Colgadas</label><input type="number"
+                      id="inv-lonas-act" value="350" oninput="actualizarGraficoInventario()"></div>
+                  <div class="field" style="flex:1;"><label>Meta Lonas</label><input type="number" id="inv-lonas-tot"
+                      value="500" oninput="actualizarGraficoInventario()"></div>
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                  <div class="field" style="flex:2;"><label>Camisetas Entregadas</label><input type="number"
+                      id="inv-cam-act" value="120" oninput="actualizarGraficoInventario()"></div>
+                  <div class="field" style="flex:1;"><label>Meta Camisetas</label><input type="number" id="inv-cam-tot"
+                      value="200" oninput="actualizarGraficoInventario()"></div>
+                </div>
+                <div style="display:flex; gap:10px;">
+                  <div class="field" style="flex:2;"><label>Banderas Repartidas</label><input type="number"
+                      id="inv-ban-act" value="85" oninput="actualizarGraficoInventario()"></div>
+                  <div class="field" style="flex:1;"><label>Meta Banderas</label><input type="number" id="inv-ban-tot"
+                      value="150" oninput="actualizarGraficoInventario()"></div>
+                </div>
+                <button class="btn-save" style="background:#e67e22; margin-top:12px;" onclick="guardarInventario()"><i
+                    class="fas fa-save"></i> Guardar Inventario en Supabase</button>
+              </div>
+              <div style="background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+                <h4 style="margin-top:0; margin-bottom:15px; text-align:center; color:#333;">Consumo de Stock Físico
+                </h4>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Lonas de Fachada</span><span id="lbl-inv-lonas">350/500 (70%)</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-inv-lonas" style="height:100%; width:70%; background:#e67e22; transition:width 0.4s;">
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Camisetas Oficiales</span><span id="lbl-inv-cam">120/200 (60%)</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-inv-cam" style="height:100%; width:60%; background:#2980b9; transition:width 0.4s;">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Banderas y Volantes</span><span id="lbl-inv-ban">85/150 (56%)</span></div>
+                  <div style="height:10px; background:#e0e0e0; border-radius:5px; overflow:hidden;">
+                    <div id="bar-inv-ban" style="height:100%; width:56%; background:#27ae60; transition:width 0.4s;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓDULO DÍA D: CONTROL DE MESAS ELECTORALES -->
+          <div class="card" style="border-left:5px solid #c0392b; margin-top:25px;">
+            <h3><i class="fas fa-person-booth"></i> Módulo "Día D": Control de Veedores en Mesas Electorales</h3>
+            <p style="font-size:0.85rem; color:#666;">Garantiza la defensa del voto asignando delegados y testigos
+              electorales en todas las Juntas Receptoras del Voto (JRV) de Montúfar.</p>
+            <div class="grid2" style="margin-top:15px; align-items:center;">
+              <div>
+                <div style="display:flex; gap:10px; margin-bottom:12px;">
+                  <div class="field" style="flex:1;"><label>Total Mesas (JRV)</label><input type="number" id="diad-tot"
+                      value="120" oninput="actualizarDiaD()"></div>
+                  <div class="field" style="flex:1;"><label>Veedores Asignados</label><input type="number" id="diad-act"
+                      value="95" oninput="actualizarDiaD()"></div>
+                </div>
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Responsable General de Control Electoral</label>
+                  <input type="text" id="diad-resp" placeholder="Ej: Abg. Marco Tulio" oninput="actualizarDiaD()">
+                </div>
+                <button class="btn-save" style="background:#c0392b;" onclick="guardarDiaD()"><i
+                    class="fas fa-shield-alt"></i> Respaldar Operativo Día D</button>
+              </div>
+              <div
+                style="text-align:center; background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+                <div style="font-size:0.75rem; color:#888; font-weight:bold; letter-spacing:1px;">COBERTURA TERRITORIAL
+                </div>
+                <div id="lbl-diad-pct"
+                  style="font-size:3rem; font-weight:900; color:#c0392b; line-height:1.1; margin:10px 0;">79%</div>
+                <div style="height:12px; background:#e0e0e0; border-radius:6px; overflow:hidden; margin-bottom:10px;">
+                  <div id="bar-diad" style="height:100%; width:79%; background:#c0392b; transition:width 0.5s;"></div>
+                </div>
+                <div id="lbl-diad-txt" style="font-size:0.85rem; color:#333; font-weight:bold;">Mesas Cubiertas: 95 /
+                  120</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIMULADOR FINANCIERO DE CAMPAÑA -->
+          <div class="card" style="border-left:5px solid #2980b9; margin-top:25px;">
+            <h3><i class="fas fa-chart-pie"></i> Simulador de Presupuesto y Gastos de Campaña</h3>
+            <p style="font-size:0.85rem; color:#666;">Monitorea la distribución y el nivel de ejecución de los recursos
+              económicos para optimizar la inversión por rubro estratégico.</p>
+            <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+              <div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Presupuesto Total Estimado ($ USD)</label>
+                  <input type="number" id="fin-tot" value="25000" oninput="actualizarFinanzas()">
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                  <div class="field" style="flex:1;"><label>Gasto Pauta Digital</label><input type="number"
+                      id="fin-pauta" value="4500" oninput="actualizarFinanzas()"></div>
+                  <div class="field" style="flex:1;"><label>Gasto Logística/Eventos</label><input type="number"
+                      id="fin-log" value="8200" oninput="actualizarFinanzas()"></div>
+                </div>
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Gasto Impresos / Merchandising</label>
+                  <input type="number" id="fin-imp" value="3100" oninput="actualizarFinanzas()">
+                </div>
+                <button class="btn-save" style="background:#2980b9;" onclick="guardarFinanzas()"><i
+                    class="fas fa-wallet"></i> Guardar Estado Presupuestario</button>
+              </div>
+              <div style="background:#f8f9fa; padding:20px; border-radius:12px; border:1px solid #eee;">
+                <h4 style="margin-top:0; margin-bottom:15px; text-align:center; color:#333;">Ejecución del Presupuesto
+                </h4>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Pauta Digital</span><span id="lbl-fin-pauta">$4,500</span></div>
+                  <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                    <div id="bar-fin-pauta" style="height:100%; width:18%; background:#9b59b6;"></div>
+                  </div>
+                </div>
+                <div style="margin-bottom:12px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Logística y Eventos</span><span id="lbl-fin-log">$8,200</span></div>
+                  <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                    <div id="bar-fin-log" style="height:100%; width:32%; background:#e67e22;"></div>
+                  </div>
+                </div>
+                <div style="margin-bottom:15px;">
+                  <div
+                    style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold; margin-bottom:4px;">
+                    <span>Impresos y Otros</span><span id="lbl-fin-imp">$3,100</span></div>
+                  <div style="height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden;">
+                    <div id="bar-fin-imp" style="height:100%; width:12%; background:#27ae60;"></div>
+                  </div>
+                </div>
+                <div style="border-top:2px solid #ddd; padding-top:10px; text-align:center;">
+                  <div style="font-size:0.75rem; color:#666;">TOTAL EJECUTADO</div>
+                  <strong id="lbl-fin-ejec" style="font-size:1.2rem; color:#1a3a6b;">$15,800 / $25,000 (63%)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: HERO -->
+        <div class="tab-panel" id="tab-hero">
+          <h1 class="page-title">Hero / <span>Candidato</span></h1>
+          <div class="notice warn"><i class="fas fa-info-circle"></i> Los cambios de texto e imágenes se guardan en la
+            base de datos y se reflejan en la página pública al recargar.</div>
+
+          <div class="card">
+            <h3><i class="fas fa-heading"></i> Título Principal</h3>
+            <div class="field"><label>Línea 1 del título (ej: CON)</label><input type="text" id="h-titulo1"
+                placeholder="CON"></div>
+            <div class="field"><label>Nombre del candidato (texto verde)</label><input type="text" id="h-nombre"
+                placeholder="FABIÁN ROBLES"></div>
+            <div class="field"><label>Línea 3 (ej: MONTÚFAR AVANZA)</label><input type="text" id="h-titulo2"
+                placeholder="MONTÚFAR AVANZA"></div>
+            <div class="field"><label>Subtexto / eslogan</label><textarea id="h-sub" rows="2"
+                placeholder="La fuerza del trabajo y el corazón de nuestra gente..."></textarea></div>
+            <button class="btn-save" onclick="saveHeroText()"><i class="fas fa-save"></i> Guardar Texto</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-image"></i> Foto Candidato Principal (izquierda)</h3>
+            <div class="notice ok"><i class="fas fa-cloud"></i> Haz clic en "Subir Foto" para cargarla directamente a
+              Cloudinary.</div>
+            <button class="btn-upload" onclick="openCloudinaryWidget('h-img1')"><i class="fas fa-upload"></i> Subir
+              Foto</button>
+            <div class="field"><label>URL de imagen (Pega el link o usa el botón de subir)</label><input type="url"
+                id="h-img1"></div>
+            <img id="prev-h-img1" class="img-preview" style="display:none">
+            <br>
+            <button class="btn-save" onclick="saveHeroImg(1)"><i class="fas fa-save"></i> Guardar Cambios</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-image"></i> Foto Candidato Secundario (derecha)</h3>
+            <button class="btn-upload" onclick="openCloudinaryWidget('h-img2')"><i class="fas fa-upload"></i> Subir
+              Foto</button>
+            <div class="field"><label>URL de imagen (Pega el link o usa el botón de subir)</label><input type="url"
+                id="h-img2"></div>
+            <img id="prev-h-img2" class="img-preview" style="display:none">
+            <br>
+            <button class="btn-save" onclick="saveHeroImg(2)"><i class="fas fa-save"></i> Guardar Cambios</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-mountain"></i> Imagen de Fondo del Hero</h3>
+            <button class="btn-upload" onclick="openCloudinaryWidget('h-bg')"><i class="fas fa-upload"></i> Subir
+              Foto</button>
+            <div class="field"><label>URL de imagen de fondo (Pega el link o usa el botón)</label><input type="url"
+                id="h-bg"></div>
+            <img id="prev-h-bg" class="img-preview" style="display:none">
+            <br>
+            <button class="btn-save" onclick="saveHeroBg()"><i class="fas fa-save"></i> Guardar Cambios</button>
+          </div>
+        </div>
+
+        <!-- TAB: SLIDER -->
+        <div class="tab-panel" id="tab-slider">
+          <h1 class="page-title">Carrusel de <span>Imágenes</span></h1>
+          <div class="card">
+            <h3><i class="fas fa-images"></i> Imágenes del carrusel principal (hasta 100)</h3>
+            <div class="notice ok"><i class="fas fa-cloud"></i> Haz clic en "Añadir Fotos" o arrástralas abajo. (Una URL
+              por línea).</div>
+            <button class="btn-upload" onclick="openCloudinaryWidget('sl-urls', true)"><i class="fas fa-upload"></i>
+              Añadir Fotos al Carrusel</button>
+            <div class="field" style="margin-top:14px">
+              <label>URLs de imágenes (una por línea)</label>
+              <textarea id="sl-urls" rows="10"
+                placeholder="https://res.cloudinary.com/foto1.jpg&#10;https://res.cloudinary.com/foto2.jpg"></textarea>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+              <button class="btn-save" onclick="saveSlider()"><i class="fas fa-save"></i> Guardar Carrusel</button>
+              <span id="sl-count" style="font-size:.85rem;color:#666"></span>
+            </div>
+            <!-- Preview de imágenes -->
+            <div id="sl-preview"
+              style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:18px">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: PROPUESTAS -->
+        <div class="tab-panel" id="tab-propuestas">
+          <h1 class="page-title">Gestión de <span>Propuestas</span></h1>
+
+          <div class="card">
+            <h3><i class="fas fa-plus"></i> Nueva Propuesta</h3>
+            <div class="grid2">
+              <div class="field"><label>Categoría</label>
+                <select id="p-cat">
+                  <option value="agro">🌾 Agro</option>
+                  <option value="seguridad">🛡️ Seguridad</option>
+                  <option value="salud">🏥 Salud</option>
+                  <option value="vialidad">🚧 Vialidad</option>
+                </select>
+              </div>
+              <div class="field"><label>Título</label><input type="text" id="p-title"
+                  placeholder="Título de la propuesta"></div>
+            </div>
+            <div class="field">
+              <label>Descripción</label>
+              <div id="editor-container"></div>
+              <!-- Textarea oculto por si acaso, aunque leeremos de Quill directo -->
+              <textarea id="p-desc" style="display:none"></textarea>
+            </div>
+            <button class="btn-save" onclick="saveProp()"><i class="fas fa-save"></i> Guardar Propuesta</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-list"></i> Propuestas Guardadas</h3>
+            <div id="props-list">
+              <p style="color:#888">Cargando...</p>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #2980b9; margin-top:25px;">
+            <h3><i class="fas fa-file-invoice"></i> Generador de Guiones Rápidos (Argumentarios Puerta a Puerta)</h3>
+            <p style="font-size:0.85rem; color:#666;">Crea "Tarjetas de Bolsillo" con respuestas optimizadas para que
+              tus brigadistas respondan con seguridad y firmeza durante las visitas casa por casa.</p>
+            <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+              <div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Eje Temático de Campaña</label>
+                  <select id="guion-eje" onchange="cargarGuionPredefinido()">
+                    <option value="agro">🌾 Impulso al Sector Agropecuario</option>
+                    <option value="seguridad">🛡️ Plan de Seguridad Integral</option>
+                    <option value="salud">🏥 Atención y Clínicas Móviles</option>
+                    <option value="vialidad">🚧 Rescate Vial y Caminos Vecinales</option>
+                  </select>
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Argumento Principal (Respuesta Inmediata)</label>
+                  <textarea id="guion-arg1" rows="2"
+                    placeholder="Ej: Reactivación mediante créditos directos y tecnificación del campo..."
+                    oninput="actualizarVistaGuion()"></textarea>
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Compromiso Clave (El Diferenciador)</label>
+                  <textarea id="guion-arg2" rows="2"
+                    placeholder="Ej: Adquisición de maquinaria pesada permanente por parroquia..."
+                    oninput="actualizarVistaGuion()"></textarea>
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Llamado a la Acción (Cierre con el Ciudadano)</label>
+                  <input type="text" id="guion-cierre" placeholder="Ej: Vote por Fabián Robles / Únase a la Renovación"
+                    oninput="actualizarVistaGuion()">
+                </div>
+                <button class="btn-save" style="background:#2980b9; margin-top:5px;"
+                  onclick="descargarGuionBolsillo()"><i class="fas fa-download"></i> Descargar Tarjeta de Guion
+                  (.PNG)</button>
+              </div>
+              <div style="display:flex; justify-content:center;">
+                <!-- Tarjeta Guion en Vivo -->
+                <div id="guion-card-box"
+                  style="width:260px; background:#fff; border:2px solid #2980b9; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.12);">
+                  <div
+                    style="background:linear-gradient(135deg, #0a192f, #2980b9); padding:12px 10px; color:#fff; text-align:center;">
+                    <div style="font-size:0.65rem; color:#64ffda; font-weight:bold; letter-spacing:1px;">GUÍA PUERTA A
+                      PUERTA</div>
+                    <div id="lbl-guion-eje" style="font-size:0.85rem; font-weight:800; margin-top:2px;">🌾 SECTOR
+                      AGROPECUARIO</div>
+                  </div>
+                  <div style="padding:15px 12px; font-size:0.75rem; line-height:1.4; color:#333;">
+                    <div style="margin-bottom:10px;">
+                      <span style="color:#2980b9; font-weight:bold; display:block; font-size:0.7rem;">RESPUESTA
+                        RÁPIDA:</span>
+                      <div id="lbl-guion-arg1" style="font-weight:600;">Reactivación mediante créditos directos y
+                        tecnificación del campo...</div>
+                    </div>
+                    <div style="margin-bottom:10px; border-top:1px dashed #ddd; padding-top:8px;">
+                      <span style="color:#00A650; font-weight:bold; display:block; font-size:0.7rem;">NUESTRO
+                        COMPROMISO:</span>
+                      <div id="lbl-guion-arg2" style="font-weight:600;">Adquisición de maquinaria pesada permanente por
+                        parroquia...</div>
+                    </div>
+                    <div
+                      style="background:#f1f2f6; padding:8px; border-radius:6px; text-align:center; margin-top:12px; border:1px solid #ddd;">
+                      <span style="color:#c0392b; font-weight:bold; display:block; font-size:0.65rem;">CIERRE:</span>
+                      <strong id="lbl-guion-cierre" style="color:#0a192f; font-size:0.8rem;">Vote por Fabián
+                        Robles</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: CONTACTO -->
+        <div class="tab-panel" id="tab-contacto">
+          <h1 class="page-title">Contacto / <span>Redes</span></h1>
+          <div class="card">
+            <h3><i class="fas fa-phone"></i> Número de WhatsApp</h3>
+            <div class="field"><label>Número con código de país (ej: 593987851539)</label><input type="text" id="c-wa"
+                placeholder="593987851539"></div>
+            <button class="btn-save" onclick="saveContact()"><i class="fas fa-save"></i> Guardar</button>
+          </div>
+          <div class="card">
+            <h3><i class="fab fa-facebook"></i> Redes Sociales</h3>
+            <div class="field"><label>URL Facebook</label><input type="url" id="c-fb"
+                placeholder="https://facebook.com/..."></div>
+            <div class="field"><label>URL TikTok</label><input type="url" id="c-tt"
+                placeholder="https://tiktok.com/..."></div>
+            <button class="btn-save" onclick="saveContact()"><i class="fas fa-save"></i> Guardar Redes</button>
+          </div>
+          <div class="card" style="border-left:5px solid #25D366;">
+            <h3><i class="fab fa-whatsapp"></i> Generador de Enlaces Rápidos para Difusión</h3>
+            <div class="notice ok">Crea un enlace con un mensaje listo para que los brigadistas o ciudadanos te lo
+              envíen con un clic. Ideal para grupos.</div>
+            <div class="field" style="margin-top:12px;">
+              <label>Mensaje Predefinido para el Ciudadano</label>
+              <input type="text" id="wa-msg-gen" placeholder="Hola equipo, confirmo mi asistencia a la caminata de hoy">
+            </div>
+            <button class="btn-save" style="background:#25D366;" onclick="generarEnlaceWhatsApp()"><i
+                class="fas fa-link"></i> Crear Enlace de WhatsApp</button>
+            <div id="wa-link-res"
+              style="display:none; margin-top:15px; padding:12px; background:#f8f9fa; border-radius:8px; word-break:break-all; font-size:0.85rem; border:1px solid #ddd;">
+              <strong style="display:block; margin-bottom:5px; color:#333;">Enlace Generado:</strong>
+              <a id="wa-link-href" target="_blank" style="color:#1a3a6b;"></a>
+              <button class="btn-secondary"
+                style="margin-top:10px; padding:6px 12px; font-size:0.8rem; display:inline-block; width:auto;"
+                onclick="copiarEnlaceWA()"><i class="fas fa-copy"></i> Copiar Enlace</button>
+            </div>
+          </div>
+
+          <!-- GENERADOR DE COPYS PARA REDES SOCIALES -->
+          <div class="card" style="border-left:5px solid #8e44ad; margin-top:25px;">
+            <h3><i class="fas fa-bullhorn"></i> Generador de Textos ("Copys") para Redes Sociales</h3>
+            <p style="font-size:0.85rem; color:#666;">Crea publicaciones de alto impacto optimizadas con gatillos
+              mentales, emojis y hashtags oficiales listos para copiar y pegar.</p>
+            <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+              <div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Plataforma de Destino</label>
+                  <select id="copy-plat" onchange="generarCopyRedes()">
+                    <option value="fb">📘 Facebook (Informativo y Detallado)</option>
+                    <option value="tt">🎵 TikTok / Reels (Dinámico y Directo)</option>
+                    <option value="wa">🟢 WhatsApp (Cercano y Movilizador)</option>
+                  </select>
+                </div>
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Público Objetivo</label>
+                  <select id="copy-pub" onchange="generarCopyRedes()">
+                    <option value="general">👥 Ciudadanía en General</option>
+                    <option value="jovenes">🎓 Jóvenes y Primer Votante</option>
+                    <option value="agro">🌾 Sector Campesino y Agrícola</option>
+                    <option value="comerciantes">🏬 Comerciantes y Emprendedores</option>
+                  </select>
+                </div>
+                <button class="btn-save" style="background:#8e44ad;" onclick="generarCopyRedes()"><i
+                    class="fas fa-magic"></i> Generar Copy Optimizado</button>
+              </div>
+              <div>
+                <div style="background:#f8f9fa; padding:15px; border-radius:10px; border:1px solid #ddd;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:0.75rem; color:#666; font-weight:bold;">VISTA PREVIA DEL COPY:</span>
+                    <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;"
+                      onclick="copiarTextoCopy()"><i class="fas fa-copy"></i> Copiar Texto</button>
+                  </div>
+                  <textarea id="copy-res-txt" rows="7"
+                    style="width:100%; font-size:0.85rem; line-height:1.4; padding:8px; border-radius:6px; border:1px solid #ccc; background:#fff; color:#333; resize:none;"
+                    readonly>Cargando texto sugerido...</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: MULTIMEDIA -->
+        <div class="tab-panel" id="tab-multimedia">
+          <h1 class="page-title">Multimedia / <span>Álbumes</span></h1>
+          <div class="notice warn"><i class="fas fa-cloud"></i> Sube tus fotos a <strong>Cloudinary</strong> y pega la
+            URL de cada imagen aquí. Máximo 100 fotos por álbum.</div>
+
+          <div class="card">
+            <h3><i class="fas fa-plus"></i> Crear Nuevo Álbum</h3>
+            <div class="grid2">
+              <div class="field"><label>Título del álbum</label><input type="text" id="alb-titulo"
+                  placeholder="Ej: Brigada San Gabriel"></div>
+              <div class="field"><label>Fecha</label><input type="text" id="alb-fecha"
+                  placeholder="Ej: 15 DE MAYO, 2026"></div>
+            </div>
+            <div class="field"><label>Lugar</label><input type="text" id="alb-lugar"
+                placeholder="Ej: San Gabriel, Montúfar"></div>
+            <div class="field">
+              <label>Imagen de portada (Obligatoria)</label>
+              <button class="btn-upload" onclick="openCloudinaryWidget('alb-portada')"><i class="fas fa-upload"></i>
+                Subir Portada</button>
+              <input type="url" id="alb-portada" placeholder="Pega aquí el enlace de la imagen..."
+                style="margin-top:8px">
+              <img id="prev-alb-portada" class="img-preview" style="display:none">
+            </div>
+            <button class="btn-save" onclick="createAlbum()"><i class="fas fa-folder-plus"></i> Crear Álbum</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-folder-open"></i> Álbumes Existentes</h3>
+            <div id="albums-list">
+              <p style="color:#888">Cargando álbumes...</p>
+            </div>
+          </div>
+
+          <!-- Panel editar fotos de un álbum -->
+          <div class="card" id="album-edit-panel" style="display:none">
+            <h3><i class="fas fa-images"></i> Fotos del álbum: <span id="album-edit-name"></span></h3>
+            <div class="notice ok">Haz clic en "Añadir Fotos" o arrástralas abajo para reordenar.</div>
+            <button class="btn-upload" onclick="openCloudinaryWidget('album-fotos-input', true)"><i
+                class="fas fa-upload"></i> Añadir Fotos</button>
+            <div class="field" style="margin-top:12px">
+              <label>URLs de fotos (una por línea)</label>
+              <textarea id="album-fotos-input" rows="10" placeholder="https://res.cloudinary.com/foto1.jpg"></textarea>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn-save" onclick="saveAlbumFotos()"><i class="fas fa-save"></i> Guardar Fotos</button>
+              <button class="btn-danger"
+                onclick="document.getElementById('album-edit-panel').style.display='none'">Cancelar</button>
+            </div>
+            <div id="album-fotos-preview"
+              style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: MENSAJES / VOLUNTARIOS -->
+        <div class="tab-panel" id="tab-mensajes">
+          <h1 class="page-title">Bandeja de <span>Mensajes</span></h1>
+
+          <div class="card" style="border-left:5px solid #1a3a6b; margin-bottom:25px;">
+            <h3><i class="fas fa-id-card"></i> Generador de Credenciales con Foto (Sincronizado en Supabase)</h3>
+            <p style="font-size:0.85rem; color:#666;">Diseña gafetes personalizados para tus brigadistas, sube su foto a
+              Cloudinary y guárdalos de forma centralizada en Supabase.</p>
+            <div class="grid2" style="margin-top:15px; align-items:flex-start;">
+              <div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Nombre del Voluntario / Brigadista</label>
+                  <input type="text" id="cred-nombre" placeholder="Ej: CARLOS MENDOZA" oninput="actualizarGafete()">
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Cargo o Rol Territorial</label>
+                  <input type="text" id="cred-rol" placeholder="Ej: COORDINADOR PARROQUIAL"
+                    oninput="actualizarGafete()">
+                </div>
+                <div class="field" style="margin-bottom:10px;">
+                  <label>Cédula o Código Interno</label>
+                  <input type="text" id="cred-id" placeholder="Ej: ID: 040152..." oninput="actualizarGafete()">
+                </div>
+                <div class="field" style="margin-bottom:12px;">
+                  <label>Foto del Brigadista (URL de Cloudinary)</label>
+                  <button class="btn-upload" onclick="openCloudinaryWidget('cred-foto')"><i class="fas fa-upload"></i>
+                    Subir Foto</button>
+                  <input type="url" id="cred-foto" placeholder="https://res.cloudinary.com/..."
+                    oninput="actualizarGafete()" style="margin-top:6px;">
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn-save" style="background:#00A650; flex:1; min-width:140px;"
+                    onclick="descargarGafete()"><i class="fas fa-download"></i> Descargar (.PNG)</button>
+                  <button class="btn-save" style="background:#1a3a6b; flex:1; min-width:140px;"
+                    onclick="guardarGafeteSupabase()"><i class="fas fa-cloud-upload-alt"></i> Guardar en
+                    Supabase</button>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:center;">
+                <!-- Tarjeta Gafete en Vivo -->
+                <div id="gafete-box"
+                  style="width:250px; background:#fff; border:2px solid #1a3a6b; border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.15); text-align:center;">
+                  <div style="background:linear-gradient(135deg, #0a192f, #1a3a6b); padding:15px 10px; color:#fff;">
+                    <img
+                      src="https://res.cloudinary.com/dtmqftcsr/image/upload/v1777329849/LOGO_RENOVACIO%CC%81N_MONTUFAREN%CC%83A_fegxxf.png"
+                      style="height:35px; width:auto; max-width:100%; object-fit:contain; filter:brightness(0) invert(1);">
+                    <div
+                      style="font-size:0.65rem; letter-spacing:1px; margin-top:4px; color:#64ffda; font-weight:bold;">
+                      CAMPAÑA OFICIAL</div>
+                  </div>
+                  <div style="padding:20px 10px;">
+                    <div id="gafete-img-container"
+                      style="width:75px; height:75px; background:#f1f2f6; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center; justify-content:center; border:2px solid #00A650; color:#1a3a6b; overflow:hidden;">
+                      <i id="gafete-icon-fallback" class="fas fa-user-check" style="font-size:2rem;"></i>
+                      <img id="gafete-img-preview" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    </div>
+                    <div id="lbl-cred-nombre"
+                      style="font-weight:800; font-size:0.95rem; color:#0a192f; word-break:break-word;">CARLOS MENDOZA
+                    </div>
+                    <div id="lbl-cred-rol" style="font-size:0.7rem; color:#00A650; font-weight:700; margin-top:3px;">
+                      COORDINADOR PARROQUIAL</div>
+                    <div id="lbl-cred-id" style="font-size:0.65rem; color:#888; margin-top:8px;">ID: 040152...</div>
+                  </div>
+                  <div
+                    style="background:#00A650; padding:6px; color:#fff; font-size:0.6rem; font-weight:bold; letter-spacing:1px;">
+                    AUTORIZADO
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Directorio de Gafetes Guardados en Supabase -->
+            <div style="margin-top:20px; border-top:1px solid #eee; padding-top:15px;">
+              <h4 style="margin-top:0; color:#333; font-size:0.85rem;"><i class="fas fa-database"
+                  style="color:#1a3a6b;"></i> Directorio de Gafetes en Base de Datos</h4>
+              <div id="list-gafetes-guardados"
+                style="display:flex; flex-direction:column; gap:8px; max-height:200px; overflow-y:auto; margin-top:8px;">
+                <p style="color:#888; font-size:0.8rem; margin:0;">Cargando directorio de credenciales...</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div
+              style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+              <h3 style="margin:0;"><i class="fas fa-inbox"></i> Mensajes Recibidos</h3>
+              <button class="btn-save" onclick="exportMensajesCSV()" style="padding:10px 16px; font-size:0.85rem;"><i
+                  class="fas fa-file-excel"></i> Exportar a Excel</button>
+            </div>
+            <div class="notice ok">Aquí aparecen los mensajes enviados desde el formulario de contacto de la página
+              principal.</div>
+            <div class="field" style="margin-bottom:20px;">
+              <input type="text" id="buscar-msg"
+                placeholder="🔍 Buscar internamente por nombre, teléfono o contenido..."
+                onkeyup="filterMensajes(this.value)">
+            </div>
+            <div id="mensajes-list">
+              <p style="color:#888">Cargando mensajes...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: MAPA TERRITORIAL -->
+        <div class="tab-panel" id="tab-mapa">
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:28px;">
+            <h1 class="page-title" style="margin:0;">Mapa <span>Territorial</span></h1>
+            <button class="btn-save" style="background:#1a3a6b;" onclick="abrirMapaPresentacion()"><i
+                class="fas fa-expand-arrows-alt"></i> Modo Presentación (Pantalla Completa)</button>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-map-pin"></i> Agregar Nuevo Punto</h3>
+            <div class="grid2">
+              <div class="field"><label>Latitud (ej: 0.592)</label><input type="number" step="any" id="map-lat"
+                  placeholder="0.592"></div>
+              <div class="field"><label>Longitud (ej: -77.831)</label><input type="number" step="any" id="map-lng"
+                  placeholder="-77.831"></div>
+            </div>
+            <div class="field"><label>Título (Parroquia o Lugar)</label><input type="text" id="map-title"
+                placeholder="SAN GABRIEL"></div>
+            <div class="field"><label>Texto del Compromiso o Evento</label><textarea id="map-text" rows="2"
+                placeholder="Compromiso: Recuperación total del Casco Colonial..."></textarea></div>
+            <button class="btn-save" onclick="createMapPoint()"><i class="fas fa-save"></i> Guardar Punto en el
+              Mapa</button>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-list"></i> Puntos Existentes</h3>
+            <div id="map-list">
+              <p style="color:#888">Cargando puntos...</p>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #27ae60; margin-top:25px;">
+            <h3><i class="fas fa-traffic-light"></i> Semáforo de Apoyo Parroquial (Mapa Estratégico de Calor)</h3>
+            <p style="font-size:0.85rem; color:#666;">Evalúa la fuerza política territorial en las parroquias de
+              Montúfar para focalizar el despliegue logístico y visitas del candidato.</p>
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">San Gabriel (Cabecera)</strong>
+                <select id="semaf-sg"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">La Paz</strong>
+                <select id="semaf-lp"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;" selected>🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">Cristóbal Colón</strong>
+                <select id="semaf-cc"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;" selected>🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">Chitán de Navarretes</strong>
+                <select id="semaf-cn"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;" selected>🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">Fernández Salvador</strong>
+                <select id="semaf-fs"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;" selected>🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;">🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+              <div
+                style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#f8f9fa; padding:10px 15px; border-radius:8px; border:1px solid #eee;">
+                <strong style="flex:2; min-width:150px; color:#1a3a6b;">Piartal</strong>
+                <select id="semaf-pt"
+                  style="flex:1; min-width:120px; padding:6px; border-radius:6px; border:1px solid #ccc; font-weight:bold;"
+                  onchange="actualizarSemaforoColor(this)">
+                  <option value="verde" style="background:#27ae60; color:#fff;">🟢 Fuerte</option>
+                  <option value="amarillo" style="background:#f1c40f; color:#000;">🟡 Competido</option>
+                  <option value="rojo" style="background:#c0392b; color:#fff;" selected>🔴 Refuerzo Urgente</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-save" style="background:#27ae60; margin-top:16px;"
+              onclick="guardarSemaforoParroquial()"><i class="fas fa-cloud-upload-alt"></i> Sincronizar Semáforo
+              Estratégico</button>
+          </div>
+        </div>
+
+        <!-- TAB: SEO Y CONFIGURACIÓN -->
+        <div class="tab-panel" id="tab-config">
+          <h1 class="page-title">SEO y <span>Tema</span></h1>
+
+          <div class="card">
+            <h3><i class="fas fa-paint-roller"></i> Colores del Tema</h3>
+            <div class="notice ok">Cambia el color principal y secundario de la página web. (Recarga la página pública
+              para ver los cambios).</div>
+            <div class="grid2" style="margin-top:15px">
+              <div class="field">
+                <label>Color Principal (Navy)</label>
+                <input type="color" id="theme-navy" value="#0a192f"
+                  style="height:50px; width:100%; cursor:pointer; padding:0; border:none; border-radius:8px">
+              </div>
+              <div class="field">
+                <label>Color Secundario (Cyan)</label>
+                <input type="color" id="theme-cyan" value="#64ffda"
+                  style="height:50px; width:100%; cursor:pointer; padding:0; border:none; border-radius:8px">
+              </div>
+            </div>
+            <button class="btn-save" onclick="saveTheme()"><i class="fas fa-save"></i> Guardar Colores</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-search"></i> SEO y Redes Sociales</h3>
+            <div class="notice warn">Configura el texto y la imagen que aparecerán cuando compartas el enlace de tu
+              página en WhatsApp o Facebook. (Aplica para compartidos dinámicos si tu servidor lo permite).</div>
+            <div class="field" style="margin-top:15px"><label>Título de la página compartida</label><input type="text"
+                id="seo-title" placeholder="Renovación Montufareña | Fabián Robles"></div>
+            <div class="field"><label>Descripción corta</label><textarea id="seo-desc" rows="2"
+                placeholder="Súmate al cambio con Fabián Robles..."></textarea></div>
+            <div class="field">
+              <label>Imagen en miniatura (URL)</label>
+              <button class="btn-upload" onclick="openCloudinaryWidget('seo-img')"><i class="fas fa-upload"></i> Subir
+                Miniatura</button>
+              <input type="url" id="seo-img" placeholder="https://..." style="margin-top:8px">
+              <img id="prev-seo-img" class="img-preview" style="display:none">
+            </div>
+            <button class="btn-save" onclick="saveSEO()"><i class="fas fa-save"></i> Guardar SEO</button>
+          </div>
+
+          <div class="card">
+            <h3><i class="fas fa-qrcode"></i> Generador de Código QR</h3>
+            <div class="notice ok">Genera y descarga instantáneamente un código QR oficial para volantes, afiches o
+              redes sociales.</div>
+            <div class="field" style="margin-top:15px">
+              <label>Enlace URL para el Código QR</label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <input type="url" id="qr-url" placeholder="https://renovacionmontufarena.com"
+                  style="flex:1; min-width:200px;">
+                <button class="btn-save" onclick="generateQRCode()" style="background:#1a3a6b;"><i
+                    class="fas fa-magic"></i> Dibujar QR</button>
+              </div>
+            </div>
+            <div id="qr-preview"
+              style="display:none; text-align:center; margin-top:20px; padding:20px; background:#f8f9fa; border-radius:12px;">
+              <img id="qr-img"
+                style="max-width:220px; border-radius:12px; border:8px solid #fff; box-shadow:0 4px 15px rgba(0,0,0,0.15); display:inline-block;">
+              <div style="margin-top:16px;">
+                <a id="qr-download" class="btn-save"
+                  style="display:inline-block; width:auto; padding:10px 24px; background:#00A650; text-decoration:none;"
+                  download="codigo_qr_campana.png"><i class="fas fa-download"></i> Descargar QR (.PNG)</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="border-left:5px solid #27ae60;">
+            <h3><i class="fas fa-eye-slash"></i> Visibilidad de Secciones</h3>
+            <div class="notice ok">Activa o desactiva las pestañas que deseas mostrar en el menú principal del sitio.
+            </div>
+            <div class="grid2" style="margin-top:15px">
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-inicio" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-inicio" style="margin:0; font-size:1rem; cursor:pointer;">Inicio</label>
+              </div>
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-trayectoria" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-trayectoria" style="margin:0; font-size:1rem; cursor:pointer;">Trayectoria</label>
+              </div>
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-sobremi" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-sobremi" style="margin:0; font-size:1rem; cursor:pointer;">Sobre Mí</label>
+              </div>
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-propuestas" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-propuestas" style="margin:0; font-size:1rem; cursor:pointer;">Propuestas</label>
+              </div>
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-multimedia" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-multimedia" style="margin:0; font-size:1rem; cursor:pointer;">Multimedia</label>
+              </div>
+              <div class="field" style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="vis-noticias" style="width:20px; height:20px; cursor:pointer;" checked>
+                <label for="vis-noticias" style="margin:0; font-size:1rem; cursor:pointer;">Noticias (Futuro)</label>
+              </div>
+            </div>
+            <button class="btn-save" style="background:#27ae60; margin-top:10px;" onclick="saveVisibleSections()"><i
+                class="fas fa-save"></i> Guardar Visibilidad</button>
+          </div>
+
+          <div class="card" style="border-left:5px solid #c0392b;">
+            <h3><i class="fas fa-box-archive"></i> Respaldo Total de Seguridad (Backup)</h3>
+            <div class="notice warn">Empaqueta todas tus propuestas, álbumes, textos y coordenadas actuales en un
+              archivo JSON seguro.</div>
+            <button class="btn-save" style="background:#c0392b; margin-top:10px;" onclick="exportTotalBackup()"><i
+                class="fas fa-download"></i> Crear Copia de Respaldo (.JSON)</button>
+          </div>
+        </div>
+
+        <!-- TAB: USUARIOS -->
+        <div class="tab-panel" id="tab-usuarios">
+          <h1 class="page-title">Gestión de <span>Usuarios</span></h1>
+          <div class="card">
+            <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Usuario</h3>
+            <div class="notice warn">Recuerda tener apagada la opción "Confirm email" en Supabase.</div>
+            <div class="grid2" style="margin-top:15px">
+              <div class="field"><label>Correo Electrónico</label><input type="email" id="new-user-email"
+                  placeholder="usuario@ejemplo.com"></div>
+              <div class="field"><label>Contraseña (Mínimo 6 caracteres)</label><input type="password"
+                  id="new-user-pass" placeholder="******"></div>
+            </div>
+            <button class="btn-save" onclick="createUser()"><i class="fas fa-save"></i> Crear Usuario</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Supabase debe cargarse ANTES del código inline -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const MASTER = { email: 'dilancoronado358@gmail.com', pass: 'Dilan123' };
+    const SB_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
+    const SB_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
+
+    function showToast(msg, type = 'success') {
+      Toastify({
+        text: msg,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: {
+          background: type === 'success' ? "#00A650" : "#c0392b",
+          borderRadius: "10px",
+          fontWeight: "600",
+          padding: "12px 24px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+        }
+      }).showToast();
+    }
+
+    // Inicializar db inmediatamente (el script de supabase ya cargó arriba)
+    const db = (window.supabase && window.supabase.createClient)
+      ? window.supabase.createClient(SB_URL, SB_KEY)
+      : null;
+
+    const login = document.getElementById('pg-login');
+    const dash = document.getElementById('pg-dash');
+    const btnIn = document.getElementById('btn-in');
+    const btnOut = document.getElementById('btn-out');
+    const errBox = document.getElementById('err');
+
+    // Verificar sesión inicial
+    async function checkSession() {
+      if (localStorage.getItem('adm') === '1') {
+        go();
+        return;
+      }
+      if (!db) return;
+      const { data: { session } } = await db.auth.getSession();
+      if (session) {
+        go();
+      }
+    }
+
+    checkSession();
+
+    btnIn.onclick = async function () {
+      const e = document.getElementById('em').value.trim();
+      const p = document.getElementById('pw').value.trim();
+      errBox.style.display = 'none';
+      if (!e || !p) { showErr('Completa todos los campos'); return; }
+
+      // Si coincide con la clave maestra, entramos directo (Bypass de seguridad de emergencia)
+      if (e.toLowerCase() === MASTER.email.toLowerCase() && p === MASTER.pass) {
+        localStorage.setItem('adm', '1');
+        go();
+        return;
+      }
+
+      if (!db) { showErr('Sin conexión a Supabase'); return; }
+      btnIn.innerText = 'Autenticando...';
+
+      const { data, error } = await db.auth.signInWithPassword({
+        email: e,
+        password: p,
+      });
+
+      btnIn.innerText = 'Ingresar';
+
+      if (error) {
+        showErr('Correo o contraseña incorrectos');
+      } else {
+        go();
+      }
+    };
+    document.getElementById('pw').onkeydown = e => { if (e.key === 'Enter') btnIn.click() };
+    document.getElementById('em').onkeydown = e => { if (e.key === 'Enter') btnIn.click() };
+
+    btnOut.onclick = async function () {
+      localStorage.removeItem('adm');
+      if (db) await db.auth.signOut();
+      dash.style.display = 'none';
+      login.style.display = 'flex';
+    };
+
+    // --- Inicializar Editor Quill ---
+    let quillEditor;
+    document.addEventListener("DOMContentLoaded", function () {
+      quillEditor = new Quill('#editor-container', {
+        theme: 'snow',
+        placeholder: 'Escribe la descripción detallada de la propuesta...',
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['clean']
+          ]
+        }
+      });
+    });
+
+    // --- Función para abrir Cloudinary Widget ---
+    function openCloudinaryWidget(targetId, multiple = false) {
+      let preset = localStorage.getItem('cld_preset');
+      if (!preset) {
+        preset = prompt("Por favor ingresa el nombre de tu 'Unsigned Upload Preset' de Cloudinary (Ej: qwqzxdf):");
+        if (preset) localStorage.setItem('cld_preset', preset);
+        else { showToast('Carga cancelada: Se requiere un preset', 'error'); return; }
+      }
+
+      cloudinary.openUploadWidget({
+        cloudName: 'dtmqftcsr', // Reemplaza con tu cloudName si es distinto
+        uploadPreset: preset,
+        multiple: multiple,
+        maxFiles: multiple ? 100 : 1,
+        clientAllowedFormats: ["png", "jpg", "jpeg", "webp", "gif", "mp4", "mov"],
+        sources: ['local', 'url', 'camera']
+      }, (error, result) => {
+        if (!error && result && result.event === "success") {
+          const url = result.info.secure_url;
+          const target = document.getElementById(targetId);
+          if (multiple) {
+            target.value = (target.value ? target.value + '\n' : '') + url;
+            // Lanzar evento input para actualizar previews
+            target.dispatchEvent(new Event('input'));
+          } else {
+            target.value = url;
+            const prev = document.getElementById('prev-' + targetId);
+            if (prev) {
+              prev.src = url;
+              prev.style.display = 'block';
+            }
+          }
+          showToast('¡Archivo subido con éxito!');
+        } else if (error) {
+          showToast('Error al subir a Cloudinary', 'error');
+        }
+      });
+    }
+
+    // --- Cargar Estadísticas del Dashboard ---
+    async function loadDashboardStats() {
+      if (!db) return;
+      try {
+        // Mensajes / Voluntarios
+        const { count: msgsCount } = await db.from('mensajes').select('id', { count: 'exact', head: true });
+        const currentMsgs = msgsCount || 0;
+        const elMsgs = document.getElementById('stat-msgs');
+        if (elMsgs) elMsgs.textContent = currentMsgs;
+
+        // Puntos del Mapa
+        const { count: mapCount } = await db.from('mapa_puntos').select('id', { count: 'exact', head: true });
+        const elMap = document.getElementById('stat-map');
+        if (elMap) elMap.textContent = mapCount || 0;
+
+        // Propuestas
+        const { count: propsCount } = await db.from('propuestas').select('id', { count: 'exact', head: true });
+        const elProps = document.getElementById('stat-props');
+        if (elProps) elProps.textContent = propsCount || 0;
+
+        // Álbumes
+        const { count: albumsCount } = await db.from('albumes').select('id', { count: 'exact', head: true });
+        const elAlbums = document.getElementById('stat-albums');
+        if (elAlbums) elAlbums.textContent = albumsCount || 0;
+
+        // Cargar Meta y Bitácora compartida
+        const metaObj = await getConfig('meta_voluntarios');
+        const targetMeta = metaObj && metaObj.meta ? parseInt(metaObj.meta) : 500;
+        const elMetaIn = document.getElementById('meta-input');
+        if (elMetaIn) elMetaIn.value = targetMeta;
+
+        const pct = targetMeta > 0 ? Math.min(100, Math.round((currentMsgs / targetMeta) * 100)) : 0;
+        const elMetaTxt = document.getElementById('meta-texto');
+        if (elMetaTxt) elMetaTxt.textContent = `Progreso: ${currentMsgs} / ${targetMeta}`;
+        const elMetaPct = document.getElementById('meta-porcentaje');
+        if (elMetaPct) elMetaPct.textContent = `${pct}%`;
+        const elMetaBar = document.getElementById('meta-bar');
+        if (elMetaBar) elMetaBar.style.width = `${pct}%`;
+
+        const bitObj = await getConfig('bitacora_equipo');
+        const elBitArea = document.getElementById('bitacora-area');
+        if (elBitArea && bitObj && bitObj.texto) {
+          elBitArea.value = bitObj.texto;
+        }
+
+        // Cargar Cuenta Regresiva
+        const cdObj = await getConfig('elecciones_fecha');
+        const fTarget = cdObj && cdObj.fecha ? cdObj.fecha : '2027-02-07';
+        const elTargetDate = document.getElementById('cd-target-date');
+        if (elTargetDate) elTargetDate.value = fTarget;
+
+        const diffTime = new Date(fTarget + 'T00:00:00').getTime() - new Date().getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const elCdText = document.getElementById('cd-text');
+        if (elCdText) {
+          elCdText.textContent = diffDays > 0 ? `Faltan ${diffDays} Días para la Victoria` : (diffDays === 0 ? '¡Hoy es el Día de la Victoria!' : 'Campaña Concluida con Éxito');
+        }
+
+        // Cargar Encuestas
+        const pollObj = await getConfig('encuestas_sondeo');
+        if (pollObj && pollObj.robles !== undefined) {
+          const elRobles = document.getElementById('poll-robles');
+          if (elRobles) elRobles.value = pollObj.robles;
+          const elOponente = document.getElementById('poll-oponente');
+          if (elOponente) elOponente.value = pollObj.oponente;
+          const elOtros = document.getElementById('poll-otros');
+          if (elOtros) elOtros.value = pollObj.otros;
+        }
+        actualizarGraficoEncuesta();
+      } catch (e) { console.warn('Stats load error:', e); }
+    }
+
+    async function go() {
+      login.style.display = 'none';
+      dash.style.display = 'block';
+      await testDB();
+      await loadDashboardStats();
+      await loadContent();
+      await loadProps();
+      await cargarGafetesSupabase();
+      await cargarInventario();
+      await cargarSemaforoParroquial();
+      await cargarDiaD();
+      await cargarFinanzas();
+      cargarGuionPredefinido();
+      generarCopyRedes();
+    }
+
+    async function testDB() {
+      const el = document.getElementById('db-status');
+      if (!db) { el.innerHTML = '<i class="fas fa-times-circle" style="color:#e74c3c"></i> Sin Supabase'; return; }
+      const { error } = await db.from('site_config').select('key').limit(1);
+      if (error) {
+        el.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#f59e0b"></i> BD: ' + error.message;
+      } else {
+        el.innerHTML = '<i class="fas fa-check-circle" style="color:#00A650"></i> Supabase conectado';
+      }
+    }
+
+    function showErr(m) { errBox.textContent = m; errBox.style.display = 'block'; }
+
+
+    function showTab(name, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sidebar nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (name === 'dashboard') loadDashboardStats();
+      if (name === 'propuestas') loadProps();
+      if (name === 'multimedia') loadAlbums();
+      if (name === 'mensajes') loadMensajes();
+      if (name === 'mapa') loadMapPoints();
+      if (name === 'config') loadConfigTab();
+    }
+
+    async function getConfig(key) {
+      if (db) {
+        const { data } = await db.from('site_config').select('value').eq('key', key).maybeSingle();
+        if (data) return JSON.parse(data.value || '{}');
+      }
+      return JSON.parse(localStorage.getItem(key) || '{}');
+    }
+
+    async function setConfig(key, obj) {
+      const val = JSON.stringify(obj);
+      localStorage.setItem(key, val);
+      if (db) {
+        const { error } = await db.from('site_config').upsert({ key, value: val, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+        if (error) {
+          showToast('Error al guardar: ' + error.message, 'error');
+        }
+      }
+    }
+
+    async function loadContent() {
+      const ht = await getConfig('hero_text');
+      if (ht.titulo1) document.getElementById('h-titulo1').value = ht.titulo1;
+      if (ht.nombre) document.getElementById('h-nombre').value = ht.nombre;
+      if (ht.titulo2) document.getElementById('h-titulo2').value = ht.titulo2;
+      if (ht.sub) document.getElementById('h-sub').value = ht.sub;
+
+      const hi = await getConfig('hero_imgs');
+      if (hi.img1) {
+        document.getElementById('h-img1').value = hi.img1;
+        document.getElementById('prev-h-img1').src = hi.img1;
+        document.getElementById('prev-h-img1').style.display = 'block';
+      }
+      if (hi.img2) {
+        document.getElementById('h-img2').value = hi.img2;
+        document.getElementById('prev-h-img2').src = hi.img2;
+        document.getElementById('prev-h-img2').style.display = 'block';
+      }
+      if (hi.bg) {
+        document.getElementById('h-bg').value = hi.bg;
+        document.getElementById('prev-h-bg').src = hi.bg;
+        document.getElementById('prev-h-bg').style.display = 'block';
+      }
+
+      const sl = await getConfig('slider_imgs');
+      const slUrls = Array.isArray(sl.urls) ? sl.urls : [sl.s1, sl.s2, sl.s3].filter(u => u && u.trim());
+      const slTextarea = document.getElementById('sl-urls');
+      if (slTextarea) slTextarea.value = slUrls.join('\n');
+      updateSliderPreview(slUrls);
+
+      const ct = await getConfig('contacto');
+      if (ct.wa) document.getElementById('c-wa').value = ct.wa;
+      if (ct.fb) document.getElementById('c-fb').value = ct.fb;
+      if (ct.tt) document.getElementById('c-tt').value = ct.tt;
+    }
+
+    async function loadConfigTab() {
+      const theme = await getConfig('theme');
+      if (theme.navy) document.getElementById('theme-navy').value = theme.navy;
+      if (theme.cyan) document.getElementById('theme-cyan').value = theme.cyan;
+
+      const seo = await getConfig('seo');
+      if (seo.title) document.getElementById('seo-title').value = seo.title;
+      if (seo.desc) document.getElementById('seo-desc').value = seo.desc;
+      if (seo.img) {
+        document.getElementById('seo-img').value = seo.img;
+        document.getElementById('prev-seo-img').src = seo.img;
+        document.getElementById('prev-seo-img').style.display = 'block';
+      }
+
+      const vis = await getConfig('visible_sections');
+      if (vis) {
+        if (vis.inicio !== undefined) document.getElementById('vis-inicio').checked = vis.inicio;
+        if (vis.trayectoria !== undefined) document.getElementById('vis-trayectoria').checked = vis.trayectoria;
+        if (vis.sobremi !== undefined) document.getElementById('vis-sobremi').checked = vis.sobremi;
+        if (vis.propuestas !== undefined) document.getElementById('vis-propuestas').checked = vis.propuestas;
+        if (vis.multimedia !== undefined) document.getElementById('vis-multimedia').checked = vis.multimedia;
+        if (vis.noticias !== undefined) document.getElementById('vis-noticias').checked = vis.noticias;
+      }
+    }
+
+    async function saveVisibleSections() {
+      await setConfig('visible_sections', {
+        inicio: document.getElementById('vis-inicio').checked,
+        trayectoria: document.getElementById('vis-trayectoria').checked,
+        sobremi: document.getElementById('vis-sobremi').checked,
+        propuestas: document.getElementById('vis-propuestas').checked,
+        multimedia: document.getElementById('vis-multimedia').checked,
+        noticias: document.getElementById('vis-noticias').checked
+      });
+      showToast('Visibilidad de secciones guardada');
+    }
+
+    async function saveHeroText() {
+      await setConfig('hero_text', {
+        titulo1: document.getElementById('h-titulo1').value,
+        nombre: document.getElementById('h-nombre').value,
+        titulo2: document.getElementById('h-titulo2').value,
+        sub: document.getElementById('h-sub').value
+      });
+      showToast('Texto del hero guardado');
+    }
+
+    async function saveHeroImg(num) {
+      const hi = await getConfig('hero_imgs');
+      if (num === 1) hi.img1 = document.getElementById('h-img1').value;
+      if (num === 2) hi.img2 = document.getElementById('h-img2').value;
+      await setConfig('hero_imgs', hi);
+      showToast('Foto candidato actualizada');
+    }
+
+    async function saveHeroBg() {
+      const hi = await getConfig('hero_imgs');
+      hi.bg = document.getElementById('h-bg').value;
+      await setConfig('hero_imgs', hi);
+      showToast('Fondo actualizado');
+    }
+
+    async function saveSlider() {
+      const ta = document.getElementById('sl-urls');
+      const urls = ta.value.split('\n').map(u => u.trim()).filter(u => u).slice(0, 100);
+      await setConfig('slider_imgs', { urls });
+      updateSliderPreview(urls);
+      showToast(`Carrusel guardado con ${urls.length} imagen(es)`);
+    }
+
+    let sliderSortable;
+    function updateSliderPreview(urls) {
+      const prev = document.getElementById('sl-preview');
+      const cnt = document.getElementById('sl-count');
+      if (!prev) return;
+      if (cnt) cnt.textContent = urls.length + '/100 imagen(es)';
+      prev.innerHTML = '';
+      urls.forEach((url, idx) => {
+        const div = document.createElement('div');
+        div.className = 'drag-item';
+        div.setAttribute('data-url', url);
+        div.innerHTML = `
+      <img src="${url}" style="width:100%;height:100px;object-fit:cover;border-radius:8px" onerror="this.style.opacity='0.3'">
+      <button class="del-btn" onclick="removeSliderImage(${idx})"><i class="fas fa-times"></i></button>
+    `;
+        prev.appendChild(div);
+      });
+
+      if (sliderSortable) sliderSortable.destroy();
+      sliderSortable = Sortable.create(prev, {
+        animation: 150,
+        onEnd: function () {
+          const newUrls = Array.from(prev.children).map(child => child.getAttribute('data-url'));
+          document.getElementById('sl-urls').value = newUrls.join('\n');
+        }
+      });
+    }
+
+    function removeSliderImage(idx) {
+      const ta = document.getElementById('sl-urls');
+      let urls = ta.value.split('\n').map(u => u.trim()).filter(u => u);
+      urls.splice(idx, 1);
+      ta.value = urls.join('\n');
+      updateSliderPreview(urls);
+    }
+
+    // Live preview en el textarea del slider
+    document.addEventListener('DOMContentLoaded', () => {
+      const ta = document.getElementById('sl-urls');
+      if (ta) ta.addEventListener('input', function () {
+        const urls = this.value.split('\n').map(u => u.trim()).filter(u => u);
+        updateSliderPreview(urls);
+      });
+    });
+
+    async function saveProp() {
+      const cat = document.getElementById('p-cat').value;
+      const title = document.getElementById('p-title').value.trim();
+      const desc = quillEditor.root.innerHTML.trim();
+
+      if (!title || desc === '<p><br></p>') { showToast('Completa título y descripción', 'error'); return; }
+      if (db) {
+        const { error } = await db.from('propuestas').insert([{ category: cat, title, desc_text: desc, is_active: true }]);
+        if (error) { showToast('Error: ' + error.message, 'error'); return; }
+      } else {
+        const arr = JSON.parse(localStorage.getItem('props_local') || '[]');
+        arr.push({ id: Date.now(), category: cat, title, desc_text: desc, is_active: true });
+        localStorage.setItem('props_local', JSON.stringify(arr));
+      }
+      document.getElementById('p-title').value = '';
+      quillEditor.root.innerHTML = '';
+      showToast('Propuesta guardada');
+      loadProps();
+    }
+
+    async function deleteProp(id) {
+      if (!confirm('¿Eliminar esta propuesta?')) return;
+      if (db) {
+        await db.from('propuestas').delete().eq('id', id);
+      } else {
+        const arr = JSON.parse(localStorage.getItem('props_local') || '[]').filter(p => p.id !== id);
+        localStorage.setItem('props_local', JSON.stringify(arr));
+      }
+      loadProps();
+    }
+
+    let prioridadesProps = [];
+
+    async function loadProps() {
+      const list = document.getElementById('props-list');
+      list.innerHTML = '<p style="color:#888">Cargando...</p>';
+      let items = [];
+      if (db) {
+        const { data, error } = await db.from('propuestas').select('*').order('id', { ascending: false });
+        if (error) { list.innerHTML = `<div class="notice warn">⚠️ ${error.message}</div>`; return; }
+        items = data || [];
+      } else {
+        items = JSON.parse(localStorage.getItem('props_local') || '[]').reverse();
+      }
+
+      const priObj = await getConfig('propuestas_prioridad');
+      prioridadesProps = Array.isArray(priObj.ids) ? priObj.ids : [];
+
+      if (!items.length) { list.innerHTML = '<p style="color:#888">No hay propuestas aún.</p>'; return; }
+      list.innerHTML = '';
+      items.forEach(p => {
+        const isPrio = prioridadesProps.includes(p.id);
+        const d = document.createElement('div');
+        d.className = 'prop-item';
+        d.style = isPrio ? 'background:#fffde7; border:2px solid #fbc02d;' : '';
+        d.innerHTML = `
+      <div style="flex:1">
+        <span class="badge-cat">${p.category}</span>
+        ${isPrio ? '<span style="background:#fbc02d; color:#000; font-size:0.7rem; font-weight:bold; padding:2px 6px; border-radius:4px; margin-left:6px;">⭐ DESTACADA</span>' : ''}
+        <h4>${p.title}</h4>
+        <p>${p.desc_text || ''}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="${p.is_active ? 'status-ok' : 'status-no'}">${p.is_active ? '● ACTIVO' : '● INACTIVO'}</span>
+        <button class="btn-save" onclick="togglePriorityProp(${p.id})" style="padding:6px 10px; font-size:0.75rem; background:${isPrio ? '#fbc02d' : '#e0e0e0'}; color:${isPrio ? '#000' : '#333'};">${isPrio ? '⭐ Quitar Destacado' : '☆ Destacar'}</button>
+        <button class="btn-danger" onclick="deleteProp(${p.id})" style="padding:6px 12px;font-size:.78rem">🗑 Eliminar</button>
+      </div>`;
+        list.appendChild(d);
+      });
+    }
+
+    async function togglePriorityProp(id) {
+      if (prioridadesProps.includes(id)) {
+        prioridadesProps = prioridadesProps.filter(x => x !== id);
+      } else {
+        prioridadesProps.push(id);
+      }
+      await setConfig('propuestas_prioridad', { ids: prioridadesProps });
+      showToast('Prioridad de propuesta actualizada');
+      loadProps();
+    }
+
+    async function saveContact() {
+      await setConfig('contacto', {
+        wa: document.getElementById('c-wa').value,
+        fb: document.getElementById('c-fb').value,
+        tt: document.getElementById('c-tt').value
+      });
+      showToast('Datos de contacto guardados');
+    }
+
+    // ---- ALBUMS ----
+    let currentAlbumId = null;
+
+    async function loadAlbums() {
+      const list = document.getElementById('albums-list');
+      if (!list) return;
+      list.innerHTML = '<p style="color:#888">Cargando...</p>';
+      if (!db) { list.innerHTML = '<p style="color:#aaa">Sin conexión a Supabase.</p>'; return; }
+      const { data, error } = await db.from('albumes').select('id,titulo,fecha,lugar,portada_url,fotos').order('id', { ascending: false });
+      if (error) { list.innerHTML = `<p style="color:red">Error: ${error.message}</p>`; return; }
+      if (!data || !data.length) { list.innerHTML = '<p style="color:#aaa">No hay álbumes aún. Crea el primero arriba.</p>'; return; }
+      list.innerHTML = '';
+      data.forEach(alb => {
+        const fotos = Array.isArray(alb.fotos) ? alb.fotos : [];
+        const fotosJson = JSON.stringify(fotos);
+        const tituloEsc = alb.titulo.replace(/'/g, "\\'");
+        const d = document.createElement('div');
+        d.className = 'prop-item';
+        d.style = 'align-items:flex-start;gap:14px';
+        d.innerHTML = `
+      <img src="${alb.portada_url || ''}" style="width:80px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0" onerror="this.style.display='none'">
+      <div style="flex:1">
+        <h4>${alb.titulo}</h4>
+        <p>${alb.fecha || ''} ${alb.lugar ? '— ' + alb.lugar : ''}</p>
+        <p style="color:#00A650;font-weight:600;font-size:.82rem">${fotos.length}/100 foto(s)</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <button class="btn-save" style="padding:7px 14px;font-size:.8rem" data-edit-id="${alb.id}">✏️ Editar Fotos</button>
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteAlbum(${alb.id})">🗑 Eliminar</button>
+      </div>`;
+        d.querySelector('.btn-save').addEventListener('click', () => editAlbumById(alb.id, alb.titulo, fotos));
+        list.appendChild(d);
+      });
+    }
+
+    async function createAlbum() {
+      const titulo = document.getElementById('alb-titulo').value.trim();
+      const fecha = document.getElementById('alb-fecha').value.trim();
+      const lugar = document.getElementById('alb-lugar').value.trim();
+      const portada = document.getElementById('alb-portada').value.trim();
+      if (!titulo || !portada) { showToast('El título y la portada son obligatorios', 'error'); return; }
+      if (!db) { showToast('Sin conexión a Supabase', 'error'); return; }
+      const { error } = await db.from('albumes').insert([{ titulo, fecha, lugar, portada_url: portada, fotos: [] }]);
+      if (error) { showToast('Error: ' + error.message, 'error'); return; }
+
+      ['alb-titulo', 'alb-fecha', 'alb-lugar', 'alb-portada'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('prev-alb-portada').style.display = 'none';
+      showToast('Álbum creado correctamente');
+      loadAlbums();
+    }
+
+    function editAlbumById(id, titulo, fotosArr) {
+      currentAlbumId = id;
+      document.getElementById('album-edit-name').textContent = titulo;
+      const panel = document.getElementById('album-edit-panel');
+      panel.style.display = 'block';
+      const input = document.getElementById('album-fotos-input');
+      input.value = fotosArr.join('\n');
+      updateFotoPreview(fotosArr);
+      panel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    let albumSortable;
+    function updateFotoPreview(urls) {
+      const prev = document.getElementById('album-fotos-preview');
+      if (!prev) return;
+      prev.innerHTML = '';
+      urls.slice(0, 100).forEach((url, idx) => {
+        const div = document.createElement('div');
+        div.className = 'drag-item';
+        div.setAttribute('data-url', url);
+        div.innerHTML = `
+      <img src="${url}" style="width:100%;height:90px;object-fit:cover;border-radius:8px" onerror="this.style.opacity='0.3'">
+      <button class="del-btn" onclick="removeAlbumImage(${idx})"><i class="fas fa-times"></i></button>
+    `;
+        prev.appendChild(div);
+      });
+
+      if (albumSortable) albumSortable.destroy();
+      albumSortable = Sortable.create(prev, {
+        animation: 150,
+        onEnd: function () {
+          const newUrls = Array.from(prev.children).map(child => child.getAttribute('data-url'));
+          document.getElementById('album-fotos-input').value = newUrls.join('\n');
+        }
+      });
+    }
+
+    function removeAlbumImage(idx) {
+      const ta = document.getElementById('album-fotos-input');
+      let urls = ta.value.split('\n').map(u => u.trim()).filter(u => u);
+      urls.splice(idx, 1);
+      ta.value = urls.join('\n');
+      updateFotoPreview(urls);
+    }
+
+    document.getElementById('album-fotos-input') && document.getElementById('album-fotos-input').addEventListener('input', function () {
+      const urls = this.value.split('\n').map(u => u.trim()).filter(u => u);
+      updateFotoPreview(urls);
+    });
+
+    async function saveAlbumFotos() {
+      if (!currentAlbumId) { showToast('No hay álbum seleccionado', 'error'); return; }
+      const urls = document.getElementById('album-fotos-input').value
+        .split('\n').map(u => u.trim()).filter(u => u).slice(0, 100);
+      if (!db) { showToast('Sin conexión', 'error'); return; }
+      const { error } = await db.from('albumes').update({ fotos: urls }).eq('id', currentAlbumId);
+      if (error) { showToast('Error: ' + error.message, 'error'); return; }
+      showToast(`${urls.length} fotos guardadas`);
+      document.getElementById('album-edit-panel').style.display = 'none';
+      loadAlbums();
+    }
+
+    async function deleteAlbum(id) {
+      if (!confirm('¿Eliminar este álbum y todas sus fotos?')) return;
+      if (!db) { showToast('Sin conexión', 'error'); return; }
+      const { error } = await db.from('albumes').delete().eq('id', id);
+      if (error) { showToast('Error: ' + error.message, 'error'); return; }
+      showToast('Álbum eliminado');
+      loadAlbums();
+    }
+    // ---- MENSAJES ----
+    let allMensajes = [];
+
+    async function loadMensajes() {
+      const list = document.getElementById('mensajes-list');
+      if (!list) return;
+      list.innerHTML = '<p style="color:#888">Cargando...</p>';
+      if (!db) { list.innerHTML = '<p style="color:#aaa">Sin conexión a Supabase.</p>'; return; }
+
+      const { data, error } = await db.from('mensajes').select('*').order('created_at', { ascending: false });
+      if (error) { list.innerHTML = `<p style="color:red">Error: ${error.message}</p>`; return; }
+      if (!data || !data.length) { list.innerHTML = '<p style="color:#aaa">No hay mensajes aún.</p>'; return; }
+
+      allMensajes = data;
+      renderMensajes(data);
+    }
+
+    function renderMensajes(items) {
+      const list = document.getElementById('mensajes-list');
+      if (!list) return;
+      list.innerHTML = '';
+      if (!items.length) { list.innerHTML = '<p style="color:#aaa">No se encontraron coincidencias.</p>'; return; }
+
+      items.forEach(msg => {
+        const d = document.createElement('div');
+        d.className = 'prop-item';
+        d.style = msg.leido ? 'opacity:0.7' : 'border-left: 4px solid var(--primary-color)';
+
+        d.innerHTML = `
+      <div style="flex:1">
+        <h4 style="display:flex; justify-content:space-between">
+          <span><i class="fas fa-user"></i> ${msg.nombre}</span>
+          <span style="font-size:0.8rem; font-weight:normal; color:#888">${new Date(msg.created_at).toLocaleString()}</span>
+        </h4>
+        <p><strong><i class="fas fa-phone"></i> Teléfono:</strong> ${msg.telefono || 'N/A'}</p>
+        <p style="margin-top:8px; padding:10px; background:rgba(0,0,0,0.03); border-radius:8px"><i>"${msg.mensaje}"</i></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:120px">
+        ${!msg.leido ? `<button class="btn-save" style="padding:7px 14px;font-size:.8rem" onclick="markMensajeLeido(${msg.id})">✔ Marcar Leído</button>` : `<span style="text-align:center;font-size:0.85rem;color:#888">Leído</span>`}
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteMensaje(${msg.id})">🗑 Eliminar</button>
+      </div>
+    `;
+        list.appendChild(d);
+      });
+    }
+
+    function filterMensajes(val) {
+      if (!val) { renderMensajes(allMensajes); return; }
+      const q = val.toLowerCase();
+      const filtered = allMensajes.filter(m =>
+        (m.nombre && m.nombre.toLowerCase().includes(q)) ||
+        (m.telefono && m.telefono.toLowerCase().includes(q)) ||
+        (m.mensaje && m.mensaje.toLowerCase().includes(q))
+      );
+      renderMensajes(filtered);
+    }
+
+    function exportMensajesCSV() {
+      if (!allMensajes || !allMensajes.length) { showToast('No hay datos para exportar', 'error'); return; }
+      let csv = 'ID,Nombre,Telefono,Mensaje,Estado,Fecha\n';
+      allMensajes.forEach(m => {
+        const cleanMsg = m.mensaje ? m.mensaje.replace(/"/g, '""').replace(/\n/g, ' ') : '';
+        csv += `"${m.id}","${m.nombre}","${m.telefono || ''}","${cleanMsg}","${m.leido ? 'Leido' : 'Nuevo'}","${m.created_at}"\n`;
+      });
+      const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'voluntarios_renovacion_montufarena.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('Archivo CSV generado con éxito');
+    }
+
+    async function markMensajeLeido(id) {
+      if (!db) return;
+      await db.from('mensajes').update({ leido: true }).eq('id', id);
+      showToast('Mensaje marcado como leído');
+      loadMensajes();
+    }
+
+    async function deleteMensaje(id) {
+      if (!confirm('¿Eliminar este mensaje?')) return;
+      if (!db) return;
+      await db.from('mensajes').delete().eq('id', id);
+      showToast('Mensaje eliminado');
+      loadMensajes();
+    }
+
+    // ---- MAPA TERRITORIAL ----
+    async function loadMapPoints() {
+      const list = document.getElementById('map-list');
+      if (!list) return;
+      list.innerHTML = '<p style="color:#888">Cargando puntos...</p>';
+      if (!db) { list.innerHTML = '<p style="color:#aaa">Sin conexión a Supabase.</p>'; return; }
+
+      const { data, error } = await db.from('mapa_puntos').select('*').order('id', { ascending: false });
+      if (error) { list.innerHTML = `<p style="color:red">Error: ${error.message}</p>`; return; }
+      if (!data || !data.length) { list.innerHTML = '<p style="color:#aaa">No hay puntos en el mapa.</p>'; return; }
+
+      list.innerHTML = '';
+      data.forEach(pt => {
+        const d = document.createElement('div');
+        d.className = 'prop-item';
+        d.innerHTML = `
+      <div style="flex:1">
+        <h4><i class="fas fa-map-marker-alt" style="color:#e74c3c"></i> ${pt.titulo}</h4>
+        <p style="font-size:0.85rem; color:#888">Lat: ${pt.lat}, Lng: ${pt.lng}</p>
+        <p style="margin-top:5px">${pt.texto}</p>
+      </div>
+      <div>
+        <button class="btn-danger" style="padding:7px 14px;font-size:.8rem" onclick="deleteMapPoint(${pt.id})">🗑 Eliminar</button>
+      </div>
+    `;
+        list.appendChild(d);
+      });
+    }
+
+    async function createMapPoint() {
+      const lat = document.getElementById('map-lat').value;
+      const lng = document.getElementById('map-lng').value;
+      const titulo = document.getElementById('map-title').value.trim();
+      const texto = document.getElementById('map-text').value.trim();
+
+      if (!lat || !lng || !titulo || !texto) { showToast('Completa todos los campos del mapa', 'error'); return; }
+      if (!db) { showToast('Sin conexión a Supabase', 'error'); return; }
+
+      const { error } = await db.from('mapa_puntos').insert([{ lat: parseFloat(lat), lng: parseFloat(lng), titulo, texto }]);
+      if (error) { showToast('Error: ' + error.message, 'error'); return; }
+
+      ['map-lat', 'map-lng', 'map-title', 'map-text'].forEach(id => document.getElementById(id).value = '');
+      showToast('Punto guardado en el mapa');
+      loadMapPoints();
+    }
+
+    async function deleteMapPoint(id) {
+      if (!confirm('¿Eliminar este punto del mapa?')) return;
+      if (!db) return;
+      await db.from('mapa_puntos').delete().eq('id', id);
+      showToast('Punto eliminado');
+      loadMapPoints();
+    }
+
+    // ---- CONFIGURACIÓN Y TEMA ----
+    async function saveTheme() {
+      const navy = document.getElementById('theme-navy').value;
+      const cyan = document.getElementById('theme-cyan').value;
+      await setConfig('theme', { navy, cyan });
+      showToast('Colores del tema actualizados');
+    }
+
+    async function saveSEO() {
+      await setConfig('seo', {
+        title: document.getElementById('seo-title').value.trim(),
+        desc: document.getElementById('seo-desc').value.trim(),
+        img: document.getElementById('seo-img').value.trim()
+      });
+      showToast('Configuración SEO guardada');
+    }
+
+    // ---- USUARIOS ----
+    async function createUser() {
+      const email = document.getElementById('new-user-email').value.trim();
+      const password = document.getElementById('new-user-pass').value.trim();
+
+      if (!email || !password || password.length < 6) {
+        showToast('Ingresa un correo válido y una contraseña de al menos 6 caracteres', 'error');
+        return;
+      }
+      if (!db) { showToast('Sin conexión a Supabase', 'error'); return; }
+
+      showToast('Creando usuario...');
+      const { data, error } = await db.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      if (error) {
+        showToast('Error: ' + error.message, 'error');
+      } else {
+        document.getElementById('new-user-email').value = '';
+        document.getElementById('new-user-pass').value = '';
+        showToast('Usuario creado exitosamente');
+      }
+    }
+
+    // ---- HERRAMIENTAS PREMIUM INTERNAS ----
+    function generateQRCode() {
+      const u = document.getElementById('qr-url').value.trim();
+      if (!u) { showToast('Ingresa una URL válida', 'error'); return; }
+      const img = document.getElementById('qr-img');
+      const preview = document.getElementById('qr-preview');
+      const dl = document.getElementById('qr-download');
+
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(u)}&margin=10`;
+      img.src = qrUrl;
+      dl.href = qrUrl;
+      preview.style.display = 'block';
+      showToast('Código QR generado en alta resolución');
+    }
+
+    async function exportTotalBackup() {
+      if (!db) { showToast('Sin conexión a base de datos', 'error'); return; }
+      showToast('Recopilando y empaquetando datos del sistema...');
+      try {
+        const backup = { timestamp: new Date().toISOString(), platform: "Renovación Montufareña Ultimate" };
+        const [cfg, prop, alb, msg, map] = await Promise.all([
+          db.from('site_config').select('*'),
+          db.from('propuestas').select('*'),
+          db.from('albumes').select('*'),
+          db.from('mensajes').select('*'),
+          db.from('mapa_puntos').select('*')
+        ]);
+        backup.config = cfg.data || [];
+        backup.propuestas = prop.data || [];
+        backup.albumes = alb.data || [];
+        backup.mensajes = msg.data || [];
+        backup.mapa_puntos = map.data || [];
+
+        const str = JSON.stringify(backup, null, 2);
+        const blob = new Blob([str], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `backup_renovacion_montufarena_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast('¡Copia de respaldo (.JSON) descargada con éxito!');
+      } catch (e) {
+        showToast('Error creando backup: ' + e.message, 'error');
+      }
+    }
+
+    async function saveMetaVoluntarios() {
+      const metaVal = document.getElementById('meta-input').value;
+      await setConfig('meta_voluntarios', { meta: metaVal });
+      showToast('Meta territorial actualizada');
+      loadDashboardStats();
+    }
+
+    async function saveBitacora() {
+      const txt = document.getElementById('bitacora-area').value.trim();
+      await setConfig('bitacora_equipo', { texto: txt });
+      showToast('Bitácora del equipo sincronizada');
+    }
+
+    function forceMasterRefresh() {
+      showToast('Sincronizando y purgando caché del servidor...', 'info');
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 600);
+    }
+
+    function abrirMapaPresentacion() {
+      const url = window.location.origin + window.location.pathname.replace('admin.html', 'index.html') + '#seccion-mapa';
+      const w = window.open(url, '_blank', 'width=1200,height=800,fullscreen=yes');
+      if (!w) {
+        showToast('Habilita las ventanas emergentes para abrir a pantalla completa', 'warn');
+      } else {
+        showToast('Mapa abierto en Modo Presentación');
+      }
+    }
+
+    function generarEnlaceWhatsApp() {
+      const elWa = document.getElementById('c-wa');
+      const baseNum = elWa && elWa.value ? elWa.value.trim() : '593987851539';
+      const elMsg = document.getElementById('wa-msg-gen');
+      const msgText = elMsg && elMsg.value ? elMsg.value.trim() : 'Hola equipo, confirmo mi asistencia a la caminata de hoy';
+      const link = `https://api.whatsapp.com/send?phone=${baseNum.replace(/\D/g, '')}&text=${encodeURIComponent(msgText)}`;
+
+      const resDiv = document.getElementById('wa-link-res');
+      const aHref = document.getElementById('wa-link-href');
+      if (aHref && resDiv) {
+        aHref.href = link;
+        aHref.textContent = link;
+        resDiv.style.display = 'block';
+        showToast('Enlace para WhatsApp listo para copiar');
+      }
+    }
+
+    function copiarEnlaceWA() {
+      const el = document.getElementById('wa-link-href');
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        showToast('¡Enlace copiado al portapapeles!');
+      }).catch(() => {
+        showToast('Error copiando enlace', 'error');
+      });
+    }
+
+    async function guardarFechaElecciones() {
+      const elDate = document.getElementById('cd-target-date');
+      const f = elDate ? elDate.value : '';
+      if (!f) { showToast('Selecciona una fecha válida', 'error'); return; }
+      await setConfig('elecciones_fecha', { fecha: f });
+      showToast('Fecha de la victoria actualizada');
+      loadDashboardStats();
+    }
+
+    function actualizarGraficoEncuesta() {
+      const elRobles = document.getElementById('poll-robles');
+      const robles = elRobles ? parseFloat(elRobles.value) || 0 : 45;
+      const elOp = document.getElementById('poll-oponente');
+      const op = elOp ? parseFloat(elOp.value) || 0 : 30;
+      const elOt = document.getElementById('poll-otros');
+      const otros = elOt ? parseFloat(elOt.value) || 0 : 25;
+      const total = robles + op + otros;
+
+      const pctR = total > 0 ? (robles / total) * 100 : 0;
+      const pctO = total > 0 ? (op / total) * 100 : 0;
+      const pctOt = total > 0 ? (otros / total) * 100 : 0;
+
+      const lblR = document.getElementById('lbl-poll-robles');
+      if (lblR) lblR.textContent = `${pctR.toFixed(1)}%`;
+      const barR = document.getElementById('bar-poll-robles');
+      if (barR) barR.style.width = `${pctR}%`;
+
+      const lblOp = document.getElementById('lbl-poll-oponente');
+      if (lblOp) lblOp.textContent = `${pctO.toFixed(1)}%`;
+      const barOp = document.getElementById('bar-poll-oponente');
+      if (barOp) barOp.style.width = `${pctO}%`;
+
+      const lblOt = document.getElementById('lbl-poll-otros');
+      if (lblOt) lblOt.textContent = `${pctOt.toFixed(1)}%`;
+      const barOt = document.getElementById('bar-poll-otros');
+      if (barOt) barOt.style.width = `${pctOt}%`;
+    }
+
+    async function guardarDatosEncuesta() {
+      const elRobles = document.getElementById('poll-robles');
+      const robles = elRobles ? parseFloat(elRobles.value) || 0 : 45;
+      const elOp = document.getElementById('poll-oponente');
+      const oponente = elOp ? parseFloat(elOp.value) || 0 : 30;
+      const elOt = document.getElementById('poll-otros');
+      const otros = elOt ? parseFloat(elOt.value) || 0 : 25;
+      await setConfig('encuestas_sondeo', { robles, oponente, otros });
+      showToast('Sondeo interno guardado con éxito');
+    }
+
+    let gafetesGuardados = [];
+
+    function actualizarGafete() {
+      const elNom = document.getElementById('cred-nombre');
+      const nom = elNom && elNom.value ? elNom.value.trim() : 'CARLOS MENDOZA';
+      const elRol = document.getElementById('cred-rol');
+      const rol = elRol && elRol.value ? elRol.value.trim() : 'COORDINADOR PARROQUIAL';
+      const elCid = document.getElementById('cred-id');
+      const cid = elCid && elCid.value ? elCid.value.trim() : 'ID: 040152...';
+      const elFoto = document.getElementById('cred-foto');
+      const foto = elFoto && elFoto.value ? elFoto.value.trim() : '';
+
+      const lblNom = document.getElementById('lbl-cred-nombre');
+      if (lblNom) lblNom.textContent = nom.toUpperCase();
+      const lblRol = document.getElementById('lbl-cred-rol');
+      if (lblRol) lblRol.textContent = rol.toUpperCase();
+      const lblCid = document.getElementById('lbl-cred-id');
+      if (lblCid) lblCid.textContent = cid;
+
+      const previewImg = document.getElementById('gafete-img-preview');
+      const fallbackIcon = document.getElementById('gafete-icon-fallback');
+      if (previewImg && fallbackIcon) {
+        if (foto) {
+          previewImg.src = foto;
+          previewImg.style.display = 'block';
+          fallbackIcon.style.display = 'none';
+        } else {
+          previewImg.style.display = 'none';
+          fallbackIcon.style.display = 'block';
+        }
+      }
+    }
+
+    function descargarGafete() {
+      const elNom = document.getElementById('lbl-cred-nombre');
+      const nom = elNom ? elNom.textContent : 'CARLOS MENDOZA';
+      const elRol = document.getElementById('lbl-cred-rol');
+      const rol = elRol ? elRol.textContent : 'COORDINADOR PARROQUIAL';
+      const elCid = document.getElementById('lbl-cred-id');
+      const cid = elCid ? elCid.textContent : 'ID: 040152...';
+      const elFoto = document.getElementById('cred-foto');
+      const foto = elFoto ? elFoto.value.trim() : '';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 400;
+      canvas.height = 600;
+      const ctx = canvas.getContext('2d');
+
+      // Fondo principal
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 400, 600);
+
+      // Borde exterior
+      ctx.strokeStyle = '#1a3a6b';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(6, 6, 388, 588);
+
+      // Cabecera superior
+      ctx.fillStyle = '#0a192f';
+      ctx.fillRect(12, 12, 376, 120);
+
+      ctx.fillStyle = '#64ffda';
+      ctx.font = 'bold 22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('RENOVACIÓN MONTUFAREÑA', 200, 65);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('CREDENCIAL OFICIAL DE CAMPAÑA', 200, 100);
+
+      const finalizarDibujo = () => {
+        // Textos del portador
+        ctx.fillStyle = '#0a192f';
+        ctx.font = 'bold 26px sans-serif';
+        ctx.fillText(nom, 200, 350);
+
+        ctx.fillStyle = '#00A650';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText(rol, 200, 400);
+
+        ctx.fillStyle = '#666666';
+        ctx.font = '15px sans-serif';
+        ctx.fillText(cid, 200, 450);
+
+        // Pie inferior
+        ctx.fillStyle = '#00A650';
+        ctx.fillRect(12, 530, 376, 58);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('BRIGADISTA AUTORIZADO', 200, 566);
+
+        // Descargar
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `credencial_${nom.replace(/\s+/g, '_').toLowerCase()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast('¡Credencial descargada exitosamente en alta calidad!');
+      };
+
+      // Dibujar Foto o Icono
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(200, 230, 55, 0, Math.PI * 2);
+      ctx.fillStyle = '#f1f2f6';
+      ctx.fill();
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = '#00A650';
+      ctx.stroke();
+      ctx.clip();
+
+      if (foto) {
+        const imgObj = new Image();
+        // Prevenir problemas de Canvas Tainted mediante un proxy o crossOrigin
+        imgObj.crossOrigin = 'Anonymous';
+        imgObj.onload = () => {
+          ctx.drawImage(imgObj, 145, 175, 110, 110);
+          ctx.restore();
+          // Redibujar borde verde tras el clip
+          ctx.beginPath();
+          ctx.arc(200, 230, 55, 0, Math.PI * 2);
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = '#00A650';
+          ctx.stroke();
+          finalizarDibujo();
+        };
+        imgObj.onerror = () => {
+          ctx.restore();
+          ctx.fillStyle = '#1a3a6b';
+          ctx.font = 'bold 45px sans-serif';
+          ctx.fillText('👤', 200, 248);
+          finalizarDibujo();
+        };
+        imgObj.src = foto;
+      } else {
+        ctx.restore();
+        ctx.fillStyle = '#1a3a6b';
+        ctx.font = 'bold 45px sans-serif';
+        ctx.fillText('👤', 200, 248);
+        finalizarDibujo();
+      }
+    }
+
+    async function cargarGafetesSupabase() {
+      const gObj = await getConfig('gafetes_guardados');
+      gafetesGuardados = Array.isArray(gObj.list) ? gObj.list : [];
+      renderizarListaGafetes();
+    }
+
+    function renderizarListaGafetes() {
+      const container = document.getElementById('list-gafetes-guardados');
+      if (!container) return;
+      if (!gafetesGuardados.length) {
+        container.innerHTML = '<p style="color:#888; font-size:0.8rem; margin:0;">No hay credenciales guardadas en la base de datos.</p>';
+        return;
+      }
+      container.innerHTML = '';
+      gafetesGuardados.forEach(item => {
+        const d = document.createElement('div');
+        d.style = 'display:flex; justify-content:space-between; align-items:center; background:#f8f9fa; padding:8px 12px; border-radius:8px; border:1px solid #ddd; font-size:0.85rem;';
+        d.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${item.foto || 'https://via.placeholder.com/40'}" style="width:35px; height:35px; border-radius:50%; object-fit:cover; border:1px solid #00A650;" onerror="this.src='https://via.placeholder.com/40'">
+        <div>
+          <strong style="display:block; color:#1a3a6b;">${item.nombre}</strong>
+          <span style="font-size:0.75rem; color:#666;">${item.rol} | ${item.cid}</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="cargarGafeteEnFormulario(${item.id})"><i class="fas fa-edit"></i> Cargar</button>
+        <button class="btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="eliminarGafeteSupabase(${item.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    `;
+        container.appendChild(d);
+      });
+    }
+
+    function cargarGafeteEnFormulario(id) {
+      const item = gafetesGuardados.find(x => x.id === id);
+      if (!item) return;
+      document.getElementById('cred-nombre').value = item.nombre || '';
+      document.getElementById('cred-rol').value = item.rol || '';
+      document.getElementById('cred-id').value = item.cid || '';
+      document.getElementById('cred-foto').value = item.foto || '';
+      actualizarGafete();
+      showToast('Datos cargados en el generador');
+    }
+
+    async function guardarGafeteSupabase() {
+      const nombre = document.getElementById('cred-nombre').value.trim() || 'CARLOS MENDOZA';
+      const rol = document.getElementById('cred-rol').value.trim() || 'COORDINADOR PARROQUIAL';
+      const cid = document.getElementById('cred-id').value.trim() || 'ID: 040152...';
+      const foto = document.getElementById('cred-foto').value.trim() || '';
+
+      const nuevo = { id: Date.now(), nombre, rol, cid, foto };
+      gafetesGuardados.unshift(nuevo);
+      await setConfig('gafetes_guardados', { list: gafetesGuardados });
+      showToast('¡Credencial guardada en Supabase exitosamente!');
+      renderizarListaGafetes();
+    }
+
+    async function eliminarGafeteSupabase(id) {
+      if (!confirm('¿Eliminar esta credencial de la base de datos?')) return;
+      gafetesGuardados = gafetesGuardados.filter(x => x.id !== id);
+      await setConfig('gafetes_guardados', { list: gafetesGuardados });
+      showToast('Credencial eliminada');
+      renderizarListaGafetes();
+    }
+
+    // --- FUNCIONES INVENTARIO LOGÍSTICO ---
+    function actualizarGraficoInventario() {
+      const elLonasAct = document.getElementById('inv-lonas-act');
+      const lonasAct = elLonasAct ? parseInt(elLonasAct.value) || 0 : 350;
+      const elLonasTot = document.getElementById('inv-lonas-tot');
+      const lonasTot = elLonasTot ? parseInt(elLonasTot.value) || 1 : 500;
+      const pctLonas = Math.min(100, Math.round((lonasAct / lonasTot) * 100));
+
+      const elCamAct = document.getElementById('inv-cam-act');
+      const camAct = elCamAct ? parseInt(elCamAct.value) || 0 : 120;
+      const elCamTot = document.getElementById('inv-cam-tot');
+      const camTot = elCamTot ? parseInt(elCamTot.value) || 1 : 200;
+      const pctCam = Math.min(100, Math.round((camAct / camTot) * 100));
+
+      const elBanAct = document.getElementById('inv-ban-act');
+      const banAct = elBanAct ? parseInt(elBanAct.value) || 0 : 85;
+      const elBanTot = document.getElementById('inv-ban-tot');
+      const banTot = elBanTot ? parseInt(elBanTot.value) || 1 : 150;
+      const pctBan = Math.min(100, Math.round((banAct / banTot) * 100));
+
+      const lblLonas = document.getElementById('lbl-inv-lonas');
+      if (lblLonas) lblLonas.textContent = `${lonasAct}/${lonasTot} (${pctLonas}%)`;
+      const barLonas = document.getElementById('bar-inv-lonas');
+      if (barLonas) barLonas.style.width = `${pctLonas}%`;
+
+      const lblCam = document.getElementById('lbl-inv-cam');
+      if (lblCam) lblCam.textContent = `${camAct}/${camTot} (${pctCam}%)`;
+      const barCam = document.getElementById('bar-inv-cam');
+      if (barCam) barCam.style.width = `${pctCam}%`;
+
+      const lblBan = document.getElementById('lbl-inv-ban');
+      if (lblBan) lblBan.textContent = `${banAct}/${banTot} (${pctBan}%)`;
+      const barBan = document.getElementById('bar-inv-ban');
+      if (barBan) barBan.style.width = `${pctBan}%`;
+    }
+
+    async function guardarInventario() {
+      const elLonasAct = document.getElementById('inv-lonas-act');
+      const lonasAct = elLonasAct ? parseInt(elLonasAct.value) || 0 : 350;
+      const elLonasTot = document.getElementById('inv-lonas-tot');
+      const lonasTot = elLonasTot ? parseInt(elLonasTot.value) || 1 : 500;
+      const elCamAct = document.getElementById('inv-cam-act');
+      const camAct = elCamAct ? parseInt(elCamAct.value) || 0 : 120;
+      const elCamTot = document.getElementById('inv-cam-tot');
+      const camTot = elCamTot ? parseInt(elCamTot.value) || 1 : 200;
+      const elBanAct = document.getElementById('inv-ban-act');
+      const banAct = elBanAct ? parseInt(elBanAct.value) || 0 : 85;
+      const elBanTot = document.getElementById('inv-ban-tot');
+      const banTot = elBanTot ? parseInt(elBanTot.value) || 1 : 150;
+
+      await setConfig('inventario_logistico', { lonasAct, lonasTot, camAct, camTot, banAct, banTot });
+      showToast('¡Inventario de materiales actualizado en Supabase!');
+    }
+
+    async function cargarInventario() {
+      const obj = await getConfig('inventario_logistico');
+      if (obj && obj.lonasTot !== undefined) {
+        const ids = ['lonas-act', 'lonas-tot', 'cam-act', 'cam-tot', 'ban-act', 'ban-tot'];
+        const keys = ['lonasAct', 'lonasTot', 'camAct', 'camTot', 'banAct', 'banTot'];
+        ids.forEach((id, idx) => {
+          const el = document.getElementById(`inv-${id}`);
+          if (el && obj[keys[idx]] !== undefined) el.value = obj[keys[idx]];
+        });
+      }
+      actualizarGraficoInventario();
+    }
+
+    // --- FUNCIONES SEMÁFORO PARROQUIAL ---
+    function actualizarSemaforoColor(sel) {
+      if (!sel) return;
+      const v = sel.value;
+      if (v === 'verde') {
+        sel.style.background = '#27ae60';
+        sel.style.color = '#fff';
+      } else if (v === 'amarillo') {
+        sel.style.background = '#f1c40f';
+        sel.style.color = '#000';
+      } else {
+        sel.style.background = '#c0392b';
+        sel.style.color = '#fff';
+      }
+    }
+
+    async function guardarSemaforoParroquial() {
+      const sg = document.getElementById('semaf-sg') ? document.getElementById('semaf-sg').value : 'verde';
+      const lp = document.getElementById('semaf-lp') ? document.getElementById('semaf-lp').value : 'amarillo';
+      const cc = document.getElementById('semaf-cc') ? document.getElementById('semaf-cc').value : 'rojo';
+      const cn = document.getElementById('semaf-cn') ? document.getElementById('semaf-cn').value : 'verde';
+      const fs = document.getElementById('semaf-fs') ? document.getElementById('semaf-fs').value : 'amarillo';
+      const pt = document.getElementById('semaf-pt') ? document.getElementById('semaf-pt').value : 'rojo';
+
+      await setConfig('semaforo_apoyo', { sg, lp, cc, cn, fs, pt });
+      showToast('¡Semáforo de fuerza territorial respaldado en Supabase!');
+    }
+
+    async function cargarSemaforoParroquial() {
+      const obj = await getConfig('semaforo_apoyo');
+      const ids = ['sg', 'lp', 'cc', 'cn', 'fs', 'pt'];
+      if (obj && obj.sg) {
+        ids.forEach(k => {
+          const el = document.getElementById(`semaf-${k}`);
+          if (el && obj[k]) {
+            el.value = obj[k];
+            actualizarSemaforoColor(el);
+          }
+        });
+      } else {
+        ids.forEach(k => {
+          const el = document.getElementById(`semaf-${k}`);
+          if (el) actualizarSemaforoColor(el);
+        });
+      }
+    }
+
+    // --- FUNCIONES GUIONES RÁPIDOS ---
+    const guionesTextos = {
+      agro: {
+        t: '🌾 SECTOR AGROPECUARIO',
+        arg1: 'Reactivación mediante créditos directos de bajo interés y tecnificación del campo para pequeños productores.',
+        arg2: 'Adquisición de un banco de maquinaria pesada permanente asignado para uso exclusivo en las parroquias rurales.',
+        cierre: 'Vote por Fabián Robles'
+      },
+      seguridad: {
+        t: '🛡️ PLAN DE SEGURIDAD',
+        arg1: 'Implementación del centro de monitoreo y cámaras inteligentes conectadas al ECU 911 en las entradas del cantón.',
+        arg2: 'Creación del cuerpo de patrullaje ciudadano y entrega de alarmas comunitarias a los barrios organizados.',
+        cierre: 'Juntos cuidamos Montúfar'
+      },
+      salud: {
+        t: '🏥 ATENCIÓN Y SALUD',
+        arg1: 'Despliegue de brigadas médicas móviles con dotación gratuita de medicamentos básicos para adultos mayores.',
+        arg2: 'Firma de convenios de salud integral y repotenciación de los dispensarios médicos parroquiales.',
+        cierre: 'Salud digna para todos'
+      },
+      vialidad: {
+        t: '🚧 RESCATE VIAL',
+        arg1: 'Plan intensivo de lastrado y mantenimiento de caminos vecinales para sacar los productos sin pérdidas.',
+        arg2: 'Adoquinado participativo de las cabeceras parroquiales en coordinación directa con los barrios.',
+        cierre: 'Caminos al desarrollo'
+      }
+    };
+
+    function cargarGuionPredefinido() {
+      const elEje = document.getElementById('guion-eje');
+      const eje = elEje ? elEje.value : 'agro';
+      const item = guionesTextos[eje];
+      if (item) {
+        const elArg1 = document.getElementById('guion-arg1');
+        if (elArg1) elArg1.value = item.arg1;
+        const elArg2 = document.getElementById('guion-arg2');
+        if (elArg2) elArg2.value = item.arg2;
+        const elCierre = document.getElementById('guion-cierre');
+        if (elCierre) elCierre.value = item.cierre;
+        actualizarVistaGuion();
+        showToast('Guion precargado exitosamente');
+      }
+    }
+
+    function actualizarVistaGuion() {
+      const elEje = document.getElementById('guion-eje');
+      const eje = elEje ? elEje.value : 'agro';
+      const item = guionesTextos[eje] || { t: 'GUÍA RÁPIDA' };
+      const elArg1 = document.getElementById('guion-arg1');
+      const arg1 = elArg1 && elArg1.value ? elArg1.value : 'Sin respuesta configurada...';
+      const elArg2 = document.getElementById('guion-arg2');
+      const arg2 = elArg2 && elArg2.value ? elArg2.value : 'Sin compromiso configurado...';
+      const elCierre = document.getElementById('guion-cierre');
+      const cierre = elCierre && elCierre.value ? elCierre.value : 'Vote por Fabián Robles';
+
+      const lblEje = document.getElementById('lbl-guion-eje');
+      if (lblEje) lblEje.textContent = item.t;
+      const lblArg1 = document.getElementById('lbl-guion-arg1');
+      if (lblArg1) lblArg1.textContent = arg1;
+      const lblArg2 = document.getElementById('lbl-guion-arg2');
+      if (lblArg2) lblArg2.textContent = arg2;
+      const lblCierre = document.getElementById('lbl-guion-cierre');
+      if (lblCierre) lblCierre.textContent = cierre;
+    }
+
+    function descargarGuionBolsillo() {
+      const elEje = document.getElementById('lbl-guion-eje');
+      const eje = elEje ? elEje.textContent : 'GUÍA DE CAMPAÑA';
+      const elArg1 = document.getElementById('lbl-guion-arg1');
+      const arg1 = elArg1 ? elArg1.textContent : '';
+      const elArg2 = document.getElementById('lbl-guion-arg2');
+      const arg2 = elArg2 ? elArg2.textContent : '';
+      const elCierre = document.getElementById('lbl-guion-cierre');
+      const cierre = elCierre ? elCierre.textContent : '';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 400;
+      canvas.height = 500;
+      const ctx = canvas.getContext('2d');
+
+      // Fondo
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 400, 500);
+
+      // Borde
+      ctx.strokeStyle = '#2980b9';
+      ctx.lineWidth = 10;
+      ctx.strokeRect(5, 5, 390, 490);
+
+      // Cabecera superior
+      ctx.fillStyle = '#0a192f';
+      ctx.fillRect(10, 10, 380, 90);
+
+      ctx.fillStyle = '#64ffda';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ARGUMENTARIO DE BOLSILLO', 200, 42);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText(eje, 200, 72);
+
+      const wrapText = (text, x, y, maxWidth, lineHeight) => {
+        const words = text.split(' ');
+        let line = '';
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + ' ';
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > maxWidth && n > 0) {
+            ctx.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          } else {
+            line = testLine;
+          }
+        }
+        ctx.fillText(line, x, y);
+        return y + lineHeight;
+      };
+
+      ctx.textAlign = 'left';
+
+      // Arg 1
+      ctx.fillStyle = '#2980b9';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('RESPUESTA RÁPIDA:', 30, 140);
+      ctx.fillStyle = '#333333';
+      ctx.font = '15px sans-serif';
+      let nextY = wrapText(arg1, 30, 165, 340, 22);
+
+      // Separador
+      ctx.strokeStyle = '#dddddd';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(30, nextY + 10);
+      ctx.lineTo(370, nextY + 10);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arg 2
+      nextY += 35;
+      ctx.fillStyle = '#00A650';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('NUESTRO COMPROMISO:', 30, nextY);
+      ctx.fillStyle = '#333333';
+      ctx.font = '15px sans-serif';
+      nextY = wrapText(arg2, 30, nextY + 25, 340, 22);
+
+      // Pie de Cierre
+      ctx.fillStyle = '#f1f2f6';
+      ctx.fillRect(20, 395, 360, 75);
+      ctx.strokeStyle = '#dddddd';
+      ctx.strokeRect(20, 395, 360, 75);
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#c0392b';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('CIERRE DE VISITA:', 200, 420);
+
+      ctx.fillStyle = '#0a192f';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(cierre, 200, 450);
+
+      // Descargar
+      const url = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `guion_bolsillo_${eje.replace(/\s+/g, '_').toLowerCase()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('¡Guion de bolsillo descargado exitosamente!');
+    }
+
+    // --- FUNCIONES MÓDULO DÍA D ---
+    function actualizarDiaD() {
+      const elTot = document.getElementById('diad-tot');
+      const tot = elTot ? parseInt(elTot.value) || 1 : 120;
+      const elAct = document.getElementById('diad-act');
+      const act = elAct ? parseInt(elAct.value) || 0 : 95;
+      const pct = Math.min(100, Math.round((act / tot) * 100));
+
+      const lblPct = document.getElementById('lbl-diad-pct');
+      if (lblPct) lblPct.textContent = `${pct}%`;
+      const bar = document.getElementById('bar-diad');
+      if (bar) bar.style.width = `${pct}%`;
+      const lblTxt = document.getElementById('lbl-diad-txt');
+      if (lblTxt) lblTxt.textContent = `Mesas Cubiertas: ${act} / ${tot}`;
+    }
+
+    async function guardarDiaD() {
+      const elTot = document.getElementById('diad-tot');
+      const tot = elTot ? parseInt(elTot.value) || 1 : 120;
+      const elAct = document.getElementById('diad-act');
+      const act = elAct ? parseInt(elAct.value) || 0 : 95;
+      const elResp = document.getElementById('diad-resp');
+      const resp = elResp ? elResp.value.trim() : '';
+
+      await setConfig('control_diad', { tot, act, resp });
+      showToast('¡Estructura de Veedores Día D actualizada en Supabase!');
+    }
+
+    async function cargarDiaD() {
+      const obj = await getConfig('control_diad');
+      if (obj && obj.tot !== undefined) {
+        const elTot = document.getElementById('diad-tot');
+        if (elTot) elTot.value = obj.tot;
+        const elAct = document.getElementById('diad-act');
+        if (elAct) elAct.value = obj.act;
+        const elResp = document.getElementById('diad-resp');
+        if (elResp && obj.resp) elResp.value = obj.resp;
+      }
+      actualizarDiaD();
+    }
+
+    // --- FUNCIONES SIMULADOR FINANCIERO ---
+    function actualizarFinanzas() {
+      const elTot = document.getElementById('fin-tot');
+      const tot = elTot ? parseFloat(elTot.value) || 1 : 25000;
+      const elPauta = document.getElementById('fin-pauta');
+      const pauta = elPauta ? parseFloat(elPauta.value) || 0 : 4500;
+      const elLog = document.getElementById('fin-log');
+      const log = elLog ? parseFloat(elLog.value) || 0 : 8200;
+      const elImp = document.getElementById('fin-imp');
+      const imp = elImp ? parseFloat(elImp.value) || 0 : 3100;
+
+      const totalEjec = pauta + log + imp;
+      const pctEjec = Math.min(100, Math.round((totalEjec / tot) * 100));
+
+      const pctPauta = Math.min(100, Math.round((pauta / tot) * 100));
+      const pctLog = Math.min(100, Math.round((log / tot) * 100));
+      const pctImp = Math.min(100, Math.round((imp / tot) * 100));
+
+      const fmt = n => '$' + n.toLocaleString('en-US');
+
+      const lblPauta = document.getElementById('lbl-fin-pauta');
+      if (lblPauta) lblPauta.textContent = fmt(pauta);
+      const barPauta = document.getElementById('bar-fin-pauta');
+      if (barPauta) barPauta.style.width = `${pctPauta}%`;
+
+      const lblLog = document.getElementById('lbl-fin-log');
+      if (lblLog) lblLog.textContent = fmt(log);
+      const barLog = document.getElementById('bar-fin-log');
+      if (barLog) barLog.style.width = `${pctLog}%`;
+
+      const lblImp = document.getElementById('lbl-fin-imp');
+      if (lblImp) lblImp.textContent = fmt(imp);
+      const barImp = document.getElementById('bar-fin-imp');
+      if (barImp) barImp.style.width = `${pctImp}%`;
+
+      const lblEjec = document.getElementById('lbl-fin-ejec');
+      if (lblEjec) lblEjec.textContent = `${fmt(totalEjec)} / ${fmt(tot)} (${pctEjec}%)`;
+    }
+
+    async function guardarFinanzas() {
+      const elTot = document.getElementById('fin-tot');
+      const tot = elTot ? parseFloat(elTot.value) || 1 : 25000;
+      const elPauta = document.getElementById('fin-pauta');
+      const pauta = elPauta ? parseFloat(elPauta.value) || 0 : 4500;
+      const elLog = document.getElementById('fin-log');
+      const log = elLog ? parseFloat(elLog.value) || 0 : 8200;
+      const elImp = document.getElementById('fin-imp');
+      const imp = elImp ? parseFloat(elImp.value) || 0 : 3100;
+
+      await setConfig('presupuesto_finanzas', { tot, pauta, log, imp });
+      showToast('¡Estado de inversión financiera respaldado en Supabase!');
+    }
+
+    async function cargarFinanzas() {
+      const obj = await getConfig('presupuesto_finanzas');
+      if (obj && obj.tot !== undefined) {
+        const elTot = document.getElementById('fin-tot');
+        if (elTot) elTot.value = obj.tot;
+        const elPauta = document.getElementById('fin-pauta');
+        if (elPauta) elPauta.value = obj.pauta;
+        const elLog = document.getElementById('fin-log');
+        if (elLog) elLog.value = obj.log;
+        const elImp = document.getElementById('fin-imp');
+        if (elImp) elImp.value = obj.imp;
+      }
+      actualizarFinanzas();
+    }
+
+    // --- FUNCIONES COPYS REDES SOCIALES ---
+    function generarCopyRedes() {
+      const elPlat = document.getElementById('copy-plat');
+      const plat = elPlat ? elPlat.value : 'fb';
+      const elPub = document.getElementById('copy-pub');
+      const pub = elPub ? elPub.value : 'general';
+
+      let txt = '';
+
+      if (plat === 'fb') {
+        txt += '¡Seguimos caminando con firmeza por el futuro de Montúfar! 🟢🤝\n\n';
+        if (pub === 'jovenes') {
+          txt += 'La juventud no es solo el futuro, ¡es el presente que transforma! Vamos a garantizar becas técnicas, conectividad de alta velocidad y apoyo real al primer emprendimiento joven. 🚀💻\n\n';
+        } else if (pub === 'agro') {
+          txt += 'Nuestros campos alimentan a la provincia entera. Por eso, nuestro compromiso irrenunciable es el lastrado permanente de vías secundarias y el banco de maquinaria pesada por parroquia. 🚜🌾\n\n';
+        } else if (pub === 'comerciantes') {
+          txt += 'El motor de nuestra economía local necesita respiro. Impulsaremos ferias seguras, ordenamiento sin persecución y simplificación de trámites para patentes y permisos. 🏬🤝\n\n';
+        } else {
+          txt += 'Cada barrio y cada parroquia rural tiene nuestra palabra: obras bien hechas, fiscalización transparente y una administración de puertas abiertas que escuche a la gente. 🏗️✨\n\n';
+        }
+        txt += '📌 Acompáñanos en este gran proyecto de transformación cantonal.\n';
+        txt += '🗳️ Este domingo, vota todo verde. ¡Vota Fabián Robles Alcalde!\n\n';
+        txt += '#FabiánRoblesAlcalde #RenovaciónMontufareña #MontúfarAvanza';
+      } else if (plat === 'tt') {
+        txt += '🚨 ¡El cambio ya es imparable en Montúfar! 🚨\n\n';
+        if (pub === 'jovenes') txt += '¿Cansado de que no haya oportunidades? 🎓 Con Fabián Robles activamos el Coworking Municipal y capital semilla. ¡Pasa la voz! 📱💥\n\n';
+        else if (pub === 'agro') txt += '¡Vías dignas para sacar los productos! 🌾🚜 Con Fabián Robles, maquinaria propia por parroquia. ¡Eso es compromiso real! 🙌\n\n';
+        else if (pub === 'comerciantes') txt += 'Menos papeleo, más ventas. 🏬 Apoyo total al comerciante local con ferias dignas y seguras. 🤝✨\n\n';
+        else txt += 'La fuerza de nuestra gente se siente en cada calle. 🟢🙌 ¡Únete a la caminata de la victoria!\n\n';
+        txt += '👉 Dale like, comenta tu barrio y comparte.\n';
+        txt += '#FabiánRoblesAlcalde #RenovaciónMontufareña #EleccionesMontúfar #ParaTi #Viral';
+      } else {
+        txt += '🟢 *¡Familia y amigos de Montúfar!* 🟢\n\n';
+        if (pub === 'jovenes') txt += 'Les invito a respaldar a Fabián Robles. Tiene las mejores propuestas para los jóvenes: internet gratuito en plazas y apoyo al emprendimiento. 🚀📱\n\n';
+        else if (pub === 'agro') txt += 'Apoyemos a Fabián Robles. Es el único que ha propuesto de verdad comprar maquinaria para mantener nuestros caminos vecinales todo el año. 🚜🌾\n\n';
+        else if (pub === 'comerciantes') txt += 'Compañeros comerciantes, con Fabián Robles tendremos reactivación de los mercados y seguridad en nuestras zonas comerciales. 🏬🤝\n\n';
+        else txt += 'Es momento de una renovación de verdad con obras que lleguen a todos los rincones del cantón. 🤝✨\n\n';
+        txt += '🗳️ *Vota Fabián Robles Alcalde*\n';
+        txt += '📲 _Reenvía este mensaje a tus contactos para sumar fuerzas._';
+      }
+
+      const elResTxt = document.getElementById('copy-res-txt');
+      if (elResTxt) elResTxt.value = txt;
+    }
+
+    function copiarTextoCopy() {
+      const elResTxt = document.getElementById('copy-res-txt');
+      if (!elResTxt) return;
+      elResTxt.select();
+      document.execCommand('copy');
+      showToast('¡Texto del Copy copiado al portapapeles!');
+    }
+
+  </script>
+</body>
+
+</html>

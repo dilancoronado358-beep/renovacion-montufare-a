@@ -305,6 +305,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             setTimeout(() => {
+                // Evento Meta Pixel - Lead
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', {
+                        content_name: 'Propuesta / Voluntario Montúfar',
+                        status: 'Enviado con éxito'
+                    });
+                }
                 alert('¡GRACIAS! TU PROPUESTA HA SIDO RECIBIDA POR EL EQUIPO DEL DR. FABIÁN ROBLES. JUNTOS CONSTRUIREMOS EL MONTÚFAR QUE SOÑAMOS.');
                 contactForm.reset();
                 btn.innerText = originalText;
@@ -506,6 +513,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
+            if (typeof fbq === 'function') {
+                fbq('trackCustom', 'ShareCampaign', {
+                    content_name: 'Compartir Sitio Web'
+                });
+            }
             const shareData = { title: document.title, text: 'Apoya a Fabián Robles en Montúfar', url: location.href };
             if (navigator.share) {
                 try { await navigator.share(shareData); } catch (e) { /* canceled */ }
@@ -523,4 +535,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- META PIXEL EVENT TRACKING (WhatsApp y Redes Sociales) ---
+    document.addEventListener('click', (e) => {
+        // Clics a WhatsApp
+        const waLink = e.target.closest('a[href*="wa.me"]');
+        if (waLink && typeof fbq === 'function') {
+            fbq('track', 'Contact', {
+                content_name: 'WhatsApp Contacto Directo',
+                channel: 'WhatsApp'
+            });
+        }
+
+        // Clics a Redes Sociales oficiales
+        const fbLink = e.target.closest('a[href*="facebook.com"]');
+        if (fbLink && typeof fbq === 'function') {
+            fbq('trackCustom', 'SocialFollow', {
+                platform: 'Facebook',
+                target: fbLink.href
+            });
+        }
+
+        const ttLink = e.target.closest('a[href*="tiktok.com"]');
+        if (ttLink && typeof fbq === 'function') {
+            fbq('trackCustom', 'SocialFollow', {
+                platform: 'TikTok',
+                target: ttLink.href
+            });
+        }
+    });
+
 });
+

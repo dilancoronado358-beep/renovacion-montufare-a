@@ -1,0 +1,146 @@
+/* ==========================================================================
+   ESTILOS OFICIALES - FABIÁN ROBLES | ALCALDÍA DEL CANTÓN MONTÚFAR
+   COLECTIVO RENOVACIÓN MONTUFAREÑA
+   Diseño Predominantemente Blanco (#FFFFFF), Limpio, Político y Formal
+   Colores del Logo:
+   - Blanco Puro (Dominante):   #FFFFFF / #F8FAFC
+   - Azul Marino Institucional: #151E5A
+   - Verde Montufareño Oficial: #008D36
+   - Rojo Renovación (Acento):  #E30613
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+  --navy: #151E5A;
+  --navy-dark: #0F1642;
+  --green: #008D36;
+  --green-dark: #00702B;
+  --red: #E30613;
+  --bg-white: #FFFFFF;
+  --bg-subtle: #F8FAFC;
+  --border-light: #E2E8F0;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1E293B;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-serif-italic {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Franja Tricolor Institucional Superior */
+.tricolor-top {
+  height: 5px;
+  background: linear-gradient(90deg, 
+    #151E5A 0%, #151E5A 50%, 
+    #E30613 50%, #E30613 65%, 
+    #008D36 65%, #008D36 100%
+  );
+}
+
+/* Subrayado verde inspirado en el logo de Renovación Montufareña */
+.renovacion-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.renovacion-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #008D36 0%, #008D36 75%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* Tarjetas blancas limpias y elegantes */
+.white-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(21, 30, 90, 0.05);
+  transition: all 0.25s ease;
+}
+
+.white-card:hover {
+  border-color: #CBD5E1;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -4px rgba(21, 30, 90, 0.1);
+}
+
+/* Botones de filtro sobre fondo claro (Sin barras de desplazamiento) */
+.filter-pill {
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: #151E5A;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+  border-color: #151E5A;
+  background: #F1F5F9;
+}
+
+.filter-pill.active {
+  background: #151E5A;
+  border-color: #151E5A;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(21, 30, 90, 0.2);
+}
+
+/* Pestañas de Parroquias */
+.parish-tab {
+  background-color: #FFFFFF;
+  color: #151E5A;
+  border: 1.5px solid #CBD5E1;
+  transition: all 0.2s ease;
+}
+
+.parish-tab:hover {
+  border-color: #008D36;
+  color: #008D36;
+}
+
+.parish-tab.active {
+  background-color: #008D36;
+  color: #FFFFFF;
+  border-color: #008D36;
+  box-shadow: 0 4px 14px rgba(0, 141, 54, 0.25);
+}
+
+/* Modal */
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Botón Flotante Discreto y Limpio */
+.floating-whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 900;
+  box-shadow: 0 6px 20px rgba(0, 141, 54, 0.3);
+}

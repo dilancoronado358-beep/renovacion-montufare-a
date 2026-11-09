@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto y Voluntariado | Fabián Robles — Alcaldía del Cantón Montúfar</title>
+  <meta name="description" content="Súmate al equipo de campaña de Fabián Robles, Candidato a la Alcaldía del Cantón Montúfar por Renovación Montufareña.">
+  <meta property="og:title" content="Contacto y Voluntariado | Fabián Robles Alcalde">
+  <meta property="og:image" content="assets/fabian-robles.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/logo-renovacion.png">
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-[#151E5A] selection:text-white flex flex-col min-h-screen">
+
+  <!-- ========================================================
+       CABECERA BLANCA MULTIPÁGINA
+       ======================================================== -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="tricolor-top w-full"></div>
+
+    <div class="bg-[#F8FAFC] border-b border-slate-200 text-slate-600 text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2 font-semibold text-[#151E5A]">
+          <span class="w-2 h-2 rounded-full bg-[#008D36]"></span>
+          <span>CANDIDATO A LA ALCALDÍA DEL CANTÓN MONTÚFAR</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-4 text-xs font-medium text-slate-500">
+          <span>San Gabriel • Carchi • Ecuador</span>
+          <span>|</span>
+          <span class="text-[#008D36] font-bold">Renovación Montufareña</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+          <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-11 sm:h-12 w-auto max-w-[190px] object-contain block">
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-xs lg:text-sm font-heading font-bold uppercase tracking-wider text-[#151E5A]">
+          <a href="index.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Inicio</a>
+          <a href="candidato.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Conoce a Fabián</a>
+          <a href="ejes.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Ejes de Trabajo</a>
+          <a href="propuestas.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Propuestas</a>
+          <a href="parroquias.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Parroquias</a>
+          <a href="contacto.html" class="whitespace-nowrap py-1 text-[#008D36] border-b-2 border-[#008D36]">Contacto</a>
+        </nav>
+
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+          <button class="open-volunteer-modal px-5 py-2.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm whitespace-nowrap">
+            Súmate al Equipo
+          </button>
+        </div>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 text-[#151E5A] hover:bg-slate-100 rounded-lg focus:outline-none" aria-label="Abrir menú">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-slate-200 px-6 py-5 shadow-lg space-y-3">
+      <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+        <span class="text-xs uppercase font-heading font-extrabold text-[#151E5A]">Secciones del Portal</span>
+        <button id="closeMobileMenu" class="text-slate-400 hover:text-[#E30613]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col space-y-2 font-heading font-bold text-sm text-[#151E5A]">
+        <a href="index.html" class="py-1.5 hover:text-[#008D36]">Inicio</a>
+        <a href="candidato.html" class="py-1.5 hover:text-[#008D36]">Conoce a Fabián Robles</a>
+        <a href="ejes.html" class="py-1.5 hover:text-[#008D36]">Ejes de Trabajo</a>
+        <a href="propuestas.html" class="py-1.5 hover:text-[#008D36]">Propuestas para Montúfar</a>
+        <a href="parroquias.html" class="py-1.5 hover:text-[#008D36]">Parroquias</a>
+        <a href="contacto.html" class="py-1.5 text-[#008D36]">Contacto</a>
+      </div>
+      <div class="pt-3 border-t border-slate-100">
+        <button class="open-volunteer-modal w-full py-3 rounded-lg bg-[#151E5A] text-white font-heading font-bold uppercase tracking-wider text-xs">
+          Súmate al Equipo
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HOJA EXCLUSIVA: CONTACTO Y ADHESIÓN CIUDADANA
+       ======================================================== -->
+  <main class="flex-grow bg-white py-14 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs uppercase font-heading tracking-widest text-[#008D36] font-extrabold">Participación Ciudadana</span>
+        <h1 class="text-3xl sm:text-5xl font-heading font-black text-[#151E5A] mt-2 uppercase">
+          Contacto y Adhesión
+        </h1>
+        <p class="text-slate-600 text-base sm:text-lg mt-2">
+          Trabajemos juntos por el presente y el futuro del Cantón Montúfar.
+        </p>
+        <div class="w-20 h-1 bg-[#008D36] mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Columna Izquierda -->
+        <div class="lg:col-span-6 space-y-6 bg-[#F8FAFC] p-8 rounded-2xl border border-slate-200">
+          <div class="flex items-center gap-5">
+            <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-14 w-auto object-contain">
+            <div class="h-10 w-[1px] bg-slate-300"></div>
+            <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-12 w-auto object-contain">
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-heading font-extrabold text-[#151E5A] leading-tight">
+            Las puertas de Renovación Montufareña están abiertas para ti
+          </h2>
+
+          <p class="text-slate-600 text-base leading-relaxed">
+            Invitamos a cada vecino, agricultor, ganadero, comerciante, deportista, joven y familia de San Gabriel, Piartal, Chitán de Navarretes, Fernández Salvador, La Paz y Cristóbal Colón a sumar sus ideas y su fuerza junto a <strong>Fabián Robles</strong>.
+          </p>
+
+          <div class="space-y-4 pt-2">
+            <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-10 h-10 rounded-lg bg-[#151E5A] flex items-center justify-center text-white flex-shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 uppercase font-heading font-bold">Territorio Cantonal</p>
+                <p class="text-sm font-bold text-[#151E5A]">San Gabriel y sus 5 Parroquias Rurales — Montúfar, Carchi</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-10 h-10 rounded-lg bg-[#008D36] flex items-center justify-center text-white flex-shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 uppercase font-heading font-bold">Atención y Coordinación</p>
+                <p class="text-sm font-bold text-[#151E5A]">Comunicación directa vía WhatsApp</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Formulario sobre Tarjeta Blanca -->
+        <div class="lg:col-span-6">
+          <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg relative overflow-hidden">
+            <div class="tricolor-top absolute top-0 left-0 right-0"></div>
+
+            <h2 class="text-xl font-heading font-extrabold text-[#151E5A] uppercase mt-2 mb-1">
+              Súmate al Equipo de Fabián Robles
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mb-6">
+              Déjanos tus datos para coordinar visitas barriales, brigadas sociales o sumarte como voluntario en tu parroquia.
+            </p>
+
+            <form id="volunteerForm" class="space-y-4">
+              <div>
+                <label for="volName" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Nombres y Apellidos</label>
+                <input type="text" id="volName" required placeholder="Ingresa tu nombre completo" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-[#151E5A] focus:bg-white">
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="volPhone" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Teléfono / Celular</label>
+                  <input type="tel" id="volPhone" required placeholder="099 123 4567" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-[#151E5A] focus:bg-white">
+                </div>
+                <div>
+                  <label for="volParish" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Parroquia</label>
+                  <select id="volParish" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A] focus:bg-white">
+                    <option value="San Gabriel">San Gabriel</option>
+                    <option value="Piartal">Piartal</option>
+                    <option value="Chitán de Navarretes">Chitán de Navarretes</option>
+                    <option value="Fernández Salvador">Fernández Salvador</option>
+                    <option value="La Paz">La Paz</option>
+                    <option value="Cristóbal Colón">Cristóbal Colón</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="volRole" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">¿Cómo deseas participar?</label>
+                <select id="volRole" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A] focus:bg-white">
+                  <option value="Voluntariado y Trabajo en mi Barrio/Comunidad">Voluntariado en mi Barrio o Comunidad</option>
+                  <option value="Brigadas de Acción Social">Brigadas de Acción Social</option>
+                  <option value="Defensa del Voto (Control Electoral)">Defensa del Voto (Control Electoral)</option>
+                  <option value="Deporte y Juventud">Coordinación de Deporte y Juventud</option>
+                  <option value="Propuesta para el Cantón Montúfar">Presentar una idea o necesidad barrial</option>
+                </select>
+              </div>
+
+              <button type="submit" class="w-full py-4 rounded-lg bg-[#008D36] hover:bg-[#151E5A] text-white font-heading font-bold uppercase tracking-wider text-xs transition-all shadow-md">
+                Enviar y Comunicarse con el Equipo
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       PIE DE PÁGINA EN BLANCO LIMPIO E INSTITUCIONAL
+       ======================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-200">
+        <div class="flex items-center gap-5">
+          <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-11 w-auto object-contain">
+          <div class="h-8 w-[1px] bg-slate-300"></div>
+          <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-9 w-auto object-contain">
+        </div>
+        <div class="text-center md:text-right">
+          <p class="font-heading font-extrabold text-[#151E5A] uppercase text-sm">Dr. Orlando Fabián Robles Benavides</p>
+          <p class="text-[#008D36] font-bold text-xs uppercase tracking-wider mt-0.5">Candidato a la Alcaldía del Cantón Montúfar • Renovación Montufareña</p>
+        </div>
+      </div>
+      <div class="pt-5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026-2027 Campaña Oficial Fabián Robles Alcalde | Renovación Montufareña.</p>
+        <p class="font-semibold text-[#151E5A]">Un hombre que trabaja junto a la gente • Montúfar, Carchi</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Registro -->
+  <div id="volunteerModal" class="modal-overlay fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="tricolor-top absolute top-0 left-0 right-0"></div>
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-[#E30613] p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="text-center mb-6 pt-2">
+        <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-12 w-auto object-contain mx-auto mb-3">
+        <h3 class="text-xl font-heading font-extrabold text-[#151E5A] uppercase">Súmate a Renovación Montufareña</h3>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1">Acompaña a Fabián Robles hacia la Alcaldía del Cantón Montúfar.</p>
+      </div>
+      <form id="modalVolunteerForm" class="space-y-4">
+        <div>
+          <label for="modalVolName" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Nombres y Apellidos</label>
+          <input type="text" id="modalVolName" required placeholder="Ingresa tu nombre completo" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolPhone" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Teléfono Móvil</label>
+          <input type="tel" id="modalVolPhone" required placeholder="099 123 4567" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolParish" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Parroquia</label>
+          <select id="modalVolParish" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+            <option value="San Gabriel">San Gabriel</option>
+            <option value="Piartal">Piartal</option>
+            <option value="Chitán de Navarretes">Chitán de Navarretes</option>
+            <option value="Fernández Salvador">Fernández Salvador</option>
+            <option value="La Paz">La Paz</option>
+            <option value="Cristóbal Colón">Cristóbal Colón</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold uppercase tracking-wider text-xs transition-all shadow-md">
+          Unirme al Equipo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
+

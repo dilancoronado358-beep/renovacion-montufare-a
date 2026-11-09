@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuestas para Montúfar | Fabián Robles — Alcaldía del Cantón Montúfar</title>
+  <meta name="description" content="Explora el Plan de Trabajo y las propuestas de Fabián Robles para la Alcaldía del Cantón Montúfar. Renovación Montufareña.">
+  <meta property="og:title" content="Propuestas para Montúfar | Fabián Robles Alcalde">
+  <meta property="og:image" content="assets/fabian-robles.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/logo-renovacion.png">
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-[#151E5A] selection:text-white flex flex-col min-h-screen">
+
+  <!-- ========================================================
+       CABECERA BLANCA MULTIPÁGINA
+       ======================================================== -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="tricolor-top w-full"></div>
+
+    <div class="bg-[#F8FAFC] border-b border-slate-200 text-slate-600 text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2 font-semibold text-[#151E5A]">
+          <span class="w-2 h-2 rounded-full bg-[#008D36]"></span>
+          <span>CANDIDATO A LA ALCALDÍA DEL CANTÓN MONTÚFAR</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-4 text-xs font-medium text-slate-500">
+          <span>San Gabriel • Carchi • Ecuador</span>
+          <span>|</span>
+          <span class="text-[#008D36] font-bold">Renovación Montufareña</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+          <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-11 sm:h-12 w-auto max-w-[190px] object-contain block">
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 lg:gap-8 text-xs lg:text-sm font-heading font-bold uppercase tracking-wider text-[#151E5A]">
+          <a href="index.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Inicio</a>
+          <a href="candidato.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Conoce a Fabián</a>
+          <a href="ejes.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Ejes de Trabajo</a>
+          <a href="propuestas.html" class="whitespace-nowrap py-1 text-[#008D36] border-b-2 border-[#008D36]">Propuestas</a>
+          <a href="parroquias.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Parroquias</a>
+          <a href="contacto.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Contacto</a>
+        </nav>
+
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+          <button class="open-volunteer-modal px-5 py-2.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm whitespace-nowrap">
+            Súmate al Equipo
+          </button>
+        </div>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 text-[#151E5A] hover:bg-slate-100 rounded-lg focus:outline-none" aria-label="Abrir menú">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-slate-200 px-6 py-5 shadow-lg space-y-3">
+      <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+        <span class="text-xs uppercase font-heading font-extrabold text-[#151E5A]">Secciones del Portal</span>
+        <button id="closeMobileMenu" class="text-slate-400 hover:text-[#E30613]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col space-y-2 font-heading font-bold text-sm text-[#151E5A]">
+        <a href="index.html" class="py-1.5 hover:text-[#008D36]">Inicio</a>
+        <a href="candidato.html" class="py-1.5 hover:text-[#008D36]">Conoce a Fabián Robles</a>
+        <a href="ejes.html" class="py-1.5 hover:text-[#008D36]">Ejes de Trabajo</a>
+        <a href="propuestas.html" class="py-1.5 text-[#008D36]">Propuestas para Montúfar</a>
+        <a href="parroquias.html" class="py-1.5 hover:text-[#008D36]">Parroquias</a>
+        <a href="contacto.html" class="py-1.5 hover:text-[#008D36]">Contacto</a>
+      </div>
+      <div class="pt-3 border-t border-slate-100">
+        <button class="open-volunteer-modal w-full py-3 rounded-lg bg-[#151E5A] text-white font-heading font-bold uppercase tracking-wider text-xs">
+          Súmate al Equipo
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HOJA EXCLUSIVA: PLAN DE TRABAJO Y PROPUESTAS
+       ======================================================== -->
+  <main class="flex-grow bg-white py-14 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs uppercase font-heading tracking-widest text-[#008D36] font-extrabold">Alcaldía del Cantón Montúfar</span>
+        <h1 class="text-3xl sm:text-5xl font-heading font-black text-[#151E5A] mt-2 uppercase">
+          Plan de Trabajo Ciudadano
+        </h1>
+        <p class="text-slate-600 text-base sm:text-lg mt-2">
+          Explora las propuestas de Fabián Robles por área de gestión o utiliza el buscador para consultar un tema específico:
+        </p>
+        <div class="w-20 h-1 bg-[#008D36] mx-auto mt-4 rounded-full"></div>
+      </div>
+
+      <!-- Buscador y Filtros Limpios (Flex-wrap, sin scroll horizontal) -->
+      <div class="max-w-4xl mx-auto mb-12 bg-[#F8FAFC] p-6 rounded-2xl border border-slate-200">
+        <div class="bg-white border-2 border-slate-300 focus-within:border-[#151E5A] rounded-xl p-2 flex items-center shadow-sm mb-5 transition-colors">
+          <div class="pl-3 pr-2 text-[#151E5A]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <input type="text" id="proposalSearch" placeholder="Buscar propuesta: agua potable, vías, ganadería, agricultura, salud, deporte, seguridad..." class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm sm:text-base focus:outline-none px-2 py-1.5">
+          <button id="clearSearch" class="hidden text-[#E30613] hover:underline px-3 text-xs uppercase font-heading font-bold">
+            Limpiar
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <button class="filter-pill active px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="all">
+            Todas las Propuestas
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="agro">
+            Ganadería y Agricultura
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="vialidad">
+            Agua Potable y Vialidad
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="social">
+            Salud, Deporte y Acción Social
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="seguridad">
+            Seguridad Ciudadana
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="turismo">
+            Turismo y Naturaleza
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de Tarjetas Blancas -->
+      <div id="proposalsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        
+        <!-- Propuesta 1 (Agro) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="agro">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
+                Ganadería y Agricultura
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 01</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Respaldo al Productor Lechero y Agrícola de Montúfar
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Asistencia veterinaria y técnica municipal, fortalecimiento de centros de acopio lechero, entrega de semillas certificadas y comercialización directa para defender el trabajo de nuestras familias campesinas.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Campo y Producción</span>
+            <span class="text-[#008D36]">Prioridad Cantonal</span>
+          </div>
+        </div>
+
+        <!-- Propuesta 2 (Vialidad y Agua) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="vialidad">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#151E5A]/10 text-[#151E5A]">
+                Agua Potable y Vialidad
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 02</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Agua Potable Segura y Caminos Vecinales Todo el Año
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Ejecución del Plan Maestro de Agua Potable y Alcantarillado para San Gabriel y comunidades, junto al mantenimiento permanente de las vías rurales para que ninguna cosecha se pierda.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Obras Básicas</span>
+            <span class="text-[#151E5A]">Ejecución Inmediata</span>
+          </div>
+        </div>
+
+        <!-- Propuesta 3 (Salud y Acción Social) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#E30613] flex flex-col justify-between" data-category="social">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#E30613]/10 text-[#E30613]">
+                Salud y Acción Social
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 03</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Brigadas Médicas, Odontológicas y Apoyo Familiar
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Desde la experiencia de más de 25 años en salud, llevaremos unidades médicas y odontológicas gratuitas a cada barrio y parroquia, cuidando con afecto y dignidad a niños, madres y adultos mayores.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Salud y Dignidad</span>
+            <span class="text-[#E30613]">Compromiso Humano</span>
+          </div>
+        </div>
+
+        <!-- Propuesta 4 (Deporte y Juventud) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="social">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
+                Deporte y Juventud
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 04</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Escuelas de Fútbol, Escenarios Deportivos y Juventud
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Rehabilitación de canchas, estadios y coliseos en barrios y parroquias. Creación de escuelas formativas permanentes de fútbol y otras disciplinas para impulsar el talento de nuestra niñez y juventud.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Fomento Deportivo</span>
+            <span class="text-[#008D36]">Juventud Sana</span>
+          </div>
+        </div>
+
+        <!-- Propuesta 5 (Seguridad) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="seguridad">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#151E5A]/10 text-[#151E5A]">
+                Seguridad Ciudadana
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 05</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Montúfar Seguro y Familias en Paz
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Sistema de videovigilancia municipal, alarmas comunitarias interconectadas, iluminación de espacios públicos y trabajo articulado con la Policía Nacional y brigadas barriales.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Orden y Paz</span>
+            <span class="text-[#151E5A]">Todo el Cantón</span>
+          </div>
+        </div>
+
+        <!-- Propuesta 6 (Turismo, Naturaleza y Animales) -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="turismo">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
+                Turismo y Naturaleza
+              </span>
+              <span class="text-xs font-heading font-bold text-slate-400">EJE 06</span>
+            </div>
+            <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
+              Turismo, Protección de la Naturaleza y Bienestar Animal
+            </h2>
+            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+              Impulso a San Gabriel Pueblo Mágico, Laguna El Salado, Bosque de los Arrayanes y Gruta de La Paz. Conservación de nuestros páramos y creación de campañas municipales de cuidado y respeto a los animales.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
+            <span class="text-slate-500">Ambiente y Turismo</span>
+            <span class="text-[#008D36]">Desarrollo Sostenible</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="noResultsMsg" class="hidden text-center py-10 bg-[#F8FAFC] rounded-xl border border-slate-200 mt-6">
+        <p class="text-slate-600 font-medium">No se encontraron propuestas con ese término.</p>
+        <button onclick="document.getElementById('clearSearch').click()" class="mt-2 text-[#151E5A] font-heading font-bold text-xs uppercase underline">
+          Mostrar todas las propuestas
+        </button>
+      </div>
+
+      <!-- Enlace hacia la página de Parroquias -->
+      <div class="mt-14 text-center">
+        <a href="parroquias.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-md">
+          <span>Ver Compromisos por Parroquia</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       PIE DE PÁGINA EN BLANCO LIMPIO E INSTITUCIONAL
+       ======================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-200">
+        <div class="flex items-center gap-5">
+          <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-11 w-auto object-contain">
+          <div class="h-8 w-[1px] bg-slate-300"></div>
+          <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-9 w-auto object-contain">
+        </div>
+        <div class="text-center md:text-right">
+          <p class="font-heading font-extrabold text-[#151E5A] uppercase text-sm">Dr. Orlando Fabián Robles Benavides</p>
+          <p class="text-[#008D36] font-bold text-xs uppercase tracking-wider mt-0.5">Candidato a la Alcaldía del Cantón Montúfar • Renovación Montufareña</p>
+        </div>
+      </div>
+      <div class="pt-5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026-2027 Campaña Oficial Fabián Robles Alcalde | Renovación Montufareña.</p>
+        <p class="font-semibold text-[#151E5A]">Un hombre que trabaja junto a la gente • Montúfar, Carchi</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Registro -->
+  <div id="volunteerModal" class="modal-overlay fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="tricolor-top absolute top-0 left-0 right-0"></div>
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-[#E30613] p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="text-center mb-6 pt-2">
+        <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-12 w-auto object-contain mx-auto mb-3">
+        <h3 class="text-xl font-heading font-extrabold text-[#151E5A] uppercase">Súmate a Renovación Montufareña</h3>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1">Acompaña a Fabián Robles hacia la Alcaldía del Cantón Montúfar.</p>
+      </div>
+      <form id="modalVolunteerForm" class="space-y-4">
+        <div>
+          <label for="modalVolName" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Nombres y Apellidos</label>
+          <input type="text" id="modalVolName" required placeholder="Ingresa tu nombre completo" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolPhone" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Teléfono Móvil</label>
+          <input type="tel" id="modalVolPhone" required placeholder="099 123 4567" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolParish" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Parroquia</label>
+          <select id="modalVolParish" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+            <option value="San Gabriel">San Gabriel</option>
+            <option value="Piartal">Piartal</option>
+            <option value="Chitán de Navarretes">Chitán de Navarretes</option>
+            <option value="Fernández Salvador">Fernández Salvador</option>
+            <option value="La Paz">La Paz</option>
+            <option value="Cristóbal Colón">Cristóbal Colón</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold uppercase tracking-wider text-xs transition-all shadow-md">
+          Unirme al Equipo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
+

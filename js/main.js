@@ -28,8 +28,8 @@ function initIntroSplash() {
     }, 800);
   };
 
-  // Se cierra automáticamente tras completarse la animación o al hacer clic
-  setTimeout(closeSplash, 2500);
+  // Se cierra automáticamente tras completarse la presentación formal
+  setTimeout(closeSplash, 2000);
   splash.addEventListener('click', closeSplash);
 }
 

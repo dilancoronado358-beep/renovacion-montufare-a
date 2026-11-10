@@ -4,12 +4,34 @@
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  initIntroSplash();
   initMobileMenu();
   initProposalsFilter();
   initLiveSearch();
   initParishesTabs();
   initVolunteerModal();
 });
+
+// 0. Animación Espectacular de Entrada con el Logo de Renovación Montufareña
+function initIntroSplash() {
+  const splash = document.getElementById('introSplash');
+  if (!splash) return;
+
+  document.body.style.overflow = 'hidden';
+
+  const closeSplash = () => {
+    if (splash.classList.contains('splash-exit')) return;
+    splash.classList.add('splash-exit');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      splash.remove();
+    }, 800);
+  };
+
+  // Se cierra automáticamente tras completarse la animación o al hacer clic
+  setTimeout(closeSplash, 2500);
+  splash.addEventListener('click', closeSplash);
+}
 
 // 1. Menú Móvil
 function initMobileMenu() {

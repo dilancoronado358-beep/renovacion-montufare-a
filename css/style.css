@@ -53,16 +53,20 @@ h1, h2, h3, h4, .font-heading {
   );
 }
 
-/* Fondo Hero con la Ciudad de San Gabriel y Velo Blanco Luminoso */
+/* Fondo Hero con la Ciudad de San Gabriel y Degradado Blanco Limpio */
 .hero-san-gabriel {
   position: relative;
   background-image: 
-    linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.88) 52%, rgba(255, 255, 255, 0.72) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.92) 45%, rgba(255, 255, 255, 0.55) 100%),
     url('../assets/san-gabriel.jpg'),
     url('https://res.cloudinary.com/jellvthl/image/upload/v1794290005/san_gabriel.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.blend-multiply {
+  mix-blend-mode: multiply;
 }
 
 /* Insignia Oficial Idéntica al Impreso de Campaña (Azul Marino + Borde Rojo y Verde) */

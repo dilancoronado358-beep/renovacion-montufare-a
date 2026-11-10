@@ -108,7 +108,7 @@
           <div class="pl-3 pr-2 text-[#151E5A]">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </div>
-          <input type="text" id="proposalSearch" placeholder="Buscar propuesta: agua potable, vías, ganadería, agricultura, salud, deporte, seguridad..." class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm sm:text-base focus:outline-none px-2 py-1.5">
+          <input type="text" id="proposalSearch" placeholder="Buscar propuesta: agua potable, App SanGa, ECU 911, Montúfar se Activa, brigadas de salud, parques..." class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm sm:text-base focus:outline-none px-2 py-1.5">
           <button id="clearSearch" class="hidden text-[#E30613] hover:underline px-3 text-xs uppercase font-heading font-bold">
             Limpiar
           </button>
@@ -118,156 +118,173 @@
           <button class="filter-pill active px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="all">
             Todas las Propuestas
           </button>
-          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="agro">
-            Ganadería y Agricultura
-          </button>
           <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="vialidad">
-            Agua Potable y Vialidad
+            Desarrollo Territorial
           </button>
           <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="social">
-            Salud, Deporte y Acción Social
+            Médico en tu Parroquia
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="turismo">
+            Proyecto Impulso
           </button>
           <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="seguridad">
             Seguridad Ciudadana
           </button>
-          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="turismo">
-            Turismo y Naturaleza
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="barrios">
+            App SanGa y Barrios
+          </button>
+          <button class="filter-pill px-4 py-2 rounded-lg text-xs font-heading font-bold uppercase tracking-wider" data-category="agro">
+            Ganadería y Agricultura
           </button>
         </div>
       </div>
 
-      <!-- Grid de Tarjetas Blancas -->
+      <!-- Grid de Tarjetas Blancas con las Propuestas Oficiales del Volante -->
       <div id="proposalsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
         
-        <!-- Propuesta 1 (Agro) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="agro">
+        <!-- Propuesta 1: DESARROLLO TERRITORIAL -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="vialidad">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
-                Ganadería y Agricultura
+              <span class="flyer-badge text-xs">
+                Desarrollo Territorial
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 01</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Respaldo al Productor Lechero y Agrícola de Montúfar
+              Agua Potable, Alcantarillado y Espacios Públicos Familiares
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Asistencia veterinaria y técnica municipal, fortalecimiento de centros de acopio lechero, entrega de semillas certificadas y comercialización directa para defender el trabajo de nuestras familias campesinas.
-            </p>
+            <ul class="space-y-2.5 text-slate-700 text-sm leading-relaxed mb-5">
+              <li class="flex items-start gap-2">
+                <span class="text-[#008D36] font-bold">•</span>
+                <span>Mejorar progresivamente la cobertura y funcionamiento de los sistemas municipales de <strong>agua potable, alcantarillado, saneamiento y manejo de residuos</strong>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[#008D36] font-bold">•</span>
+                <span>Construcción y remodelación de <strong>espacios públicos (parques, grutas, canchas)</strong> en cada barrio y comunidad, serán lugares de encuentro familiar.</span>
+              </li>
+            </ul>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Campo y Producción</span>
-            <span class="text-[#008D36]">Prioridad Cantonal</span>
+            <span class="text-slate-500">Servicios y Obras</span>
+            <span class="text-[#151E5A]">Barrios y Comunidades</span>
           </div>
         </div>
 
-        <!-- Propuesta 2 (Vialidad y Agua) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="vialidad">
+        <!-- Propuesta 2: MÉDICO EN TU PARROQUIA -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#E30613] flex flex-col justify-between" data-category="social">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#151E5A]/10 text-[#151E5A]">
-                Agua Potable y Vialidad
+              <span class="flyer-badge text-xs">
+                Médico en tu Parroquia
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 02</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Agua Potable Segura y Caminos Vecinales Todo el Año
+              Mingas por la Salud y Brigadas Permanentes
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Ejecución del Plan Maestro de Agua Potable y Alcantarillado para San Gabriel y comunidades, junto al mantenimiento permanente de las vías rurales para que ninguna cosecha se pierda.
-            </p>
+            <ul class="space-y-2.5 text-slate-700 text-sm leading-relaxed mb-5">
+              <li class="flex items-start gap-2">
+                <span class="text-[#E30613] font-bold">•</span>
+                <span>Repotenciaremos nuestras <strong>mingas por la salud</strong>, crearemos las <strong>brigadas permanentes de salud</strong> en cada barrio y comunidad desde el municipio.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[#E30613] font-bold">•</span>
+                <span>Fortalecer los programas y servicios municipales dirigidos a los <strong>grupos de atención prioritaria</strong>.</span>
+              </li>
+            </ul>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Obras Básicas</span>
-            <span class="text-[#151E5A]">Ejecución Inmediata</span>
+            <span class="text-slate-500">Salud y Dignidad</span>
+            <span class="text-[#E30613]">Atención Prioritaria</span>
           </div>
         </div>
 
-        <!-- Propuesta 3 (Salud y Acción Social) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#E30613] flex flex-col justify-between" data-category="social">
+        <!-- Propuesta 3: PROYECTO IMPULSO -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="turismo">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#E30613]/10 text-[#E30613]">
-                Salud y Acción Social
+              <span class="flyer-badge text-xs">
+                Proyecto Impulso
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 03</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Brigadas Médicas, Odontológicas y Apoyo Familiar
+              Programa "Montúfar se Activa" y Generación de Empleo
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Desde la experiencia de más de 25 años en salud, llevaremos unidades médicas y odontológicas gratuitas a cada barrio y parroquia, cuidando con afecto y dignidad a niños, madres y adultos mayores.
+            <p class="text-slate-700 text-sm leading-relaxed mb-5">
+              Fortalecer el <strong>turismo comunitario y el ecoturismo</strong> mediante capacitaciones con nuestro programa <strong>Montúfar se Activa</strong>, buscando fomentar la <strong>generación de empleo</strong> para nuestras familias y emprendedores.
             </p>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Salud y Dignidad</span>
-            <span class="text-[#E30613]">Compromiso Humano</span>
+            <span class="text-slate-500">Turismo y Empleo</span>
+            <span class="text-[#008D36]">Montúfar se Activa</span>
           </div>
         </div>
 
-        <!-- Propuesta 4 (Deporte y Juventud) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="social">
+        <!-- Propuesta 4: SEGURIDAD CIUDADANA -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="seguridad">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
-                Deporte y Juventud
+              <span class="flyer-badge text-xs">
+                Seguridad Ciudadana
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 04</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Escuelas de Fútbol, Escenarios Deportivos y Juventud
+              Salas Espejo y Videovigilancia con el ECU 911
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Rehabilitación de canchas, estadios y coliseos en barrios y parroquias. Creación de escuelas formativas permanentes de fútbol y otras disciplinas para impulsar el talento de nuestra niñez y juventud.
+            <p class="text-slate-700 text-sm leading-relaxed mb-5">
+              Implementación de <strong>salas espejo – cámaras de videovigilancia</strong> en lugares estratégicos, previa coordinación con el <strong>ECU 911</strong>, garantizando tranquilidad, monitoreo y respuesta oportuna para nuestros barrios y comunidades.
             </p>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Fomento Deportivo</span>
-            <span class="text-[#008D36]">Juventud Sana</span>
+            <span class="text-slate-500">Videovigilancia</span>
+            <span class="text-[#151E5A]">Coordinación ECU 911</span>
           </div>
         </div>
 
-        <!-- Propuesta 5 (Seguridad) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#151E5A] flex flex-col justify-between" data-category="seguridad">
+        <!-- Propuesta 5: MUNICIPIO PARA LOS BARRIOS Y COMUNIDADES -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="barrios">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#151E5A]/10 text-[#151E5A]">
-                Seguridad Ciudadana
+              <span class="flyer-badge text-xs">
+                Municipio en tu Barrio
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 05</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Montúfar Seguro y Familias en Paz
+              Implementación de la App SanGa: Trámites en tu Celular
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Sistema de videovigilancia municipal, alarmas comunitarias interconectadas, iluminación de espacios públicos y trabajo articulado con la Policía Nacional y brigadas barriales.
+            <p class="text-slate-700 text-sm leading-relaxed mb-5">
+              Implementación de la <strong>App SanGa</strong>, todos los trámites municipales en tu celular, garantizando <strong>transparencia y accesibilidad</strong> de los trámites y servicios municipales para todos los barrios y comunidades.
             </p>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Orden y Paz</span>
-            <span class="text-[#151E5A]">Todo el Cantón</span>
+            <span class="text-slate-500">Innovación y Transparencia</span>
+            <span class="text-[#008D36]">App SanGa</span>
           </div>
         </div>
 
-        <!-- Propuesta 6 (Turismo, Naturaleza y Animales) -->
-        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="turismo">
+        <!-- Propuesta 6: GANADERÍA, AGRICULTURA Y NATURALEZA -->
+        <div class="proposal-card white-card rounded-2xl p-7 border-t-4 border-t-[#008D36] flex flex-col justify-between" data-category="agro">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="px-3 py-1 rounded-md text-xs font-heading font-bold uppercase bg-[#008D36]/10 text-[#008D36]">
-                Turismo y Naturaleza
+              <span class="flyer-badge text-xs">
+                Campo y Producción
               </span>
               <span class="text-xs font-heading font-bold text-slate-400">EJE 06</span>
             </div>
             <h2 class="text-lg font-heading font-extrabold text-[#151E5A] mb-3">
-              Turismo, Protección de la Naturaleza y Bienestar Animal
+              Apoyo a la Ganadería, Agricultura y Respeto a la Naturaleza
             </h2>
-            <p class="text-slate-600 text-sm leading-relaxed mb-5">
-              Impulso a San Gabriel Pueblo Mágico, Laguna El Salado, Bosque de los Arrayanes y Gruta de La Paz. Conservación de nuestros páramos y creación de campañas municipales de cuidado y respeto a los animales.
+            <p class="text-slate-700 text-sm leading-relaxed mb-5">
+              Respaldo al productor agrícola y ganadero de nuestras parroquias rurales, mantenimiento vial productivo y programas de cuidado de nuestros recursos hídricos, la naturaleza y el bienestar animal.
             </p>
           </div>
           <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-heading font-bold">
-            <span class="text-slate-500">Ambiente y Turismo</span>
-            <span class="text-[#008D36]">Desarrollo Sostenible</span>
+            <span class="text-slate-500">Ganadería y Agricultura</span>
+            <span class="text-[#008D36]">Compromiso Rural</span>
           </div>
         </div>
 

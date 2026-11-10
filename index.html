@@ -92,31 +92,31 @@
        CONTENIDO DE LA PÁGINA DE INICIO (PORTADA PRINCIPAL)
        ======================================================== -->
   <main class="flex-grow">
-    <!-- Hero Principal sobre Blanco Puro -->
-    <section class="bg-white pt-10 pb-16 md:pt-14 md:pb-20 border-b border-slate-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Hero Principal con la Ciudad de San Gabriel de Fondo -->
+    <section class="hero-san-gabriel pt-10 pb-16 md:pt-14 md:pb-20 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           <!-- Columna Izquierda -->
           <div class="lg:col-span-7 text-center lg:text-left">
             
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8FAFC] border border-slate-300 text-[#151E5A] text-xs sm:text-sm font-heading font-extrabold uppercase tracking-wider mb-6 shadow-sm">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-300 text-[#151E5A] text-xs sm:text-sm font-heading font-extrabold uppercase tracking-wider mb-6 shadow-sm">
               <span class="w-2.5 h-2.5 rounded-full bg-[#E30613]"></span>
               <span>Candidato a la Alcaldía del Cantón Montúfar</span>
             </div>
 
-            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 sm:gap-8 mb-6">
-              <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-20 sm:h-24 md:h-28 w-auto object-contain">
-              <div class="hidden sm:block w-[2px] h-20 bg-slate-200"></div>
-              <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-16 sm:h-20 md:h-24 w-auto object-contain">
+            <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-6 sm:gap-8 mb-6 bg-white/95 backdrop-blur-sm px-6 py-4 rounded-2xl border border-slate-200 shadow-sm">
+              <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-18 sm:h-24 md:h-26 w-auto object-contain">
+              <div class="hidden sm:block w-[2px] h-16 bg-slate-200"></div>
+              <img src="assets/logo-renovacion.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/9499f6c9-1f56-4e02-93b3-c217c443c969.png'" alt="Renovación Montufareña" class="h-14 sm:h-20 md:h-22 w-auto object-contain">
             </div>
 
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-[#151E5A] tracking-tight leading-tight mb-4">
               Un hombre que trabaja <span class="text-[#008D36] renovacion-underline">junto a la gente.</span>
             </h1>
 
-            <p class="text-slate-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed mt-5 mb-8">
+            <p class="text-slate-800 font-medium text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 leading-relaxed mt-5 mb-8 bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-white/60">
               La política entendida y vivida como una herramienta para transformar vidas, no para servirse de ella. Una propuesta para el <strong>Cantón Montúfar</strong> que nace desde la experiencia, el servicio y el corazón.
             </p>
 
@@ -125,7 +125,7 @@
                 <span>Conoce a Fabián Robles</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
-              <a href="propuestas.html" class="px-8 py-4 rounded-lg bg-white hover:bg-slate-50 text-[#151E5A] border-2 border-[#151E5A] font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center gap-2">
+              <a href="propuestas.html" class="px-8 py-4 rounded-lg bg-white hover:bg-slate-50 text-[#151E5A] border-2 border-[#151E5A] font-heading font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-sm flex items-center gap-2">
                 <span>Explorar Propuestas</span>
               </a>
             </div>
@@ -134,9 +134,9 @@
 
           <!-- Columna Derecha: Retrato Oficial -->
           <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
-            <div class="relative w-full max-w-md mx-auto bg-white flex flex-col items-center">
-              <img src="assets/fabian-robles.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1794252863/FABIAN_ROBLES.png'" alt="Dr. Orlando Fabián Robles Benavides - Candidato a la Alcaldía de Montúfar" class="w-full max-h-[500px] object-contain object-bottom block">
-              <div class="w-full bg-white border border-slate-200 border-t-4 border-t-[#151E5A] rounded-xl p-4 shadow-md text-center -mt-2 relative z-10">
+            <div class="relative w-full max-w-md mx-auto bg-white/95 backdrop-blur-sm rounded-3xl pt-4 px-4 pb-0 border border-slate-200 shadow-xl flex flex-col items-center">
+              <img src="assets/fabian-robles.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1794252863/FABIAN_ROBLES.png'" alt="Dr. Orlando Fabián Robles Benavides - Candidato a la Alcaldía de Montúfar" class="w-full max-h-[480px] object-contain object-bottom block">
+              <div class="w-full bg-white border border-slate-200 border-t-4 border-t-[#151E5A] rounded-xl p-4 shadow-md text-center -mt-2 mb-4 relative z-10">
                 <p class="font-heading font-black text-[#151E5A] text-sm sm:text-base uppercase tracking-wide">
                   Dr. Orlando Fabián Robles Benavides
                 </p>
@@ -149,6 +149,93 @@
 
         </div>
 
+      </div>
+    </section>
+
+    <!-- Resumen de los 5 Ejes Oficiales de Campaña en la Portada -->
+    <section class="py-16 bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <span class="text-xs uppercase font-heading tracking-widest text-[#008D36] font-extrabold">Plan Oficial de Gobierno</span>
+          <h2 class="text-2xl sm:text-4xl font-heading font-black text-[#151E5A] mt-1 uppercase">
+            Nuestros 5 Ejes de Transformación
+          </h2>
+          <div class="w-20 h-1 bg-[#008D36] mx-auto mt-3 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- 1. DESARROLLO TERRITORIAL -->
+          <div class="white-card rounded-2xl p-7 border border-slate-200">
+            <div class="mb-5">
+              <span class="flyer-badge text-sm sm:text-base">DESARROLLO TERRITORIAL</span>
+            </div>
+            <ul class="space-y-3.5 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#151E5A] text-white flex items-center justify-center text-xs font-bold mt-0.5">📍</span>
+                <span>Mejorar progresivamente la cobertura y funcionamiento de los sistemas municipales de <strong>agua potable, alcantarillado, saneamiento y manejo de residuos</strong>.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#008D36] text-white flex items-center justify-center text-xs font-bold mt-0.5">📍</span>
+                <span>Construcción y remodelación de <strong>espacios públicos (parques, grutas, canchas)</strong> en cada barrio y comunidad, serán lugares de encuentro familiar.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 2. PROYECTO IMPULSO -->
+          <div class="white-card rounded-2xl p-7 border border-slate-200">
+            <div class="mb-5">
+              <span class="flyer-badge text-sm sm:text-base">PROYECTO IMPULSO</span>
+            </div>
+            <ul class="space-y-3.5 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#151E5A] text-white flex items-center justify-center text-xs font-bold mt-0.5">⚙️</span>
+                <span>Fortalecer el <strong>turismo comunitario y el ecoturismo</strong> mediante capacitaciones con nuestro programa <strong>Montúfar se Activa</strong>, buscando fomentar la generación de empleo.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 3. MÉDICO EN TU PARROQUIA -->
+          <div class="white-card rounded-2xl p-7 border border-slate-200">
+            <div class="mb-5">
+              <span class="flyer-badge text-sm sm:text-base">MÉDICO EN TU PARROQUIA</span>
+            </div>
+            <ul class="space-y-3.5 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#008D36] text-white flex items-center justify-center text-xs font-bold mt-0.5">♥</span>
+                <span>Repotenciaremos nuestras <strong>mingas por la salud</strong>, crearemos las <strong>brigadas permanentes de salud</strong> en cada barrio y comunidad desde el municipio.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#151E5A] text-white flex items-center justify-center text-xs font-bold mt-0.5">♥</span>
+                <span>Fortalecer los programas y servicios municipales dirigidos a los <strong>grupos de atención prioritaria</strong>.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 4. SEGURIDAD CIUDADANA Y MUNICIPIO PARA LOS BARRIOS -->
+          <div class="space-y-6">
+            <div class="white-card rounded-2xl p-6 border border-slate-200">
+              <div class="mb-4">
+                <span class="flyer-badge text-sm sm:text-base">SEGURIDAD CIUDADANA</span>
+              </div>
+              <p class="text-slate-700 text-sm sm:text-base leading-relaxed flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#151E5A] text-white flex items-center justify-center text-xs font-bold mt-0.5">🛡️</span>
+                <span>Implementación de <strong>salas espejo – cámaras de videovigilancia</strong> en lugares estratégicos, previa coordinación con el <strong>ECU 911</strong>.</span>
+              </p>
+            </div>
+
+            <div class="white-card rounded-2xl p-6 border border-slate-200">
+              <div class="mb-4">
+                <span class="flyer-badge text-sm sm:text-base">MUNICIPIO PARA LOS BARRIOS Y COMUNIDADES</span>
+              </div>
+              <p class="text-slate-700 text-sm sm:text-base leading-relaxed flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#008D36] text-white flex items-center justify-center text-xs font-bold mt-0.5">📱</span>
+                <span>Implementación de la <strong>App SanGa</strong>, todos los trámites municipales en tu celular, transparencia y accesibilidad de los trámites y servicios municipales.</span>
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 

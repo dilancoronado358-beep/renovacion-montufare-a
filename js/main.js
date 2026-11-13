@@ -6,11 +6,50 @@
 document.addEventListener('DOMContentLoaded', () => {
   initIntroSplash();
   initMobileMenu();
+  initCandidatesSearch();
   initProposalsFilter();
   initLiveSearch();
   initParishesTabs();
   initVolunteerModal();
 });
+
+// 0.1 Buscador y Visor de Candidatos (en candidatos.html)
+function initCandidatesSearch() {
+  const searchInput = document.getElementById('candidateSearch');
+  const cards = document.querySelectorAll('.candidate-card');
+  if (!searchInput || !cards.length) return;
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    cards.forEach(card => {
+      const name = (card.getAttribute('data-name') || card.textContent).toLowerCase();
+      if (name.includes(term)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  });
+}
+
+function openCandidateModal(imgUrl, candidateName) {
+  const modal = document.getElementById('candidateLightbox');
+  const imgEl = document.getElementById('lightboxCandidateImg');
+  const nameEl = document.getElementById('lightboxCandidateName');
+  if (!modal || !imgEl || !nameEl) return;
+
+  imgEl.src = imgUrl;
+  nameEl.textContent = candidateName;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCandidateModal() {
+  const modal = document.getElementById('candidateLightbox');
+  if (!modal) return;
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
 
 // 0. Animación Espectacular de Entrada con el Logo de Renovación Montufareña
 function initIntroSplash() {

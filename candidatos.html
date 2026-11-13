@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidatos | Renovación Montufareña - Fabián Robles Alcalde</title>
+  <meta name="description" content="Conoce a nuestro futuro Alcalde Fabián Robles y a todos los candidatos del equipo de Renovación Montufareña por el Cantón Montúfar.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/jellvthl/image/upload/v1794291401/9499f6c9-1f56-4e02-93b3-c217c443c969.png">
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-[#151E5A] selection:text-white flex flex-col min-h-screen">
+
+  <!-- ========================================================
+       CABECERA BLANCA MULTIPÁGINA
+       ======================================================== -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="tricolor-top w-full"></div>
+
+    <div class="bg-[#F8FAFC] border-b border-slate-200 text-slate-600 text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2 font-semibold text-[#151E5A]">
+          <span class="w-2 h-2 rounded-full bg-[#008D36]"></span>
+          <span>CANDIDATO A LA ALCALDÍA DEL CANTÓN MONTÚFAR</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-4 text-xs font-medium text-slate-500">
+          <span>San Gabriel • Carchi • Ecuador</span>
+          <span>|</span>
+          <span class="text-[#008D36] font-bold">Renovación Montufareña</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+          <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794291401/9499f6c9-1f56-4e02-93b3-c217c443c969.png" alt="Renovación Montufareña" class="h-11 sm:h-12 w-auto max-w-[190px] object-contain block">
+        </a>
+
+        <nav class="hidden md:flex items-center gap-4 lg:gap-6 text-xs lg:text-[13px] font-heading font-bold uppercase tracking-wider text-[#151E5A]">
+          <a href="index.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Inicio</a>
+          <a href="candidato.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Conoce a Fabián</a>
+          <a href="candidatos.html" class="whitespace-nowrap py-1 text-[#008D36] border-b-2 border-[#008D36]">Candidatos</a>
+          <a href="ejes.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Ejes de Trabajo</a>
+          <a href="propuestas.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Plan de Montúfar</a>
+          <a href="parroquias.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Parroquias</a>
+          <a href="contacto.html" class="whitespace-nowrap py-1 hover:text-[#008D36] transition-colors">Contacto</a>
+        </nav>
+
+        <div class="hidden sm:flex items-center gap-3 flex-shrink-0">
+          <button class="open-volunteer-modal px-5 py-2.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm whitespace-nowrap">
+            Súmate al Equipo
+          </button>
+        </div>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 text-[#151E5A] hover:bg-slate-100 rounded-lg focus:outline-none" aria-label="Abrir menú">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-slate-200 px-6 py-5 shadow-lg space-y-3">
+      <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+        <span class="text-xs uppercase font-heading font-extrabold text-[#151E5A]">Secciones del Portal</span>
+        <button id="closeMobileMenu" class="text-slate-400 hover:text-[#E30613]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col space-y-2 font-heading font-bold text-sm text-[#151E5A]">
+        <a href="index.html" class="py-1.5 hover:text-[#008D36]">Inicio</a>
+        <a href="candidato.html" class="py-1.5 hover:text-[#008D36]">Conoce a Fabián Robles</a>
+        <a href="candidatos.html" class="py-1.5 text-[#008D36]">Candidatos</a>
+        <a href="ejes.html" class="py-1.5 hover:text-[#008D36]">Ejes de Trabajo</a>
+        <a href="propuestas.html" class="py-1.5 hover:text-[#008D36]">Plan de Montúfar</a>
+        <a href="parroquias.html" class="py-1.5 hover:text-[#008D36]">Parroquias</a>
+        <a href="contacto.html" class="py-1.5 hover:text-[#008D36]">Contacto</a>
+      </div>
+      <div class="pt-3 border-t border-slate-100">
+        <button class="open-volunteer-modal w-full py-3 rounded-lg bg-[#151E5A] text-white font-heading font-bold uppercase tracking-wider text-xs">
+          Súmate al Equipo
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       SECCIÓN EXCLUSIVA: CANDIDATOS RENOVACIÓN MONTUFAREÑA
+       ======================================================== -->
+  <main class="flex-grow bg-white py-14 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Encabezado General -->
+      <div class="text-center max-w-4xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F8FAFC] border border-slate-300 text-[#008D36] text-xs sm:text-sm font-heading font-extrabold uppercase tracking-widest mb-3">
+          <span class="w-2 h-2 rounded-full bg-[#E30613]"></span>
+          <span>Renovación Montufareña</span>
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-heading font-black text-[#151E5A] mt-1 uppercase tracking-tight">
+          Nuestros Candidatos
+        </h1>
+        <p class="text-slate-600 text-base sm:text-lg mt-3 max-w-2xl mx-auto">
+          Hombres y mujeres comprometidos con el progreso, la honestidad y el trabajo junto a la gente de cada barrio, comunidad y parroquia del Cantón Montúfar.
+        </p>
+        <div class="w-24 h-1.5 bg-gradient-to-r from-[#151E5A] via-[#E30613] to-[#008D36] mx-auto mt-5 rounded-full"></div>
+      </div>
+
+      <!-- ========================================================
+           DESTACADO PRINCIPAL: NUESTRO FUTURO ALCALDE - FABIÁN ROBLES
+           ======================================================== -->
+      <section class="mb-16">
+        <div class="max-w-4xl mx-auto bg-[#F8FAFC] rounded-3xl border-2 border-[#151E5A] shadow-xl overflow-hidden">
+          <div class="tricolor-top w-full"></div>
+          <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-8 p-6 sm:p-10">
+            
+            <!-- Fotografía Oficial de Fabián Robles -->
+            <div class="md:col-span-6 flex justify-center">
+              <div class="w-full max-w-sm bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md cursor-pointer group" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591805/FABIAN_ROBLES.jpg.jpg', 'Fabián Robles — Nuestro Futuro Alcalde')">
+                <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591805/FABIAN_ROBLES.jpg.jpg" alt="Fabián Robles - Nuestro Futuro Alcalde del Cantón Montúfar" class="w-full h-auto object-contain block group-hover:scale-[1.02] transition-transform duration-300">
+              </div>
+            </div>
+
+            <!-- Información del Futuro Alcalde -->
+            <div class="md:col-span-6 text-center md:text-left">
+              <div class="mb-4">
+                <span class="flyer-badge text-xs sm:text-sm">
+                  NUESTRO FUTURO ALCALDE
+                </span>
+              </div>
+              <h2 class="text-2xl sm:text-4xl font-heading font-black text-[#151E5A] uppercase leading-tight">
+                Fabián <span class="text-[#008D36]">Robles</span>
+              </h2>
+              <p class="text-xs sm:text-sm font-heading font-extrabold text-slate-500 uppercase tracking-wider mt-1">
+                Dr. Orlando Fabián Robles Benavides
+              </p>
+              <p class="text-slate-700 text-sm sm:text-base leading-relaxed mt-4 mb-6">
+                Un hombre que trabaja junto a la gente. Con más de 25 años de vocación de servicio profesional, lidera al equipo de <strong>Renovación Montufareña</strong> para transformar la Alcaldía del Cantón Montúfar con orden, sensibilidad social y resultados.
+              </p>
+              <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                <a href="candidato.html" class="px-6 py-3 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm">
+                  Ver Biografía Completa
+                </a>
+                <a href="propuestas.html" class="px-6 py-3 rounded-lg bg-white hover:bg-slate-100 text-[#151E5A] border border-[#151E5A] font-heading font-bold text-xs uppercase tracking-wider transition-all">
+                  Plan de Montúfar
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           EQUIPO COMPLETO DE CANDIDATOS (17 CANDIDATOS)
+           ======================================================== -->
+      <section>
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-200 pb-5">
+          <div>
+            <span class="text-xs font-heading font-extrabold uppercase tracking-widest text-[#008D36]">Equipo Oficial</span>
+            <h2 class="text-2xl sm:text-3xl font-heading font-black text-[#151E5A] uppercase mt-1">
+              Candidatos de Renovación Montufareña
+            </h2>
+          </div>
+
+          <!-- Buscador Rápido de Candidatos -->
+          <div class="w-full md:w-80 bg-[#F8FAFC] border border-slate-300 focus-within:border-[#151E5A] rounded-xl px-3.5 py-2 flex items-center shadow-sm">
+            <svg class="w-4 h-4 text-[#151E5A] mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="candidateSearch" placeholder="Buscar candidato por nombre..." class="w-full bg-transparent text-slate-800 placeholder-slate-400 text-sm focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Cuadrícula de los 17 Candidatos -->
+        <div id="candidatesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7">
+
+          <!-- 1. Erika Salazar -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="erika salazar" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591812/ERIKA_SALAZAR.jpg.jpg', 'Erika Salazar')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591812/ERIKA_SALAZAR.jpg.jpg" alt="Erika Salazar - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Erika Salazar</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 2. Erika Flores -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="erika flores" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591812/ERIKA_FLORES.jpg.jpg', 'Erika Flores')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591812/ERIKA_FLORES.jpg.jpg" alt="Erika Flores - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Erika Flores</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 3. Diana Pozo -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#E30613] flex flex-col justify-between cursor-pointer group" data-name="diana pozo" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591812/DIANA_POZO.jpg.jpg', 'Diana Pozo')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591812/DIANA_POZO.jpg.jpg" alt="Diana Pozo - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Diana Pozo</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 4. Armando Robles -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="armando robles" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591811/ARMANDO_ROBLES.jpg.jpg', 'Armando Robles')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591811/ARMANDO_ROBLES.jpg.jpg" alt="Armando Robles - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Armando Robles</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 5. Bayardo Moreno -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="bayardo moreno" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591811/BAYARDO_MORENO.jpg.jpg', 'Bayardo Moreno')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591811/BAYARDO_MORENO.jpg.jpg" alt="Bayardo Moreno - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Bayardo Moreno</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 6. Amparo Velasco -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#E30613] flex flex-col justify-between cursor-pointer group" data-name="amparo velasco" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591810/AMPARO_VELASCO.jpg.jpg', 'Amparo Velasco')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591810/AMPARO_VELASCO.jpg.jpg" alt="Amparo Velasco - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Amparo Velasco</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 7. Ana Chaves -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="ana chaves" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591810/ANA_CHAVES.jpg.jpg', 'Ana Chaves')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591810/ANA_CHAVES.jpg.jpg" alt="Ana Chaves - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Ana Chaves</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 8. Viviana Ponce -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="viviana ponce" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591810/VIVIANA_PONCE.jpg.jpg', 'Viviana Ponce')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591810/VIVIANA_PONCE.jpg.jpg" alt="Viviana Ponce - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Viviana Ponce</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 9. Verónica Cuastuza -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#E30613] flex flex-col justify-between cursor-pointer group" data-name="veronica cuastuza" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591810/VERONICA_CUASTUZA.jpg.jpg', 'Verónica Cuastuza')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591810/VERONICA_CUASTUZA.jpg.jpg" alt="Verónica Cuastuza - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Verónica Cuastuza</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 10. Verónica Taramuel -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="veronica taramuel" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591809/VERONICA_TARAMUEL.jpg.jpg', 'Verónica Taramuel')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591809/VERONICA_TARAMUEL.jpg.jpg" alt="Verónica Taramuel - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Verónica Taramuel</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 11. Tania Solano -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="tania solano" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591809/TANIA_SOLANO.jpg.jpg', 'Tania Solano')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591809/TANIA_SOLANO.jpg.jpg" alt="Tania Solano - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Tania Solano</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 12. Amanda Dorado -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#E30613] flex flex-col justify-between cursor-pointer group" data-name="amanda dorado" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591808/AMANDA_DORADO.jpg.jpg', 'Amanda Dorado')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591808/AMANDA_DORADO.jpg.jpg" alt="Amanda Dorado - Candidata Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Amanda Dorado</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 13. Telmo Chulde -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="telmo chulde" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591809/TELMO_CHULDE.jpg.jpg', 'Telmo Chulde')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591809/TELMO_CHULDE.jpg.jpg" alt="Telmo Chulde - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Telmo Chulde</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 14. Álvaro Benavides -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="alvaro benavides álvaro benavides" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591806/ALVARO_BENAVIDES.jpg.jpg', 'Álvaro Benavides')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591806/ALVARO_BENAVIDES.jpg.jpg" alt="Álvaro Benavides - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Álvaro Benavides</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 15. Joel Malte -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#E30613] flex flex-col justify-between cursor-pointer group" data-name="joel malte" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591806/JOEL_MALTE.jpg.jpg', 'Joel Malte')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591806/JOEL_MALTE.jpg.jpg" alt="Joel Malte - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Joel Malte</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 16. Klever Moreno -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#151E5A] flex flex-col justify-between cursor-pointer group" data-name="klever moreno" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591806/KLEVER_MORENO.jpg.jpg', 'Klever Moreno')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591806/KLEVER_MORENO.jpg.jpg" alt="Klever Moreno - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">Klever Moreno</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+          <!-- 17. William Romero -->
+          <div class="candidate-card white-card rounded-2xl overflow-hidden border border-slate-200 border-t-4 border-t-[#008D36] flex flex-col justify-between cursor-pointer group" data-name="william romero" onclick="openCandidateModal('https://res.cloudinary.com/jellvthl/image/upload/v1794591806/WILLIAM_ROMERO.jpg.jpg', 'William Romero')">
+            <div class="bg-[#F8FAFC] overflow-hidden">
+              <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794591806/WILLIAM_ROMERO.jpg.jpg" alt="William Romero - Candidato Renovación Montufareña" class="w-full h-auto object-contain block group-hover:scale-[1.03] transition-transform duration-300" loading="lazy">
+            </div>
+            <div class="p-4 bg-white border-t border-slate-100 text-center">
+              <h3 class="font-heading font-extrabold text-[#151E5A] text-base uppercase tracking-wide">William Romero</h3>
+              <p class="text-[#008D36] font-heading font-bold text-xs uppercase tracking-wider mt-0.5">Renovación Montufareña</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Visor de Imagen Ampliada (Lightbox para Candidatos) -->
+  <div id="candidateLightbox" class="modal-overlay fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target === this) closeCandidateModal()">
+    <div class="bg-white rounded-2xl p-4 sm:p-6 max-w-lg w-full relative shadow-2xl border border-slate-200 overflow-hidden text-center">
+      <div class="tricolor-top absolute top-0 left-0 right-0"></div>
+      <button onclick="closeCandidateModal()" class="absolute top-3 right-3 bg-white/90 rounded-full text-slate-600 hover:text-[#E30613] p-1.5 shadow">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <img id="lightboxCandidateImg" src="" alt="Candidato Renovación Montufareña" class="w-full max-h-[75vh] object-contain mx-auto rounded-xl mt-2">
+      <h3 id="lightboxCandidateName" class="text-lg sm:text-xl font-heading font-extrabold text-[#151E5A] uppercase mt-4"></h3>
+      <p class="text-xs font-heading font-bold text-[#008D36] uppercase tracking-wider mt-0.5">Renovación Montufareña • Cantón Montúfar</p>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       PIE DE PÁGINA EN BLANCO LIMPIO E INSTITUCIONAL
+       ======================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-200">
+        <div class="flex items-center gap-5">
+          <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794291401/9499f6c9-1f56-4e02-93b3-c217c443c969.png" alt="Renovación Montufareña" class="h-11 w-auto object-contain">
+          <div class="h-8 w-[1px] bg-slate-300"></div>
+          <img src="assets/logo-candidato.png" onerror="this.src='https://res.cloudinary.com/jellvthl/image/upload/v1793108636/a46913bc-d9a0-4ccd-8ed7-67db7923c7f5.png'" alt="Fabián Robles" class="h-9 w-auto object-contain">
+        </div>
+        <div class="text-center md:text-right">
+          <p class="font-heading font-extrabold text-[#151E5A] uppercase text-sm">Dr. Orlando Fabián Robles Benavides</p>
+          <p class="text-[#008D36] font-bold text-xs uppercase tracking-wider mt-0.5">Candidato a la Alcaldía del Cantón Montúfar • Renovación Montufareña</p>
+        </div>
+      </div>
+      <div class="pt-5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <p>© 2026-2027 Campaña Oficial Fabián Robles Alcalde | Renovación Montufareña.</p>
+        <p class="font-semibold text-[#151E5A]">Un hombre que trabaja junto a la gente • Montúfar, Carchi</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Registro -->
+  <div id="volunteerModal" class="modal-overlay fixed inset-0 z-[9999] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="tricolor-top absolute top-0 left-0 right-0"></div>
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-[#E30613] p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="text-center mb-6 pt-2">
+        <img src="https://res.cloudinary.com/jellvthl/image/upload/v1794291401/9499f6c9-1f56-4e02-93b3-c217c443c969.png" alt="Renovación Montufareña" class="h-12 w-auto object-contain mx-auto mb-3">
+        <h3 class="text-xl font-heading font-extrabold text-[#151E5A] uppercase">Súmate a Renovación Montufareña</h3>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1">Acompaña a Fabián Robles hacia la Alcaldía del Cantón Montúfar.</p>
+      </div>
+      <form id="modalVolunteerForm" class="space-y-4">
+        <div>
+          <label for="modalVolName" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Nombres y Apellidos</label>
+          <input type="text" id="modalVolName" required placeholder="Ingresa tu nombre completo" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolPhone" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Teléfono Móvil</label>
+          <input type="tel" id="modalVolPhone" required placeholder="099 123 4567" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+        </div>
+        <div>
+          <label for="modalVolParish" class="block text-xs font-heading font-bold text-[#151E5A] uppercase tracking-wider mb-1">Parroquia</label>
+          <select id="modalVolParish" class="w-full px-4 py-3 rounded-lg bg-[#F8FAFC] border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-[#151E5A]">
+            <option value="San Gabriel">San Gabriel</option>
+            <option value="Piartal">Piartal</option>
+            <option value="Chitán de Navarretes">Chitán de Navarretes</option>
+            <option value="Fernández Salvador">Fernández Salvador</option>
+            <option value="La Paz">La Paz</option>
+            <option value="Cristóbal Colón">Cristóbal Colón</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-lg bg-[#151E5A] hover:bg-[#008D36] text-white font-heading font-bold uppercase tracking-wider text-xs transition-all shadow-md">
+          Unirme al Equipo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

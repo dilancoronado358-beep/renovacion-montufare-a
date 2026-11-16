@@ -1,9 +1,6 @@
--- ==========================================================================
--- TABLA DE VOLUNTARIOS Y ADHESIÓN CIUDADANA - RENOVACIÓN MONTUFAREÑA
--- CANDIDATURA FABIÁN ROBLES | ALCALDÍA DE MONTÚFAR
--- ==========================================================================
 
--- 1. Crear tabla de voluntarios
+
+-- 1 tabla de voluntarios
 CREATE TABLE IF NOT EXISTS public.voluntarios (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
@@ -14,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.voluntarios (
     origen TEXT DEFAULT 'web'
 );
 
--- 2. Habilitar Seguridad por Fila (Row Level Security - RLS)
+-- 2. Habilitar Seguridad por Fila RLS
 ALTER TABLE public.voluntarios ENABLE ROW LEVEL SECURITY;
 
 -- 3. Política: Permitir inserciones públicas desde el formulario web

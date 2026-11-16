@@ -295,7 +295,32 @@ function initParishesTabs() {
   });
 }
 
-// 5. Modal de Adhesión Ciudadana y Voluntariado (presente en todas las páginas)
+// ==========================================================================
+// 5. Configuración y Conexión a Supabase (Registro de Voluntarios)
+// ==========================================================================
+const SUPABASE_URL = 'https://agqrytictqmjzupqrnqp.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_RuhFkhy2RrVwu4ZYbLZOGw_be0S_rDf';
+
+async function guardarEnSupabase(datos) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/voluntarios`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(datos)
+    });
+    return res.ok;
+  } catch (error) {
+    console.error('Error al conectar con Supabase:', error);
+    return false;
+  }
+}
+
+// Modal de Adhesión Ciudadana y Voluntariado (presente en todas las páginas)
 function initVolunteerModal() {
   const openButtons = document.querySelectorAll('.open-volunteer-modal');
   const modal = document.getElementById('volunteerModal');
@@ -331,43 +356,86 @@ function initVolunteerModal() {
   }
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = document.getElementById('volName')?.value || 'Ciudadano/a';
-      const phone = document.getElementById('volPhone')?.value || '';
-      const parish = document.getElementById('volParish')?.value || 'Montúfar';
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Registrando...';
+      }
+
+      const name = document.getElementById('volName')?.value.trim() || 'Ciudadano/a';
+      const phone = document.getElementById('volPhone')?.value.trim() || '';
+      const parish = document.getElementById('volParish')?.value || 'San Gabriel';
       const role = document.getElementById('volRole')?.value || 'Adhesión Ciudadana';
 
+      // 1. Guardar en la base de datos de Supabase
+      await guardarEnSupabase({
+        nombre: name,
+        telefono: phone,
+        parroquia: parish,
+        rol: role,
+        origen: 'pagina_contacto'
+      });
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+
+      showToast(`¡Registro guardado con éxito! Gracias por sumarte, ${name}.`);
+
+      // 2. Redirección complementaria a WhatsApp con el mensaje estructurado
       const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo integrarme al equipo de Renovación Montufareña en el área de: ${role}. Mi número de contacto es ${phone}.`);
       const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
 
-      closeModal();
-      showToast(`Registro recibido, ${name}. Redirigiendo al canal oficial de comunicación.`);
-
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
-      }, 1100);
+      }, 1000);
 
       form.reset();
     });
   }
 
   if (modalForm) {
-    modalForm.addEventListener('submit', (e) => {
+    modalForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = document.getElementById('modalVolName')?.value || 'Ciudadano/a';
-      const phone = document.getElementById('modalVolPhone')?.value || '';
-      const parish = document.getElementById('modalVolParish')?.value || 'Montúfar';
+      const submitBtn = modalForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Registrando...';
+      }
 
+      const name = document.getElementById('modalVolName')?.value.trim() || 'Ciudadano/a';
+      const phone = document.getElementById('modalVolPhone')?.value.trim() || '';
+      const parish = document.getElementById('modalVolParish')?.value || 'San Gabriel';
+
+      // 1. Guardar en la base de datos de Supabase
+      await guardarEnSupabase({
+        nombre: name,
+        telefono: phone,
+        parroquia: parish,
+        rol: 'Súmate al Equipo (Modal)',
+        origen: 'modal_header'
+      });
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+
+      closeModal();
+      showToast(`¡Registro guardado con éxito! Gracias por sumarte, ${name}.`);
+
+      // 2. Redirección complementaria a WhatsApp con el mensaje estructurado
       const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo sumarme al proyecto de Renovación Montufareña. Mi teléfono es ${phone}.`);
       const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
 
-      closeModal();
-      showToast(`Gracias por su adhesión, ${name}. Conectando con la coordinación cantonal.`);
-
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
-      }, 1100);
+      }, 1000);
 
       modalForm.reset();
     });

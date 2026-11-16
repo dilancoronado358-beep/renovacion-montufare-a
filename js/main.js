@@ -338,8 +338,8 @@ function initVolunteerModal() {
       const parish = document.getElementById('volParish')?.value || 'Montúfar';
       const role = document.getElementById('volRole')?.value || 'Adhesión Ciudadana';
 
-      const whatsappMsg = encodeURIComponent(`Estimado Dr. Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo integrarme al equipo de Renovación Montufareña en el área de: ${role}. Mi número de contacto es ${phone}.`);
-      const whatsappUrl = `https://wa.me/593999999999?text=${whatsappMsg}`;
+      const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo integrarme al equipo de Renovación Montufareña en el área de: ${role}. Mi número de contacto es ${phone}.`);
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
 
       closeModal();
       showToast(`Registro recibido, ${name}. Redirigiendo al canal oficial de comunicación.`);
@@ -359,8 +359,8 @@ function initVolunteerModal() {
       const phone = document.getElementById('modalVolPhone')?.value || '';
       const parish = document.getElementById('modalVolParish')?.value || 'Montúfar';
 
-      const whatsappMsg = encodeURIComponent(`Estimado Dr. Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo sumarme al proyecto de Renovación Montufareña. Mi teléfono es ${phone}.`);
-      const whatsappUrl = `https://wa.me/593999999999?text=${whatsappMsg}`;
+      const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo sumarme al proyecto de Renovación Montufareña. Mi teléfono es ${phone}.`);
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
 
       closeModal();
       showToast(`Gracias por su adhesión, ${name}. Conectando con la coordinación cantonal.`);

@@ -368,14 +368,13 @@ function initVolunteerModal() {
       const name = document.getElementById('volName')?.value.trim() || 'Ciudadano/a';
       const phone = document.getElementById('volPhone')?.value.trim() || '';
       const parish = document.getElementById('volParish')?.value || 'San Gabriel';
-      const role = document.getElementById('volRole')?.value || 'Adhesión Ciudadana';
 
       // 1. Guardar en la base de datos de Supabase
       await guardarEnSupabase({
         nombre: name,
         telefono: phone,
         parroquia: parish,
-        rol: role,
+        rol: 'Voluntariado General',
         origen: 'pagina_contacto'
       });
 

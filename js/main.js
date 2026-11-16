@@ -384,14 +384,13 @@ function initVolunteerModal() {
         submitBtn.innerHTML = originalText;
       }
 
-      showToast(`¡Registro guardado con éxito! Gracias por sumarte, ${name}.`);
+      showToast(`¡Registro guardado con éxito! Redirigiendo al grupo oficial de WhatsApp.`);
 
-      // 2. Redirección complementaria a WhatsApp con el mensaje estructurado
-      const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo integrarme al equipo de Renovación Montufareña en el área de: ${role}. Mi número de contacto es ${phone}.`);
-      const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
+      // 2. Redirección al grupo oficial de WhatsApp de Renovación Montufareña
+      const whatsappGroupUrl = 'https://chat.whatsapp.com/K8MoGQyFzeyKqJVoEqNKnU?s=cl&p=i&iam=2';
 
       setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
+        window.open(whatsappGroupUrl, '_blank');
       }, 1000);
 
       form.reset();
@@ -427,14 +426,13 @@ function initVolunteerModal() {
       }
 
       closeModal();
-      showToast(`¡Registro guardado con éxito! Gracias por sumarte, ${name}.`);
+      showToast(`¡Registro guardado con éxito! Redirigiendo al grupo oficial de WhatsApp.`);
 
-      // 2. Redirección complementaria a WhatsApp con el mensaje estructurado
-      const whatsappMsg = encodeURIComponent(`Estimado Fabián Robles, mi nombre es ${name}, de la parroquia ${parish}. Deseo sumarme al proyecto de Renovación Montufareña. Mi teléfono es ${phone}.`);
-      const whatsappUrl = `https://api.whatsapp.com/send/?phone=593985763047&text=${whatsappMsg}`;
+      // 2. Redirección al grupo oficial de WhatsApp de Renovación Montufareña
+      const whatsappGroupUrl = 'https://chat.whatsapp.com/K8MoGQyFzeyKqJVoEqNKnU?s=cl&p=i&iam=2';
 
       setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
+        window.open(whatsappGroupUrl, '_blank');
       }, 1000);
 
       modalForm.reset();
